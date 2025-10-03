@@ -4,395 +4,135 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Class Piano Gallery</title>
-  
-  <!--
-    ✨ HOW TO EDIT QUICKLY
-    - Colors: adjust CSS variables in :root (gold, black, white, gray)
-    - Fonts: update Google Fonts below (Playfair Display + Montserrat)
-    - Sections: Find IDs (#home, #brands, #about, #process, #services, #reviews, #gallery, #contact)
-    - Images: Replace placeholder images (data-uris) with your own URLs
-    - Lead form: Wire to your CRM / Formspree / Zoho by replacing the form action
-    - Contact info: Update in the footer & contact section
-  -->
 
-  <!-- Google Fonts (Luxury Serif + Clean Sans) -->
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: '#C5A253',
+            ink: '#0a0a0a',
+          },
+          fontFamily: {
+            serif: ["Playfair Display", "ui-serif", "Georgia", "serif"],
+            sans: ["Montserrat", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Arial"],
+          }
+        }
+      }
+    }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --gold: #C5A253; /* alt: #D4AF37 */
-      --black: #0a0a0a;
-      --white: #ffffff;
-      --gray-100: #f6f7f9;
-      --gray-300: #e6e8ec;
-      --gray-600: #6b7280;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--black);
-      background: var(--white);
-      line-height: 1.6;
-    }
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-
-    /* Header / Nav */
-    .nav{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: saturate(180%) blur(8px);
-      background: rgba(255,255,255,0.8);
-      border-bottom: 1px solid var(--gray-300);
-    }
-    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand-logo{width:36px;height:36px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-weight:700;color:var(--gold)}
-    .brand-name{font-family:'Playfair Display', serif;font-weight:700;letter-spacing:0.4px}
-    .nav-links{display:flex;gap:18px;flex-wrap:wrap}
-    .nav-links a{padding:8px 10px;border-radius:999px;opacity:.9}
-    .nav-links a.active, .nav-links a:hover{background: var(--black); color: var(--white)}
-    .cta{border:1px solid var(--black);padding:9px 14px;border-radius:999px;font-weight:600}
-    .cta.primary{background:var(--gold); border-color:var(--gold); color:#000;}
-
-    /* Hero */
-    .hero{position:relative;overflow:hidden;background:var(--black);color:var(--white)}
-    .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;padding:72px 20px}
-    .eyebrow{letter-spacing:2px;text-transform:uppercase;font-size:12px;color:rgba(255,255,255,.7)}
-    .hero h1{font-family:'Playfair Display', serif;font-size: clamp(32px,4vw,56px);line-height:1.12;margin:10px 0 16px}
-    .hero p{color:rgba(255,255,255,.85);max-width:52ch}
-    .hero .buttons{display:flex;gap:12px;margin-top:22px}
-    .hero .buttons .btn{padding:12px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.3);font-weight:600}
-    .hero .buttons .btn.primary{background:var(--gold);color:#000;border-color:var(--gold)}
-
-    .hero-visual{position:relative;border-radius:20px;overflow:hidden;border:1px solid #222}
-    .hero-visual::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%, rgba(197,162,83,.35), transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(255,255,255,.08), transparent 55%)}
-
-    /* Section shell */
-    section{padding:70px 20px}
-    .container{max-width:1200px;margin:0 auto}
-    .section-title{font-family:'Playfair Display', serif;font-size: clamp(26px,3vw,40px);margin:0 0 14px}
-    .section-sub{color:var(--gray-600);max-width:70ch;margin:0 0 26px}
-
-    /* Brands */
-    .brand-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
-    .brand-card{border:1px solid var(--gray-300);border-radius:14px;padding:18px;display:grid;place-items:center;background:var(--white)}
-    .brand-card span{font-weight:600}
-
-    /* About */
-    .about{background:var(--gray-100)}
-    .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
-    .about h3{font-family:'Playfair Display', serif;margin-top:0}
-
-    /* Process */
-    .process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-    .step{border:1px solid var(--gray-300);border-radius:16px;padding:18px;background:var(--white)}
-    .step .num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--black);color:var(--white);font-weight:700;margin-bottom:8px}
-
-    /* Services */
-    .services{background:linear-gradient(180deg,#fff, #faf9f6)}
-    .service-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-    .service-card{border:1px solid var(--gray-300);border-radius:16px;padding:20px;background:#fff}
-    .badge{display:inline-block;background:var(--gold);color:#000;font-weight:700;padding:6px 10px;border-radius:999px;margin-bottom:10px}
-
-    /* Reviews */
-    .reviews{background:var(--black);color:var(--white)}
-    .review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-    .review{border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;background:rgba(255,255,255,.03)}
-    .stars{letter-spacing:2px;color:var(--gold)}
-
-    /* Gallery */
-    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-    .tile{aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid var(--gray-300);background:#eee}
-
-    /* Contact */
-    .contact{background:var(--gray-100)}
-    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    form .full{grid-column:1/-1}
-    input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--gray-300);border-radius:12px;font:inherit;background:#fff}
-    textarea{min-height:120px;resize:vertical}
-    button[type="submit"]{background:var(--gold);border:0;color:#000;font-weight:700;padding:12px 16px;border-radius:999px;cursor:pointer}
-
-    /* Footer */
-    footer{padding:40px 20px;border-top:1px solid var(--gray-300);background:#fff}
-    .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
-    .footer-inner small{color:var(--gray-600)}
-
-    /* Utilities */
-    .divider{height:1px;background:var(--gray-300);margin:32px 0}
-    .accent{color:var(--gold)}
-
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero-inner{grid-template-columns:1fr;gap:28px;padding:54px 16px}
-      .about-grid{grid-template-columns:1fr}
-      form{grid-template-columns:1fr}
-      .nav-inner{padding:12px 14px}
-    }
+    .lux-shadow{ box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+    .btn{ @apply inline-flex items-center justify-center px-5 py-3 rounded-full font-semibold tracking-wide; }
+    .btn-gold{ @apply bg-gold text-black hover:opacity-90; }
+    .btn-outline{ @apply border border-black/20 hover:bg-black hover:text-white dark:border-white/30 dark:hover:bg-white dark:hover:text-black; }
   </style>
 </head>
+<body class="font-sans text-ink bg-white dark:bg-ink dark:text-white">
 
-<body>
   <!-- Nav -->
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="#home" class="brand">
-        <div class="brand-logo">WC</div>
-        <div class="brand-name">World Class Piano Gallery</div>
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-ink/80 border-b border-black/10 dark:border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="#home" class="flex items-center gap-3">
+        <img id="brandLogo" src="playstore.png" alt="World Class Piano Gallery logo" class="h-10 w-10 rounded-2xl object-contain"/>
+        <div class="leading-tight">
+          <div class="font-serif text-xl font-bold">World Class Piano Gallery</div>
+        </div>
       </a>
-      <nav class="nav-links">
-        <a href="#brands">Brands</a>
-        <a href="#about">Who We Are</a>
-        <a href="#process">Process</a>
-        <a href="#services">Services</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#gallery">Showcase</a>
-        <a href="#contact" class="cta primary">Book Viewing</a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#brands" class="hover:opacity-70">Brands</a>
+        <a href="#catalog" class="hover:opacity-70">Catalog</a>
+        <a href="#process" class="hover:opacity-70">Process</a>
+        <a href="#reviews" class="hover:opacity-70">Reviews</a>
+        <a href="#contact" class="btn btn-gold">Book Viewing</a>
+        <button id="toggleTheme" class="btn btn-outline px-3 py-2">🌙/☀️</button>
       </nav>
+      <button id="openMenu" class="md:hidden btn btn-outline px-3 py-2">Menu</button>
     </div>
   </header>
 
   <!-- Hero -->
-  <section id="home" class="hero">
-    <div class="hero-inner">
+  <section id="home" class="bg-ink text-white dark:bg-white dark:text-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center py-16">
       <div>
-        <div class="eyebrow">Luxury Pianos • Delivery & Tuning Included</div>
-        <h1>Concert‑Ready Pianos for Homes, Studios, and Stages</h1>
-        <p>Discover curated instruments from iconic makers—meticulously prepped, delivered free within 1,000 miles, and tuned at no charge. Experience concierge service from selection to first performance.</p>
-        <div class="buttons">
-          <a href="#gallery" class="btn">View Showcase</a>
-          <a href="#contact" class="btn primary">Schedule a Private Viewing</a>
+        <h1 class="font-serif text-4xl sm:text-5xl font-bold">Concert‑Ready Pianos for Homes, Studios, and Stages</h1>
+        <p class="mt-4">Curated instruments from iconic makers—meticulously prepped, delivered free, and tuned at no charge.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#catalog" class="btn btn-outline">View Catalog</a>
+          <a href="#contact" class="btn btn-gold">Schedule a Private Viewing</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <!-- Replace this placeholder with your hero image URL -->
-        <img alt="Grand piano in a dimly lit concert hall" src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop" />
+      <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/10 lux-shadow">
+        <img alt="Grand piano hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=1600&auto=format&fit=crop" />
       </div>
     </div>
   </section>
 
-  <!-- Brands -->
-  <section id="brands">
-    <div class="container">
-      <h2 class="section-title">Pianos by Brand</h2>
-      <p class="section-sub">Select from the world’s most respected names. Each instrument is inspected, voiced, and regulated to our standard before delivery.</p>
-      <div class="brand-grid">
-        <div class="brand-card"><span>Steinway & Sons</span></div>
-        <div class="brand-card"><span>Yamaha</span></div>
-        <div class="brand-card"><span>Bösendorfer</span></div>
-        <div class="brand-card"><span>Kawai</span></div>
-        <div class="brand-card"><span>Fazioli</span></div>
-        <div class="brand-card"><span>Mason & Hamlin</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="about">
-    <div class="container about-grid">
-      <div>
-        <h2 class="section-title">Who We Are</h2>
-        <p class="section-sub">World Class Piano Gallery is a boutique showroom specializing in premium new and restored pianos. Our team includes concert technicians and professional pianists who match instruments to players, rooms, and repertoire.</p>
-        <h3>Our Standard</h3>
-        <ul>
-          <li>Expert prep: regulation, voicing, and concert‑level tuning</li>
-          <li>Concierge guidance for acoustics, placement, and care</li>
-          <li>Authenticity and provenance documentation</li>
-        </ul>
-      </div>
-      <div>
-        <img alt="Detail of grand piano strings and hammers" src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop">
-      </div>
-    </div>
-  </section>
-
-  <!-- Process -->
-  <section id="process">
-    <div class="container">
-      <h2 class="section-title">Our Process</h2>
-      <p class="section-sub">Transparent, musician‑first steps from discovery to delivery.</p>
-      <div class="process-grid">
-        <div class="step">
-          <div class="num">1</div>
-          <h4>Consultation</h4>
-          <p>Tell us your goals, space, and repertoire. We shortlist ideal makes and sizes.</p>
-        </div>
-        <div class="step">
-          <div class="num">2</div>
-          <h4>Audition</h4>
-          <p>Hands‑on demos in studio or via curated video/sound tests.</p>
-        </div>
-        <div class="step">
-          <div class="num">3</div>
-          <h4>Preparation</h4>
-          <p>Full regulation & voicing by our technicians for your touch and tone.</p>
-        </div>
-        <div class="step">
-          <div class="num">4</div>
-          <h4>White‑Glove Delivery</h4>
-          <p>Free delivery within 1,000 miles and a complimentary post‑settle tuning.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section id="services" class="services">
-    <div class="container">
-      <h2 class="section-title">Included Services</h2>
-      <p class="section-sub">Everything you need for a flawless first performance—built into every purchase.</p>
-      <div class="service-cards">
-        <div class="service-card">
-          <span class="badge">Free</span>
-          <h4>Delivery (≤ 1,000 miles)</h4>
-          <p>Insured, climate‑aware transport with concert‑level care.</p>
-        </div>
-        <div class="service-card">
-          <span class="badge">Free</span>
-          <h4>First Tuning</h4>
-          <p>Post‑settle tuning and touch check by our certified technicians.</p>
-        </div>
-        <div class="service-card">
-          <h4>Trade‑Up Program</h4>
-          <p>Grow with your instrument—apply purchase value toward future upgrades.</p>
-        </div>
-        <div class="service-card">
-          <h4>Financing Options</h4>
-          <p>Flexible plans for individuals, studios, venues, and institutions.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Reviews -->
-  <section id="reviews" class="reviews">
-    <div class="container">
-      <h2 class="section-title">Client Reviews</h2>
-      <p class="section-sub">Trusted by artists, educators, and venues across the Southeast.</p>
-      <div class="review-grid">
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>“The prep and voicing were superb—exactly the articulation I needed. Delivery was flawless.”</p>
-          <small>— Conservatory Professor</small>
-        </div>
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>“White‑glove service from start to finish. Our recital hall has never sounded better.”</p>
-          <small>— Venue Director</small>
-        </div>
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>“They matched a piano to my room and repertoire. The free tuning sealed the deal.”</p>
-          <small>— Private Client</small>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery / Showcase -->
-  <section id="gallery">
-    <div class="container">
-      <h2 class="section-title">Piano Showcase</h2>
-      <p class="section-sub">A glimpse at recent arrivals and restorations. Tap to view details or request a private demo.</p>
-      <div class="gallery-grid">
-        <a class="tile" href="#contact" title="Inquire about this instrument">
-          <img alt="Concert grand on stage" src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=1200&auto=format&fit=crop">
-        </a>
-        <a class="tile" href="#contact" title="Inquire about this instrument">
-          <img alt="Piano keys close up" src="https://images.unsplash.com/photo-1513885535751-8b9238bd3454?q=80&w=1200&auto=format&fit=crop">
-        </a>
-        <a class="tile" href="#contact" title="Inquire about this instrument">
-          <img alt="Grand piano in modern home" src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop">
-        </a>
-        <a class="tile" href="#contact" title="Inquire about this instrument">
-          <img alt="Piano action detail" src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop">
-        </a>
-      </div>
-      <div class="divider"></div>
-      <div style="display:flex;justify-content:center">
-        <a href="#contact" class="cta primary" style="padding:12px 18px">Request Full Catalog</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact / Lead Capture -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2 class="section-title">Book a Private Viewing</h2>
-      <p class="section-sub">Tell us a bit about your needs. We’ll follow up to schedule in‑showroom or virtual demos and provide personalized recommendations.</p>
-
-      <form action="#" method="post" onsubmit="event.preventDefault(); alert('Thank you! We\'ll be in touch shortly.'); this.reset();">
-        <div>
-          <label for="name">Full Name</label>
-          <input id="name" name="name" placeholder="Your name" required>
-        </div>
-        <div>
-          <label for="email">Email</label>
-          <input id="email" type="email" name="email" placeholder="you@example.com" required>
-        </div>
-        <div>
-          <label for="phone">Phone</label>
-          <input id="phone" name="phone" placeholder="(###) ###‑####">
-        </div>
-        <div>
-          <label for="interest">Interest</label>
-          <select id="interest" name="interest">
-            <option>Grand</option>
-            <option>Upright</option>
-            <option>Hybrid / Digital</option>
-            <option>Not Sure Yet</option>
-          </select>
-        </div>
-        <div class="full">
-          <label for="message">Notes</label>
-          <textarea id="message" name="message" placeholder="Room size, repertoire, preferred brands, etc."></textarea>
-        </div>
-        <div class="full" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <button type="submit">Send Request</button>
-          <span style="color:var(--gray-600)">Free delivery ≤ 1,000 miles • Complimentary first tuning</span>
-        </div>
-      </form>
+  <!-- Catalog placeholder -->
+  <section id="catalog" class="py-14 bg-neutral-50 dark:bg-neutral-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-serif text-3xl font-bold">Catalog</h2>
+      <div id="catalogGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
+  <footer class="py-10 border-t border-black/10 dark:border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div>
-        <strong>World Class Piano Gallery</strong><br>
-        <small>1000 North Point Cir, Alpharetta, GA 30022 • (404) 491‑1656 • info@worldclasspianos.com</small>
+        <div class="font-serif text-xl font-bold">World Class Piano Gallery</div>
+        <div class="text-sm">1000 North Point Cir, Alpharetta, GA 30022 • (404) 491‑1656 • info@worldclasspianos.com</div>
       </div>
-      <div>
-        <a class="cta" href="#contact">Schedule</a>
-      </div>
+      <button id="openAdmin" class="btn btn-gold">Admin</button>
     </div>
   </footer>
 
-  <script>
-    // Smooth scroll & active link highlighting
-    const links = document.querySelectorAll('.nav-links a[href^="#"]');
-    const opts = {behavior:'smooth', block:'start'};
-
-    links.forEach(a=>{
-      a.addEventListener('click', e=>{
-        const id = a.getAttribute('href');
-        const el = document.querySelector(id);
-        if(el){
-          e.preventDefault();
-          el.scrollIntoView(opts);
-        }
-      });
+  <script type="module">
+    // Theme toggle
+    const btn = document.getElementById('toggleTheme');
+    btn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     });
+    // Load saved theme
+    if(localStorage.getItem('theme')==='dark'){
+      document.documentElement.classList.add('dark');
+    }
 
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        const id = '#' + entry.target.id;
-        const link = document.querySelector('.nav-links a[href="'+id+'"]');
-        if(link){ link.classList.toggle('active', entry.isIntersecting); }
+    // Firestore fetch (placeholder)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadInventory(){
+      const snapshot = await getDocs(collection(db, "pianos"));
+      let html = "";
+      snapshot.forEach(doc => {
+        const p = doc.data();
+        html += `
+        <article class='bg-white dark:bg-ink rounded-2xl p-4 shadow'>
+          <h3 class='font-semibold'>${p.make} ${p.model}</h3>
+          <p class='text-sm'>Year: ${p.year} | Length: ${p.length}</p>
+          <p class='text-sm'>${p.description||''}</p>
+          <div class='font-bold mt-2'>$${p.cost}</div>
+        </article>`;
       });
-    }, {rootMargin:'-50% 0px -45% 0px', threshold:0});
+      document.getElementById('catalogGrid').innerHTML = html;
+    }
 
-    document.querySelectorAll('section[id]').forEach(sec=>observer.observe(sec));
+    loadInventory();
   </script>
 </body>
 </html>
