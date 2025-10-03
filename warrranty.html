@@ -5,24 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Warranty – World Class Piano Gallery</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { gold: '#C5A253', ink: '#0a0a0a' },
+          fontFamily: {
+            serif: ["Playfair Display", "ui-serif", "Georgia", "serif"],
+            sans: ["Montserrat", "ui-sans-serif", "system-ui"],
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-neutral-50 text-black dark:bg-ink dark:text-white">
+<body class="bg-ink text-white font-sans">
 
-  <header class="p-4 bg-white dark:bg-ink shadow flex justify-between">
-    <a href="index.html" class="font-serif font-bold">World Class Piano Gallery</a>
-    <nav class="space-x-6">
-      <a href="index.html">Home</a>
-      <a href="pianos.html">Pianos</a>
-      <a href="warranty.html" class="font-bold">Warranty</a>
-    </nav>
+  <!-- Navbar -->
+  <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
+      <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      <nav class="hidden md:flex space-x-8">
+        <a href="index.html" class="hover:text-gold">Home</a>
+        <a href="pianos.html" class="hover:text-gold">Pianos</a>
+        <a href="warranty.html" class="text-gold">Warranty</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="max-w-4xl mx-auto p-6">
-    <h1 class="font-serif text-3xl font-bold mb-6">Warranty Information</h1>
-    <div id="warrantyContent" class="prose dark:prose-invert">
-      <p>Paste your official warranty details here.</p>
+  <main class="max-w-5xl mx-auto pt-28 px-6 pb-20">
+    <h1 class="font-serif text-4xl font-bold mb-8" data-aos="fade-up">3-Year Warranty</h1>
+    <div class="prose prose-lg dark:prose-invert" data-aos="fade-up" data-aos-delay="200">
+      <p>Paste your official warranty details here. Styled in editorial format for readability and elegance.</p>
     </div>
   </main>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
 </body>
 </html>
