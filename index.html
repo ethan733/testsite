@@ -72,7 +72,7 @@
     </div>
   </section>
 
-  <!-- Catalog placeholder -->
+  <!-- Catalog -->
   <section id="catalog" class="py-14 bg-neutral-50 dark:bg-neutral-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="font-serif text-3xl font-bold">Catalog</h2>
@@ -87,7 +87,6 @@
         <div class="font-serif text-xl font-bold">World Class Piano Gallery</div>
         <div class="text-sm">1000 North Point Cir, Alpharetta, GA 30022 • (404) 491‑1656 • info@worldclasspianos.com</div>
       </div>
-      <button id="openAdmin" class="btn btn-gold">Admin</button>
     </div>
   </footer>
 
@@ -98,26 +97,30 @@
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     });
-    // Load saved theme
     if(localStorage.getItem('theme')==='dark'){
       document.documentElement.classList.add('dark');
     }
 
-    // Firestore fetch (placeholder)
+    // Firestore fetch only items with showOnSite == true
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
+      apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
+      authDomain: "pianoinv.firebaseapp.com",
+      projectId: "pianoinv",
+      storageBucket: "pianoinv.firebasestorage.app",
+      messagingSenderId: "651707888262",
+      appId: "1:651707888262:web:23131a782e31a7bb511707",
+      measurementId: "G-1XQLEV28JZ"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     async function loadInventory(){
-      const snapshot = await getDocs(collection(db, "pianos"));
+      const q = query(collection(db, "pianos"), where("showOnSite", "==", true));
+      const snapshot = await getDocs(q);
       let html = "";
       snapshot.forEach(doc => {
         const p = doc.data();
