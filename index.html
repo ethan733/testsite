@@ -4,145 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Class Piano Gallery</title>
-
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            gold: '#C5A253',
-            ink: '#0a0a0a',
-          },
-          fontFamily: {
-            serif: ["Playfair Display", "ui-serif", "Georgia", "serif"],
-            sans: ["Montserrat", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Arial"],
-          }
-        }
-      }
-    }
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    .lux-shadow{ box-shadow: 0 10px 30px rgba(0,0,0,.08); }
-    .btn{ @apply inline-flex items-center justify-center px-5 py-3 rounded-full font-semibold tracking-wide; }
-    .btn-gold{ @apply bg-gold text-black hover:opacity-90; }
-    .btn-outline{ @apply border border-black/20 hover:bg-black hover:text-white dark:border-white/30 dark:hover:bg-white dark:hover:text-black; }
-  </style>
 </head>
-<body class="font-sans text-ink bg-white dark:bg-ink dark:text-white">
+<body class="bg-white text-black dark:bg-ink dark:text-white">
 
-  <!-- Nav -->
-  <header class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-ink/80 border-b border-black/10 dark:border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      <a href="#home" class="flex items-center gap-3">
-        <img id="brandLogo" src="playstore.png" alt="World Class Piano Gallery logo" class="h-10 w-10 rounded-2xl object-contain"/>
-        <div class="leading-tight">
-          <div class="font-serif text-xl font-bold">World Class Piano Gallery</div>
-        </div>
-      </a>
-      <nav class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#brands" class="hover:opacity-70">Brands</a>
-        <a href="#catalog" class="hover:opacity-70">Catalog</a>
-        <a href="#process" class="hover:opacity-70">Process</a>
-        <a href="#reviews" class="hover:opacity-70">Reviews</a>
-        <a href="#contact" class="btn btn-gold">Book Viewing</a>
-        <button id="toggleTheme" class="btn btn-outline px-3 py-2">🌙/☀️</button>
-      </nav>
-      <button id="openMenu" class="md:hidden btn btn-outline px-3 py-2">Menu</button>
-    </div>
+  <!-- Header -->
+  <header class="p-4 bg-white dark:bg-ink shadow flex justify-between items-center">
+    <a href="index.html" class="font-serif font-bold text-xl">World Class Piano Gallery</a>
+    <nav class="space-x-6">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="pianos.html" class="hover:underline">Pianos</a>
+      <a href="#process" class="hover:underline">Process</a>
+      <a href="#contact" class="hover:underline">Contact</a>
+    </nav>
   </header>
 
   <!-- Hero -->
-  <section id="home" class="bg-ink text-white dark:bg-white dark:text-black">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center py-16">
-      <div>
-        <h1 class="font-serif text-4xl sm:text-5xl font-bold">Concert‑Ready Pianos for Homes, Studios, and Stages</h1>
-        <p class="mt-4">Curated instruments from iconic makers—meticulously prepped, delivered free, and tuned at no charge.</p>
-        <div class="mt-6 flex gap-3">
-          <a href="#catalog" class="btn btn-outline">View Catalog</a>
-          <a href="#contact" class="btn btn-gold">Schedule a Private Viewing</a>
-        </div>
-      </div>
-      <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/10 lux-shadow">
-        <img alt="Grand piano hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=1600&auto=format&fit=crop" />
-      </div>
+  <section class="max-w-6xl mx-auto py-16 px-6 text-center">
+    <h1 class="font-serif text-5xl font-bold">Concert-Ready Pianos for Homes, Studios, and Stages</h1>
+    <p class="mt-6 text-lg text-gray-700">Curated instruments from iconic makers — meticulously prepped, delivered free, and tuned at no charge.</p>
+    <div class="mt-6 flex justify-center gap-4">
+      <a href="pianos.html" class="px-6 py-3 bg-gold text-black font-semibold rounded-full">View Pianos</a>
+      <a href="#contact" class="px-6 py-3 border border-black rounded-full">Book a Private Viewing</a>
     </div>
   </section>
 
-  <!-- Catalog -->
-  <section id="catalog" class="py-14 bg-neutral-50 dark:bg-neutral-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="font-serif text-3xl font-bold">Catalog</h2>
-      <div id="catalogGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
-    </div>
+  <!-- About -->
+  <section id="process" class="max-w-5xl mx-auto py-12 px-6">
+    <h2 class="font-serif text-3xl font-bold mb-4">Our Process</h2>
+    <p>Each piano is carefully inspected, voiced, regulated, and tuned before delivery. We include free delivery within 1,000 miles and one complimentary tuning.</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="max-w-5xl mx-auto py-12 px-6">
+    <h2 class="font-serif text-3xl font-bold mb-4">Contact Us</h2>
+    <p>Email: info@worldclasspianos.com • Phone: (404) 491-1656</p>
   </section>
 
   <!-- Footer -->
-  <footer class="py-10 border-t border-black/10 dark:border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-      <div>
-        <div class="font-serif text-xl font-bold">World Class Piano Gallery</div>
-        <div class="text-sm">1000 North Point Cir, Alpharetta, GA 30022 • (404) 491‑1656 • info@worldclasspianos.com</div>
-      </div>
-    </div>
+  <footer class="py-6 text-center border-t border-gray-200">
+    <p class="text-sm">&copy; 2025 World Class Piano Gallery</p>
   </footer>
 
-  <script type="module">
-    // Theme toggle
-    const btn = document.getElementById('toggleTheme');
-    btn.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    });
-    if(localStorage.getItem('theme')==='dark'){
-      document.documentElement.classList.add('dark');
-    }
-
-    // Firestore fetch only items with showOnSite == true and status != sold
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
-      authDomain: "pianoinv.firebaseapp.com",
-      projectId: "pianoinv",
-      storageBucket: "pianoinv.firebasestorage.app",
-      messagingSenderId: "651707888262",
-      appId: "1:651707888262:web:23131a782e31a7bb511707",
-      measurementId: "G-1XQLEV28JZ"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    function formatMoney(num){
-      if(!num) return '';
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
-    }
-
-    async function loadInventory(){
-      const q = query(collection(db, "pianos"), where("showOnSite", "==", true));
-      const snapshot = await getDocs(q);
-      let html = "";
-      snapshot.forEach(doc => {
-        const p = doc.data();
-        if(p.status && p.status.toLowerCase() === "sold") return; // filter sold out manually
-        let priceDisplay = p.cost ? formatMoney(p.cost) : "Contact for Pricing";
-        html += `
-        <article class='bg-white dark:bg-ink rounded-2xl p-4 shadow'>
-          <h3 class='font-semibold'>${p.make} ${p.model}</h3>
-          <p class='text-sm'>Year: ${p.year} | Length: ${p.length}</p>
-          <p class='text-sm'>${p.description||''}</p>
-          <div class='font-bold mt-2'>${priceDisplay}</div>
-        </article>`;
-      });
-      document.getElementById('catalogGrid').innerHTML = html || "<p>No pianos available right now.</p>";
-    }
-
-    loadInventory();
-  </script>
 </body>
 </html>
