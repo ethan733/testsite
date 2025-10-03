@@ -25,23 +25,85 @@
   <!-- Navbar -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-      <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      <div class="flex items-center space-x-2">
+        <img src="playstore.png" alt="Logo" class="h-8 w-auto">
+        <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      </div>
       <nav class="hidden md:flex space-x-8">
         <a href="index.html" class="hover:text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="warranty.html" class="text-gold">Warranty</a>
       </nav>
+      <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
+      <nav class="flex flex-col px-6 py-4 space-y-4">
+        <a href="index.html" class="hover:text-gold">Home</a>
+        <a href="pianos.html" class="hover:text-gold">Pianos</a>
+        <a href="warranty.html" class="hover:text-gold">Warranty</a>
+      </nav>
     </div>
   </header>
 
+  <!-- Warranty Content -->
   <main class="max-w-5xl mx-auto pt-28 px-6 pb-20">
-    <h1 class="font-serif text-4xl font-bold mb-8" data-aos="fade-up">3-Year Warranty</h1>
-    <div class="prose prose-lg dark:prose-invert" data-aos="fade-up" data-aos-delay="200">
-      <p>Paste your official warranty details here. Styled in editorial format for readability and elegance.</p>
+    <h1 class="font-serif text-5xl font-bold mb-10 text-center" data-aos="fade-up">Our Warranty</h1>
+    <div class="prose prose-invert max-w-none text-gray-200 space-y-6" data-aos="fade-up" data-aos-delay="200">
+      <p>
+        At <span class="text-gold font-semibold">World Class Piano Gallery</span>, we stand behind every instrument we deliver.  
+        Your piano is not just a purchase—it is an investment in craftsmanship, artistry, and performance.
+      </p>
+
+      <h2 class="font-serif text-3xl text-gold mt-10 mb-4">3-Year Limited Warranty</h2>
+      <p>
+        Every piano purchased through our gallery is protected by a comprehensive 3-year warranty.  
+        This warranty covers defects in materials and workmanship under normal use during the warranty period.  
+      </p>
+
+      <ul class="list-disc list-inside space-y-2">
+        <li>Full coverage of all manufacturer defects</li>
+        <li>Complimentary in-home service by certified technicians</li>
+        <li>Free tuning adjustments during the warranty period</li>
+        <li>Priority access to our service team</li>
+      </ul>
+
+      <p class="mt-6">
+        This warranty does not cover damage caused by improper care, environmental conditions, or unauthorized modifications.  
+        For full details, please contact our service department.
+      </p>
+
+      <h2 class="font-serif text-3xl text-gold mt-10 mb-4">Service & Support</h2>
+      <p>
+        Our clients enjoy complimentary piano tuning within the first year of purchase,  
+        and free delivery within 1000 miles of our showroom.  
+        Beyond the warranty, our team is available to support you with maintenance, restoration, or resale guidance.
+      </p>
     </div>
   </main>
 
+  <!-- Contact -->
+  <section class="py-20 bg-black">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="font-serif text-3xl font-bold mb-6">Have Questions?</h2>
+      <p class="text-gray-300 mb-6">Our concierge team is here to assist you with warranty or service inquiries.</p>
+      <a href="mailto:info@worldclasspianos.com" 
+         class="px-6 py-3 bg-gold text-black font-semibold rounded-full hover:opacity-90">
+         Contact Us
+      </a>
+    </div>
+  </section>
+
+  <footer class="py-8 text-center border-t border-gold/20 bg-ink">
+    <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
+  </footer>
+
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
+  <script>
+    // Mobile nav toggle
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    });
+  </script>
 </body>
 </html>
