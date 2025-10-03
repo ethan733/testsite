@@ -30,7 +30,6 @@
         <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
       </div>
 
-      <!-- Desktop Nav -->
       <nav class="hidden md:flex space-x-8">
         <a href="index.html" class="text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
@@ -38,11 +37,8 @@
         <a href="#contact" class="hover:text-gold">Contact</a>
       </nav>
 
-      <!-- Mobile Hamburger -->
       <button id="menuBtn" class="md:hidden text-gold text-2xl focus:outline-none">☰</button>
     </div>
-
-    <!-- Mobile Menu -->
     <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
       <nav class="flex flex-col px-6 py-4 space-y-4">
         <a href="index.html" class="hover:text-gold">Home</a>
@@ -123,7 +119,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Load showcase slots
     async function loadShowcase() {
       for (let i = 1; i <= 3; i++) {
         const snap = await getDoc(doc(db, "showcase", `slot${i}`));
@@ -132,9 +127,14 @@
           const pianoSnap = await getDoc(doc(db, "pianos", pianoId));
           if (pianoSnap.exists()) {
             const p = pianoSnap.data();
+            let imageUrl = p.image || p.photoUrl || p.img || p.url;
+            if (!imageUrl && p.filename) {
+              imageUrl = `https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F${encodeURIComponent(p.filename)}?alt=media`;
+            }
+            if (!imageUrl) imageUrl = "https://via.placeholder.com/600x400";
             document.getElementById(`featured${i}`).innerHTML = `
               <a href="product.html?id=${pianoId}">
-                <img src="${p.image||'https://via.placeholder.com/400x300'}" class="rounded mb-4"/>
+                <img src="${imageUrl}" class="rounded mb-4"/>
                 <h3 class="font-serif text-xl font-bold">${p.make||''} ${p.model||''}</h3>
                 <p class="text-gray-300">${p.year||''} • ${p.length||''} • ${p.color||''}</p>
               </a>`;
@@ -145,7 +145,6 @@
       }
     }
 
-    // Modal logic
     document.getElementById("editShowcaseBtn").onclick = async () => {
       document.getElementById("showcaseModal").classList.remove("hidden");
       const list = document.getElementById("pianoList");
@@ -168,7 +167,6 @@
       document.getElementById("showcaseModal").classList.add("hidden");
     };
 
-    // Select piano for showcase slot
     window.selectPiano = async (pianoId) => {
       const slot = prompt("Which showcase slot (1, 2, or 3)?");
       if (slot && [1,2,3].includes(parseInt(slot))) {
@@ -181,7 +179,6 @@
 
     loadShowcase();
 
-    // Mobile nav toggle
     document.getElementById("menuBtn").addEventListener("click", () => {
       document.getElementById("mobileMenu").classList.toggle("hidden");
     });
