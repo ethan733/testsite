@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Product – World Class Piano Gallery</title>
+  <title>Piano Details – World Class Piano Gallery</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script>
@@ -36,33 +36,43 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    async function loadProduct(){
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-      if(!id) return;
+    async function loadProduct() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (!id) return;
 
-      const ref = doc(db, "pianos", id);
-      const snap = await getDoc(ref);
-      if(!snap.exists()){
-        document.getElementById("product").innerHTML = "<p>Product not found.</p>";
+      const snap = await getDoc(doc(db, "pianos", id));
+      if (!snap.exists()) {
+        document.getElementById("product").innerHTML = `<p class="text-gray-400">Piano not found.</p>`;
         return;
       }
+
       const p = snap.data();
+
+      // Smart image fallback
+      let imageUrl = p.image || p.photoUrl || p.img || p.url;
+      if (!imageUrl && p.filename) {
+        imageUrl = `https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F${encodeURIComponent(p.filename)}?alt=media`;
+      }
+      if (!imageUrl) imageUrl = "https://via.placeholder.com/800x600";
+
       let price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
       document.getElementById("product").innerHTML = `
-        <div class="grid md:grid-cols-2 gap-12 items-center" data-aos="fade-up">
-          <div><img src="${p.image||'https://via.placeholder.com/800x600'}" alt="${p.make||''} ${p.model||''}" class="rounded-xl shadow border border-gold/20"/></div>
-          <div>
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <img src="${imageUrl}" alt="${p.make||''} ${p.model||''}" class="w-full rounded shadow-lg" data-aos="fade-right"/>
+          <div data-aos="fade-left">
             <h1 class="font-serif text-4xl font-bold mb-4">${p.make||''} ${p.model||''}</h1>
-            <p class="text-gray-300 mb-2">Year: ${p.year||''} • Length: ${p.length||''} • Color: ${p.color||''}</p>
+            <p class="text-gray-300 mb-4">Year: ${p.year||'—'} • Length: ${p.length||'—'} • Color: ${p.color||'—'}</p>
             <div class="text-2xl font-semibold text-gold mb-6">${price}</div>
-            <p class="text-gray-200 leading-relaxed mb-6">${p.description || "Detailed description coming soon."}</p>
-            <div class="flex gap-4">
-              <a href="index.html#contact" class="px-6 py-3 bg-gold text-black rounded-full font-semibold hover:opacity-90">Request Info</a>
-            </div>
+            <p class="text-gray-200 mb-8">${p.description || "A world-class instrument ready for your home or stage."}</p>
+            <a href="mailto:info@worldclasspianos.com?subject=Interested in ${p.make||''} ${p.model||''}" 
+               class="px-6 py-3 bg-gold text-black font-semibold rounded-full hover:opacity-90">
+               Inquire Now
+            </a>
           </div>
-        </div>`;
+        </div>
+      `;
     }
 
     window.onload = loadProduct;
@@ -70,10 +80,22 @@
 </head>
 <body class="bg-ink text-white font-sans">
 
+  <!-- Navbar -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-      <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      <div class="flex items-center space-x-2">
+        <img src="playstore.png" alt="Logo" class="h-8 w-auto">
+        <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      </div>
       <nav class="hidden md:flex space-x-8">
+        <a href="index.html" class="hover:text-gold">Home</a>
+        <a href="pianos.html" class="hover:text-gold">Pianos</a>
+        <a href="warranty.html" class="hover:text-gold">Warranty</a>
+      </nav>
+      <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
+      <nav class="flex flex-col px-6 py-4 space-y-4">
         <a href="index.html" class="hover:text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="warranty.html" class="hover:text-gold">Warranty</a>
@@ -81,9 +103,21 @@
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto pt-28 px-6 pb-20" id="product"></main>
+  <main class="max-w-7xl mx-auto pt-28 px-6 pb-20" id="product">
+    <p class="text-gray-400">Loading...</p>
+  </main>
+
+  <footer class="py-8 text-center border-t border-gold/20 bg-ink">
+    <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
+  </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
+  <script>
+    // Mobile nav toggle
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    });
+  </script>
 </body>
 </html>
