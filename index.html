@@ -101,7 +101,7 @@
       document.documentElement.classList.add('dark');
     }
 
-    // Firestore fetch only items with showOnSite == true
+    // Firestore fetch only items with showOnSite == true and status != sold
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -129,15 +129,17 @@
       let html = "";
       snapshot.forEach(doc => {
         const p = doc.data();
+        if(p.status && p.status.toLowerCase() === "sold") return; // filter sold out manually
+        let priceDisplay = p.cost ? formatMoney(p.cost) : "Contact for Pricing";
         html += `
         <article class='bg-white dark:bg-ink rounded-2xl p-4 shadow'>
           <h3 class='font-semibold'>${p.make} ${p.model}</h3>
           <p class='text-sm'>Year: ${p.year} | Length: ${p.length}</p>
           <p class='text-sm'>${p.description||''}</p>
-          <div class='font-bold mt-2'>${formatMoney(p.cost)}</div>
+          <div class='font-bold mt-2'>${priceDisplay}</div>
         </article>`;
       });
-      document.getElementById('catalogGrid').innerHTML = html;
+      document.getElementById('catalogGrid').innerHTML = html || "<p>No pianos available right now.</p>";
     }
 
     loadInventory();
