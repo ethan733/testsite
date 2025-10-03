@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pianos – World Class Piano Gallery</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { gold: '#C5A253', ink: '#0a0a0a' },
+          fontFamily: {
+            serif: ["Playfair Display", "ui-serif", "Georgia", "serif"],
+            sans: ["Montserrat", "ui-sans-serif", "system-ui"],
+          }
+        }
+      }
+    }
+  </script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -23,42 +37,56 @@
     const db = getFirestore(app);
 
     async function loadCatalog(){
-      const snapshot = await getDocs(collection(db, "pianos"));
-      let html = "";
-      snapshot.forEach(doc => {
-        const p = doc.data();
-        console.log(doc.id, p); // Debug log
-        if(p.status && p.status.toLowerCase() === "sold") return;
-        let price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
-        html += `
-          <a href="product.html?id=${doc.id}" class="block bg-white text-black dark:bg-neutral-900 dark:text-white rounded-xl shadow p-4 hover:shadow-lg">
-            <img src="${p.image||'https://via.placeholder.com/400x300'}" class="w-full h-48 object-cover rounded-md mb-3"/>
-            <h3 class="font-bold">${p.make||''} ${p.model||''}</h3>
-            <p class="text-sm">Year: ${p.year||''} • Length: ${p.length||''} • Color: ${p.color||''}</p>
-            <div class="font-semibold mt-2">${price}</div>
-          </a>`;
-      });
-      document.getElementById("catalog").innerHTML = html || "<p>No pianos available right now.</p>";
+      try {
+        const snapshot = await getDocs(collection(db, "pianos"));
+        console.log("Firestore snapshot size:", snapshot.size);
+        let html = "";
+        snapshot.forEach(doc => {
+          const p = doc.data();
+          console.log("Doc:", doc.id, p);
+          if(p.status && p.status.toLowerCase() === "sold") return;
+          let price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
+          html += `
+            <a href="product.html?id=${doc.id}" 
+               class="block bg-ink text-white rounded-xl border border-gold/20 shadow hover:shadow-gold/20 hover:scale-[1.02] transition p-6" data-aos="fade-up">
+              <img src="${p.image||'https://via.placeholder.com/600x400'}" 
+                   alt="${p.make||''} ${p.model||''}" 
+                   class="w-full h-64 object-cover rounded mb-4"/>
+              <h3 class="font-serif text-xl font-bold">${p.make||''} ${p.model||''}</h3>
+              <p class="text-sm text-gray-300">Year: ${p.year||''} • Length: ${p.length||''} • Color: ${p.color||''}</p>
+              <div class="mt-3 text-lg font-semibold text-gold">${price}</div>
+            </a>`;
+        });
+        document.getElementById("catalog").innerHTML = html || "<p class='text-gray-400'>No pianos available.</p>";
+      } catch (e) {
+        console.error("Error loading Firestore:", e);
+        document.getElementById("catalog").innerHTML = "<p class='text-red-500'>Error loading catalog. Check console.</p>";
+      }
     }
 
-    loadCatalog();
+    window.onload = loadCatalog;
   </script>
 </head>
-<body class="bg-neutral-50 text-black dark:bg-ink dark:text-white">
+<body class="bg-ink text-white font-sans">
 
-  <header class="p-4 bg-white dark:bg-ink shadow flex justify-between">
-    <a href="index.html" class="font-serif font-bold">World Class Piano Gallery</a>
-    <nav class="space-x-6">
-      <a href="index.html">Home</a>
-      <a href="pianos.html" class="font-bold">Pianos</a>
-      <a href="warranty.html">Warranty</a>
-    </nav>
+  <!-- Navbar -->
+  <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
+      <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      <nav class="hidden md:flex space-x-8">
+        <a href="index.html" class="hover:text-gold">Home</a>
+        <a href="pianos.html" class="text-gold">Pianos</a>
+        <a href="warranty.html" class="hover:text-gold">Warranty</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="max-w-6xl mx-auto p-6">
-    <h1 class="font-serif text-3xl font-bold mb-6">Available Pianos</h1>
-    <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-black dark:text-white"></div>
+  <main class="max-w-7xl mx-auto pt-28 px-6 pb-20">
+    <h1 class="font-serif text-4xl font-bold text-center mb-12">Available Pianos</h1>
+    <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10"></div>
   </main>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
 </body>
 </html>
