@@ -14,35 +14,55 @@
     <nav class="space-x-6">
       <a href="index.html" class="hover:underline">Home</a>
       <a href="pianos.html" class="hover:underline">Pianos</a>
-      <a href="#process" class="hover:underline">Process</a>
+      <a href="warranty.html" class="hover:underline">Warranty</a>
       <a href="#contact" class="hover:underline">Contact</a>
     </nav>
   </header>
 
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto py-16 px-6 text-center">
-    <h1 class="font-serif text-5xl font-bold">Concert-Ready Pianos for Homes, Studios, and Stages</h1>
-    <p class="mt-6 text-lg text-gray-700">Curated instruments from iconic makers — meticulously prepped, delivered free, and tuned at no charge.</p>
-    <div class="mt-6 flex justify-center gap-4">
-      <a href="pianos.html" class="px-6 py-3 bg-gold text-black font-semibold rounded-full">View Pianos</a>
-      <a href="#contact" class="px-6 py-3 border border-black rounded-full">Book a Private Viewing</a>
+  <section class="bg-neutral-100 dark:bg-neutral-900">
+    <div class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
+      <!-- Left text -->
+      <div>
+        <h1 class="font-serif text-5xl font-bold">Concert-Ready Pianos</h1>
+        <p class="mt-6 text-lg text-gray-700 dark:text-gray-300">
+          Curated instruments from iconic makers — meticulously prepped, delivered free, and tuned at no charge.
+        </p>
+        <div class="mt-8 flex gap-4">
+          <a href="pianos.html" 
+             class="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-full shadow hover:bg-yellow-600">
+             View Pianos
+          </a>
+          <a href="#contact" 
+             class="px-6 py-3 border border-black dark:border-white rounded-full hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">
+             Book a Private Viewing
+          </a>
+        </div>
+      </div>
+
+      <!-- Right image -->
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=1600&auto=format&fit=crop"
+             alt="Grand piano" 
+             class="rounded-2xl shadow-lg"/>
+      </div>
     </div>
   </section>
 
-  <!-- About -->
-  <section id="process" class="max-w-5xl mx-auto py-12 px-6">
+  <!-- Process -->
+  <section id="process" class="max-w-5xl mx-auto py-16 px-6">
     <h2 class="font-serif text-3xl font-bold mb-4">Our Process</h2>
     <p>Each piano is carefully inspected, voiced, regulated, and tuned before delivery. We include free delivery within 1,000 miles and one complimentary tuning.</p>
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="max-w-5xl mx-auto py-12 px-6">
+  <section id="contact" class="max-w-5xl mx-auto py-16 px-6">
     <h2 class="font-serif text-3xl font-bold mb-4">Contact Us</h2>
     <p>Email: info@worldclasspianos.com • Phone: (404) 491-1656</p>
   </section>
 
   <!-- Footer -->
-  <footer class="py-6 text-center border-t border-gray-200">
+  <footer class="py-6 text-center border-t border-gray-200 dark:border-gray-700">
     <p class="text-sm">&copy; 2025 World Class Piano Gallery</p>
   </footer>
 
