@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
@@ -22,46 +22,42 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    function formatMoney(num){
-      if(!num) return '';
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
-    }
-
     async function loadCatalog(){
-      const q = query(collection(db, "pianos"), where("showOnSite", "==", true));
-      const snapshot = await getDocs(q);
+      const snapshot = await getDocs(collection(db, "pianos"));
       let html = "";
       snapshot.forEach(doc => {
         const p = doc.data();
+        console.log(doc.id, p); // Debug log
         if(p.status && p.status.toLowerCase() === "sold") return;
-        let price = p.cost ? formatMoney(p.cost) : "Contact for Pricing";
+        let price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
         html += `
-          <a href="product.html?id=${doc.id}" class="block bg-white dark:bg-neutral-900 rounded-xl shadow p-4 hover:shadow-lg">
-            <img src="${p.image||'https://via.placeholder.com/400x300'}" alt="${p.make} ${p.model}" class="w-full h-48 object-cover rounded-md mb-3"/>
-            <h3 class="font-bold">${p.make} ${p.model}</h3>
-            <p class="text-sm text-gray-600">Year: ${p.year||''} • Length: ${p.length||''}</p>
+          <a href="product.html?id=${doc.id}" class="block bg-white text-black dark:bg-neutral-900 dark:text-white rounded-xl shadow p-4 hover:shadow-lg">
+            <img src="${p.image||'https://via.placeholder.com/400x300'}" class="w-full h-48 object-cover rounded-md mb-3"/>
+            <h3 class="font-bold">${p.make||''} ${p.model||''}</h3>
+            <p class="text-sm">Year: ${p.year||''} • Length: ${p.length||''} • Color: ${p.color||''}</p>
             <div class="font-semibold mt-2">${price}</div>
           </a>`;
       });
       document.getElementById("catalog").innerHTML = html || "<p>No pianos available right now.</p>";
     }
 
-    window.onload = loadCatalog;
+    loadCatalog();
   </script>
 </head>
-<body class="bg-neutral-50 dark:bg-ink text-ink dark:text-white">
+<body class="bg-neutral-50 text-black dark:bg-ink dark:text-white">
 
   <header class="p-4 bg-white dark:bg-ink shadow flex justify-between">
     <a href="index.html" class="font-serif font-bold">World Class Piano Gallery</a>
     <nav class="space-x-6">
       <a href="index.html">Home</a>
       <a href="pianos.html" class="font-bold">Pianos</a>
+      <a href="warranty.html">Warranty</a>
     </nav>
   </header>
 
   <main class="max-w-6xl mx-auto p-6">
     <h1 class="font-serif text-3xl font-bold mb-6">Available Pianos</h1>
-    <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-black dark:text-white"></div>
   </main>
 
 </body>
