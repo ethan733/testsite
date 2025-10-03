@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product – World Class Piano Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
+      authDomain: "pianoinv.firebaseapp.com",
+      projectId: "pianoinv",
+      storageBucket: "pianoinv.firebasestorage.app",
+      messagingSenderId: "651707888262",
+      appId: "1:651707888262:web:23131a782e31a7bb511707",
+      measurementId: "G-1XQLEV28JZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function formatMoney(num){
+      if(!num) return '';
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+    }
+
+    async function loadProduct(){
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      if(!id) return;
+
+      const ref = doc(db, "pianos", id);
+      const snap = await getDoc(ref);
+      if(!snap.exists()){
+        document.getElementById("product").innerHTML = "<p>Product not found.</p>";
+        return;
+      }
+      const p = snap.data();
+      let price = p.cost ? formatMoney(p.cost) : "Contact for Pricing";
+
+      document.getElementById("product").innerHTML = `
+        <div class="grid md:grid-cols-2 gap-8">
+          <div><img src="${p.image||'https://via.placeholder.com/600x400'}" alt="${p.make} ${p.model}" class="rounded-xl shadow"/></div>
+          <div>
+            <h1 class="font-serif text-3xl font-bold">${p.make} ${p.model}</h1>
+            <p class="text-sm text-gray-600">Year: ${p.year||''} • Length: ${p.length||''}</p>
+            <div class="text-2xl font-bold mt-3">${price}</div>
+            <p class="mt-6">${p.description || "Detailed description coming soon."}</p>
+            <div class="mt-6 flex gap-3">
+              <button class="px-5 py-3 bg-gold text-black font-semibold rounded-full">Buy Now</button>
+              <a href="index.html#contact" class="px-5 py-3 border border-black rounded-full">Request Info</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    window.onload = loadProduct;
+  </script>
+</head>
+<body class="bg-neutral-50 dark:bg-ink text-ink dark:text-white">
+  <header class="p-4 bg-white dark:bg-ink shadow flex justify-between">
+    <a href="index.html" class="font-serif font-bold">World Class Piano Gallery</a>
+    <nav class="space-x-6">
+      <a href="index.html">Home</a>
+      <a href="pianos.html" class="font-bold">Pianos</a>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-6" id="product"></main>
+</body>
+</html>
