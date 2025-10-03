@@ -118,6 +118,11 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    function formatMoney(num){
+      if(!num) return '';
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+    }
+
     async function loadInventory(){
       const q = query(collection(db, "pianos"), where("showOnSite", "==", true));
       const snapshot = await getDocs(q);
@@ -129,7 +134,7 @@
           <h3 class='font-semibold'>${p.make} ${p.model}</h3>
           <p class='text-sm'>Year: ${p.year} | Length: ${p.length}</p>
           <p class='text-sm'>${p.description||''}</p>
-          <div class='font-bold mt-2'>$${p.cost}</div>
+          <div class='font-bold mt-2'>${formatMoney(p.cost)}</div>
         </article>`;
       });
       document.getElementById('catalogGrid').innerHTML = html;
