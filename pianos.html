@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pianos – World Class Piano Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
+      authDomain: "pianoinv.firebaseapp.com",
+      projectId: "pianoinv",
+      storageBucket: "pianoinv.firebasestorage.app",
+      messagingSenderId: "651707888262",
+      appId: "1:651707888262:web:23131a782e31a7bb511707",
+      measurementId: "G-1XQLEV28JZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function formatMoney(num){
+      if(!num) return '';
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+    }
+
+    async function loadCatalog(){
+      const q = query(collection(db, "pianos"), where("showOnSite", "==", true));
+      const snapshot = await getDocs(q);
+      let html = "";
+      snapshot.forEach(doc => {
+        const p = doc.data();
+        if(p.status && p.status.toLowerCase() === "sold") return;
+        let price = p.cost ? formatMoney(p.cost) : "Contact for Pricing";
+        html += `
+          <a href="product.html?id=${doc.id}" class="block bg-white dark:bg-neutral-900 rounded-xl shadow p-4 hover:shadow-lg">
+            <img src="${p.image||'https://via.placeholder.com/400x300'}" alt="${p.make} ${p.model}" class="w-full h-48 object-cover rounded-md mb-3"/>
+            <h3 class="font-bold">${p.make} ${p.model}</h3>
+            <p class="text-sm text-gray-600">Year: ${p.year||''} • Length: ${p.length||''}</p>
+            <div class="font-semibold mt-2">${price}</div>
+          </a>`;
+      });
+      document.getElementById("catalog").innerHTML = html || "<p>No pianos available right now.</p>";
+    }
+
+    window.onload = loadCatalog;
+  </script>
+</head>
+<body class="bg-neutral-50 dark:bg-ink text-ink dark:text-white">
+
+  <header class="p-4 bg-white dark:bg-ink shadow flex justify-between">
+    <a href="index.html" class="font-serif font-bold">World Class Piano Gallery</a>
+    <nav class="space-x-6">
+      <a href="index.html">Home</a>
+      <a href="pianos.html" class="font-bold">Pianos</a>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-6">
+    <h1 class="font-serif text-3xl font-bold mb-6">Available Pianos</h1>
+    <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+</body>
+</html>
