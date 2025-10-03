@@ -25,9 +25,27 @@
   <!-- Navbar -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-      <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      <div class="flex items-center space-x-2">
+        <img src="playstore.png" alt="Logo" class="h-8 w-auto">
+        <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      </div>
+
+      <!-- Desktop Nav -->
       <nav class="hidden md:flex space-x-8">
         <a href="index.html" class="text-gold">Home</a>
+        <a href="pianos.html" class="hover:text-gold">Pianos</a>
+        <a href="warranty.html" class="hover:text-gold">Warranty</a>
+        <a href="#contact" class="hover:text-gold">Contact</a>
+      </nav>
+
+      <!-- Mobile Hamburger -->
+      <button id="menuBtn" class="md:hidden text-gold text-2xl focus:outline-none">☰</button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
+      <nav class="flex flex-col px-6 py-4 space-y-4">
+        <a href="index.html" class="hover:text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="warranty.html" class="hover:text-gold">Warranty</a>
         <a href="#contact" class="hover:text-gold">Contact</a>
@@ -51,28 +69,29 @@
     </div>
   </section>
 
-  <!-- Feature block -->
-  <section class="grid md:grid-cols-2 gap-12 max-w-7xl mx-auto px-6 py-20 items-center">
-    <div data-aos="fade-right">
-      <h2 class="font-serif text-4xl font-bold mb-4">Craftsmanship & Heritage</h2>
-      <p class="text-gray-300 leading-relaxed">Each piano is meticulously voiced, regulated, and tuned — continuing a legacy of excellence passed down by the world’s most renowned makers.</p>
-    </div>
-    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a9?q=80&w=1920&auto=format&fit=crop"
-         class="rounded-xl shadow-lg" data-aos="fade-left" />
-  </section>
-
-  <!-- Catalog preview -->
+  <!-- Featured Showcase -->
   <section class="bg-black py-20">
     <div class="max-w-7xl mx-auto px-6 text-center">
       <h2 class="font-serif text-4xl font-bold mb-12" data-aos="fade-up">Our Collection</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay="200">
-        <div class="bg-ink border border-gold/20 rounded-xl p-6">Preview Piano 1</div>
-        <div class="bg-ink border border-gold/20 rounded-xl p-6">Preview Piano 2</div>
-        <div class="bg-ink border border-gold/20 rounded-xl p-6">Preview Piano 3</div>
+      <div id="featuredPianos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="featured1" class="bg-ink border border-gold/20 rounded-xl p-6">Loading...</div>
+        <div id="featured2" class="bg-ink border border-gold/20 rounded-xl p-6">Loading...</div>
+        <div id="featured3" class="bg-ink border border-gold/20 rounded-xl p-6">Loading...</div>
       </div>
-      <a href="pianos.html" class="mt-10 inline-block px-8 py-3 bg-gold text-black rounded-full font-semibold hover:opacity-90">View All Pianos</a>
+      <button id="editShowcaseBtn" class="mt-10 px-6 py-2 border border-gold text-gold rounded hover:bg-gold hover:text-black">
+        Edit Showcase
+      </button>
     </div>
   </section>
+
+  <!-- Modal -->
+  <div id="showcaseModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+    <div class="bg-ink border border-gold/20 rounded-xl p-6 w-full max-w-2xl">
+      <h3 class="font-serif text-2xl mb-4">Select Piano for Showcase</h3>
+      <div id="pianoList" class="grid sm:grid-cols-2 gap-4 max-h-96 overflow-y-auto"></div>
+      <button id="closeModal" class="mt-4 px-6 py-2 bg-gold text-black rounded">Close</button>
+    </div>
+  </div>
 
   <!-- Contact -->
   <section id="contact" class="py-20 bg-ink">
@@ -85,6 +104,88 @@
   <footer class="py-8 text-center border-t border-gold/20 bg-ink">
     <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
   </footer>
+
+  <!-- Firebase Showcase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
+      authDomain: "pianoinv.firebaseapp.com",
+      projectId: "pianoinv",
+      storageBucket: "pianoinv.firebasestorage.app",
+      messagingSenderId: "651707888262",
+      appId: "1:651707888262:web:23131a782e31a7bb511707",
+      measurementId: "G-1XQLEV28JZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Load showcase slots
+    async function loadShowcase() {
+      for (let i = 1; i <= 3; i++) {
+        const snap = await getDoc(doc(db, "showcase", `slot${i}`));
+        if (snap.exists()) {
+          const pianoId = snap.data().pianoId;
+          const pianoSnap = await getDoc(doc(db, "pianos", pianoId));
+          if (pianoSnap.exists()) {
+            const p = pianoSnap.data();
+            document.getElementById(`featured${i}`).innerHTML = `
+              <a href="product.html?id=${pianoId}">
+                <img src="${p.image||'https://via.placeholder.com/400x300'}" class="rounded mb-4"/>
+                <h3 class="font-serif text-xl font-bold">${p.make||''} ${p.model||''}</h3>
+                <p class="text-gray-300">${p.year||''} • ${p.length||''} • ${p.color||''}</p>
+              </a>`;
+          }
+        } else {
+          document.getElementById(`featured${i}`).innerHTML = `<p class="text-gray-400">Empty Slot</p>`;
+        }
+      }
+    }
+
+    // Modal logic
+    document.getElementById("editShowcaseBtn").onclick = async () => {
+      document.getElementById("showcaseModal").classList.remove("hidden");
+      const list = document.getElementById("pianoList");
+      list.innerHTML = "Loading...";
+      const snapshot = await getDocs(collection(db, "pianos"));
+      let html = "";
+      snapshot.forEach(docSnap => {
+        const p = docSnap.data();
+        html += `
+          <div class="bg-ink border border-gold/20 rounded p-3 cursor-pointer hover:bg-gold/10"
+               onclick="selectPiano('${docSnap.id}')">
+            <h4 class="font-serif font-bold">${p.make||''} ${p.model||''}</h4>
+            <p class="text-gray-400 text-sm">${p.year||''} • ${p.color||''}</p>
+          </div>`;
+      });
+      list.innerHTML = html;
+    };
+
+    document.getElementById("closeModal").onclick = () => {
+      document.getElementById("showcaseModal").classList.add("hidden");
+    };
+
+    // Select piano for showcase slot
+    window.selectPiano = async (pianoId) => {
+      const slot = prompt("Which showcase slot (1, 2, or 3)?");
+      if (slot && [1,2,3].includes(parseInt(slot))) {
+        await setDoc(doc(db, "showcase", `slot${slot}`), { pianoId });
+        alert("Showcase updated!");
+        loadShowcase();
+        document.getElementById("showcaseModal").classList.add("hidden");
+      }
+    };
+
+    loadShowcase();
+
+    // Mobile nav toggle
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    });
+  </script>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
