@@ -12,22 +12,26 @@
         extend: {
           colors: { gold: '#C5A253', ink: '#0a0a0a' },
           fontFamily: {
-            serif: ['Playfair Display', 'ui-serif', 'Georgia', 'serif'],
-            sans: ['Montserrat', 'ui-sans-serif', 'system-ui'],
+            serif: ['Playfair Display','ui-serif','Georgia','serif'],
+            sans: ['Montserrat','ui-sans-serif','system-ui'],
           },
         },
       },
     };
   </script>
   <style>
-    .fade-in-up {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 1.2s ease forwards;
+    .fade-in-up{opacity:0;transform:translateY(30px);animation:fadeUp 1s ease forwards;}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+    .carousel-container{position:relative;overflow:hidden;border-radius:0.75rem;}
+    .carousel-slide{display:none;width:100%;height:500px;object-fit:cover;}
+    .carousel-slide.active{display:block;}
+    .carousel-btn{
+      position:absolute;top:50%;transform:translateY(-50%);
+      background:rgba(0,0,0,.5);color:#fff;border:none;
+      width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;
     }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .carousel-btn:hover{background:rgba(197,162,83,.85);}
+    .carousel-btn.prev{left:12px;} .carousel-btn.next{right:12px;}
   </style>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -43,53 +47,81 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const db  = getFirestore(app);
+    const fixUrl = (u) => u?.includes("firebasestorage.app") ? u.replace("firebasestorage.app","appspot.com") : u;
+    const priceStr = (v) => (typeof v === "number" && !isNaN(v)) ? `$${v.toLocaleString()}` : "Contact for Pricing";
 
-    async function loadProduct() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
-      if (!id) return;
+    async function loadProduct(){
+      const id = new URLSearchParams(window.location.search).get("id");
+      if(!id) return;
 
-      const snap = await getDoc(doc(db, "pianos", id));
-      if (!snap.exists()) {
+      const snap = await getDoc(doc(db,"pianos",id));
+      if(!snap.exists()){
         document.getElementById("product").innerHTML = "<p class='text-gray-400'>Piano not found.</p>";
         return;
       }
-
       const p = snap.data();
-      let imageUrl = p.photoURL || "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
-      if (imageUrl.includes("firebasestorage.app")) imageUrl = imageUrl.replace("firebasestorage.app", "appspot.com");
-      const price = p.listingPrice ? `$${p.listingPrice.toLocaleString()}` : "Contact for Pricing";
+
+      let photos=[];
+      if (Array.isArray(p.photos) && p.photos.length) photos = p.photos;
+      else if (p.photoURL) photos=[p.photoURL];
+      if (!photos.length) photos=["https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"];
+      photos = photos.map(u => fixUrl(u) || "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg");
+
+      const slides = photos.map((u,i)=>`<img src="${u}" class="carousel-slide ${i===0?'active':''}" alt="${p.brand||''} ${p.model||''}">`).join("");
 
       document.getElementById("product").innerHTML = `
         <div class="grid lg:grid-cols-2 gap-12 items-center fade-in-up">
-          <img src="${imageUrl}" alt="${p.brand||''} ${p.model||''}" class="w-full rounded shadow-lg" />
+          <div class="carousel-container">
+            ${slides}
+            ${photos.length>1?`<button class="carousel-btn prev" aria-label="Previous">&#10094;</button>
+            <button class="carousel-btn next" aria-label="Next">&#10095;</button>`:""}
+          </div>
           <div>
             <h1 class="font-serif text-4xl font-bold mb-4 text-gold">${p.brand||''} ${p.model||''}</h1>
-            <p class="text-gray-300 mb-3">Year: ${p.year||'—'}</p>
-            <p class="text-gray-300 mb-3">Length: ${p.length||'—'}</p>
-            <p class="text-gray-300 mb-3">Color: ${p.color||'—'}</p>
-            <div class="text-2xl font-semibold text-gold mb-6">${price}</div>
+            <p class="text-gray-300 mb-2">Year: ${p.year||'—'}</p>
+            <p class="text-gray-300 mb-2">Length: ${p.length||'—'}</p>
+            <p class="text-gray-300 mb-4">Color: ${p.color||'—'}</p>
+            <div class="text-2xl font-semibold text-gold mb-6">${priceStr(p.listingPrice)}</div>
             <a href="contact.html" class="px-6 py-3 bg-gold text-black font-semibold rounded-full hover:bg-gold/90 transition">Buy Now</a>
           </div>
         </div>`;
+
+      // Wire big carousel
+      const slidesEls = document.querySelectorAll(".carousel-slide");
+      if (slidesEls.length>1){
+        let idx=0;
+        const show=(n)=>{ slidesEls[idx].classList.remove("active"); idx=(n+slidesEls.length)%slidesEls.length; slidesEls[idx].classList.add("active"); };
+        document.querySelector(".prev")?.addEventListener("click",()=>show(idx-1));
+        document.querySelector(".next")?.addEventListener("click",()=>show(idx+1));
+      }
     }
 
-    window.onload = loadProduct;
+    window.addEventListener("load", loadProduct);
   </script>
 </head>
-
 <body class="bg-ink text-white font-sans">
+  <!-- NAV -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
       <div class="flex items-center space-x-2">
-        <img src="playstore.png" alt="Logo" class="h-8 w-auto">
+        <img src="playstore.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" class="h-8 w-auto" alt="Logo">
         <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
       </div>
       <nav class="hidden md:flex space-x-8">
         <a href="index.html" class="hover:text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="contact.html" class="hover:text-gold">Contact</a>
+        <a href="warranty.html" class="hover:text-gold">Warranty</a>
+      </nav>
+      <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
+      <nav class="flex flex-col px-6 py-4 space-y-4">
+        <a href="index.html" class="hover:text-gold">Home</a>
+        <a href="pianos.html" class="hover:text-gold">Pianos</a>
+        <a href="contact.html" class="hover:text-gold">Contact</a>
+        <a href="warranty.html" class="hover:text-gold">Warranty</a>
       </nav>
     </div>
   </header>
@@ -99,5 +131,11 @@
   <footer class="py-8 text-center border-t border-gold/20 bg-ink">
     <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
   </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+    document.getElementById("menuBtn")?.addEventListener("click",()=>document.getElementById("mobileMenu")?.classList.toggle("hidden"));
+  </script>
 </body>
 </html>
