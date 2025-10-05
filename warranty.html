@@ -1,128 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>3-Year Warranty – World Class Piano Gallery</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { gold: '#C5A253', ink: '#0a0a0a' },
-          fontFamily: {
-            serif: ["Playfair Display", "ui-serif", "Georgia", "serif"],
-            sans: ["Montserrat", "ui-sans-serif", "system-ui"],
-          }
-        }
-      }
-    }
-  </script>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Warranty – World Class Piano Gallery</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-ink text-white font-sans">
+<header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
+<div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
+<div class="flex items-center space-x-2">
+<img src="playstore.png" class="h-8 w-auto"><a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+</div>
+<nav class="hidden md:flex space-x-8">
+<a href="index.html" class="hover:text-gold">Home</a><a href="pianos.html" class="hover:text-gold">Pianos</a><a href="contact.html" class="hover:text-gold">Contact</a><a href="warranty.html" class="text-gold">Warranty</a>
+</nav>
+</div>
+</header>
 
-  <!-- Navbar -->
-  <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
-    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-      <div class="flex items-center space-x-2">
-        <img src="playstore.png" alt="Logo" class="h-8 w-auto">
-        <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
-      </div>
-      <nav class="hidden md:flex space-x-8">
-        <a href="index.html" class="hover:text-gold">Home</a>
-        <a href="pianos.html" class="hover:text-gold">Pianos</a>
-        <a href="warranty.html" class="text-gold">Warranty</a>
-      </nav>
-      <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
-      <nav class="flex flex-col px-6 py-4 space-y-4">
-        <a href="index.html" class="hover:text-gold">Home</a>
-        <a href="pianos.html" class="hover:text-gold">Pianos</a>
-        <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Warranty Content -->
-  <main class="max-w-5xl mx-auto pt-28 px-6 pb-20 leading-relaxed text-gray-200">
-    <h1 class="font-serif text-5xl font-bold text-center mb-10 text-gold" data-aos="fade-up">
-      Three-Year Common Sense Warranty
-    </h1>
-
-    <p class="mb-6" data-aos="fade-up" data-aos-delay="100">
-      <span class="font-semibold text-gold">World Class Piano Gallery, LLC</span> (“Seller”) warrants that the piano purchased (“Instrument”) 
-      is free from defects in materials and workmanship that would affect its normal use and performance for a period of 
-      <span class="text-gold font-semibold">three (3) years</span> from the date of delivery.
-    </p>
-
-    <h2 class="font-serif text-3xl text-gold mt-10 mb-4" data-aos="fade-up">Coverage</h2>
-    <ul class="list-disc list-inside space-y-2" data-aos="fade-up">
-      <li>Structural integrity of the piano, including the frame, soundboard, bridges, and keybed.</li>
-      <li>Action parts, keys, and pedal mechanisms under normal use.</li>
-      <li>Any defect in workmanship or materials that prevents the piano from functioning as intended.</li>
-      <li>Labor and parts necessary to correct covered defects.</li>
-    </ul>
-
-    <h2 class="font-serif text-3xl text-gold mt-10 mb-4" data-aos="fade-up">What This Warranty Does Not Cover</h2>
-    <ul class="list-disc list-inside space-y-2" data-aos="fade-up">
-      <li>Normal tuning, regulation, and voicing adjustments (routine maintenance).</li>
-      <li>Normal wear and tear of strings, hammers, dampers, and finish.</li>
-      <li>Damage from improper use, neglect, accidents, or extreme conditions (humidity, dryness, heat, cold, or water).</li>
-      <li>Work performed by technicians not authorized by World Class Piano Gallery.</li>
-    </ul>
-
-    <h2 class="font-serif text-3xl text-gold mt-10 mb-4" data-aos="fade-up">Buyer’s Responsibility</h2>
-    <ul class="list-disc list-inside space-y-2" data-aos="fade-up">
-      <li>Maintain the piano in a climate-controlled environment (40–60% humidity, 65–75°F).</li>
-      <li>Have the piano tuned and serviced regularly by a qualified technician.</li>
-      <li>Promptly notify World Class Piano Gallery of any warranty issues.</li>
-    </ul>
-
-    <h2 class="font-serif text-3xl text-gold mt-10 mb-4" data-aos="fade-up">How Service Works</h2>
-    <p class="mb-4" data-aos="fade-up">
-      If a defect covered by this warranty arises, World Class Piano Gallery will, at its discretion:
-    </p>
-    <ol class="list-decimal list-inside space-y-2" data-aos="fade-up">
-      <li>Repair the piano at no charge, or</li>
-      <li>Replace defective parts, or</li>
-      <li>If repair is not practical, provide a reasonable alternative solution.</li>
-    </ol>
-    <p class="mt-4" data-aos="fade-up">All warranty service will be performed by or arranged through World Class Piano Gallery.</p>
-
-    <h2 class="font-serif text-3xl text-gold mt-10 mb-4" data-aos="fade-up">Limitations</h2>
-    <p class="mb-4" data-aos="fade-up">
-      This warranty is non-transferable and applies only to the original purchaser.  
-      It represents the full extent of coverage; no other express or implied warranties 
-      (including merchantability or fitness for purpose) apply beyond the terms stated herein.
-    </p>
-
-    <h2 class="font-serif text-3xl text-gold mt-10 mb-4" data-aos="fade-up">Peace of Mind</h2>
-    <p data-aos="fade-up">
-      This is a <span class="text-gold font-semibold">“common sense” warranty</span>:  
-      if something goes wrong with your piano that should not reasonably happen under normal use and care,  
-      we will make it right within the three-year period.
-    </p>
-
-    <div class="mt-12 border-t border-gold/30 pt-8 text-center" data-aos="fade-up">
-      <p class="text-gray-400">World Class Piano Gallery, LLC</p>
-      <p class="text-gray-400 mt-2">Date: ____________________</p>
-      <p class="text-gray-400">Buyer: ____________________</p>
-      <p class="text-gray-400">Signature: ____________________</p>
-    </div>
-  </main>
-
-  <footer class="py-8 text-center border-t border-gold/20 bg-ink">
-    <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
-  </footer>
-
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
-  <script>
-    document.getElementById("menuBtn").addEventListener("click", () => {
-      document.getElementById("mobileMenu").classList.toggle("hidden");
-    });
-  </script>
+<main class="max-w-5xl mx-auto pt-28 px-6 pb-20 text-center">
+<h1 class="font-serif text-4xl font-bold text-gold mb-6">Warranty Information</h1>
+<p class="text-gray-300 text-lg leading-relaxed">
+Our 10-Year Warranty details are being prepared and will appear here soon.  
+Please check back for full coverage information or <a href="contact.html" class="text-gold hover:underline">contact us</a> for immediate assistance.
+</p>
+</main>
+<footer class="py-8 text-center border-t border-gold/20 bg-ink"><p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p></footer>
 </body>
 </html>
