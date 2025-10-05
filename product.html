@@ -75,7 +75,7 @@
 
       const p = snap.data();
 
-      // ✅ use photoURL field first
+      // ✅ Use photoURL or fallback
       let imageUrl =
         p.photoURL ||
         p.toURL ||
@@ -87,7 +87,12 @@
         p.filename ||
         "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
 
-      console.log("Loaded product image:", imageUrl);
+      // ✅ Fix .firebasestorage.app → .appspot.com for public access
+      if (imageUrl.includes("firebasestorage.app")) {
+        imageUrl = imageUrl.replace("firebasestorage.app", "appspot.com");
+      }
+
+      console.log("Loaded product image (corrected):", imageUrl);
 
       const price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
@@ -119,10 +124,14 @@
     Loading Piano Details...
   </div>
 
+  <!-- NAVBAR -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
       <div class="flex items-center space-x-2">
-        <img src="images/playstore.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" alt="Logo" class="h-8 w-auto">
+        <!-- ✅ Updated path so logo doesn’t 404 -->
+        <img src="playstore.png"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'"
+             alt="Logo" class="h-8 w-auto" />
         <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
       </div>
       <nav class="hidden md:flex space-x-8">
@@ -130,18 +139,26 @@
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="warranty.html" class="hover:text-gold">Warranty</a>
       </nav>
+      <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
     </div>
   </header>
 
+  <!-- PRODUCT CONTENT -->
   <main class="max-w-7xl mx-auto pt-28 px-6 pb-20" id="product">
     <p class="text-gray-400">Loading...</p>
   </main>
 
+  <!-- FOOTER -->
   <footer class="py-8 text-center border-t border-gold/20 bg-ink">
     <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
+  <script>
+    AOS.init();
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      document.getElementById("mobileMenu")?.classList.toggle("hidden");
+    });
+  </script>
 </body>
 </html>
