@@ -50,7 +50,7 @@
 
       const p = snap.data();
 
-      // ✅ Use toURL if available
+      // ✅ Use toURL or fallback
       let imageUrl =
         p.toURL ||
         p.image ||
@@ -59,7 +59,9 @@
         p.picture ||
         p.fileName ||
         p.filename ||
-        "https://via.placeholder.com/800x600";
+        "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+
+      console.log("Loaded product image:", imageUrl);
 
       const price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
@@ -87,7 +89,7 @@
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
       <div class="flex items-center space-x-2">
-        <img src="playstore.png" alt="Logo" class="h-8 w-auto">
+        <img src="images/playstore.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" alt="Logo" class="h-8 w-auto">
         <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
       </div>
       <nav class="hidden md:flex space-x-8">
