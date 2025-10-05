@@ -110,14 +110,17 @@
 
       document.getElementById("catalog").innerHTML = html;
 
-      // ✅ Post-render image fix
-      document.querySelectorAll("#catalog img").forEach((img) => {
-        if (img.src.includes("firebasestorage.app")) {
-          img.src = img.src.replace("firebasestorage.app", "appspot.com");
-        }
-      });
+      // ✅ Guaranteed post-load image fix
+      setTimeout(() => {
+        document.querySelectorAll("#catalog img").forEach((img) => {
+          if (img.src.includes("firebasestorage.app")) {
+            const fixed = img.src.replace("firebasestorage.app", "appspot.com");
+            img.setAttribute("src", fixed);
+          }
+        });
+      }, 1000);
 
-      // Fade-in once loaded
+      // Fade-in animation
       document.querySelectorAll(".fade-in").forEach((el) => {
         requestAnimationFrame(() => el.classList.add("loaded"));
       });
