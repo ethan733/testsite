@@ -36,7 +36,6 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const bucket = "https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/piano_photos%2F";
 
     async function loadCatalog() {
       try {
@@ -46,7 +45,17 @@
           const p = docSnap.data();
           if (p.status && p.status.toLowerCase() === "sold") return;
 
-          let imageUrl = p.image || (p.filename ? `${bucket}${encodeURIComponent(p.filename)}?alt=media` : "https://via.placeholder.com/600x400");
+          // ✅ Use toURL field if available
+          let imageUrl =
+            p.toURL ||
+            p.image ||
+            p.img ||
+            p.photo ||
+            p.picture ||
+            p.fileName ||
+            p.filename ||
+            "https://via.placeholder.com/600x400";
+
           const price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
           html += `
