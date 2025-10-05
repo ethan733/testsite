@@ -1,124 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pianos – World Class Piano Gallery</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: { gold: '#C5A253', ink: '#0a0a0a' },
-      fontFamily: {
-        serif: ['Playfair Display','ui-serif','Georgia','serif'],
-        sans: ['Montserrat','ui-sans-serif','system-ui'],
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pianos – World Class Piano Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { gold: '#C5A253', ink: '#0a0a0a' },
+          fontFamily: {
+            serif: ['Playfair Display', 'ui-serif', 'Georgia', 'serif'],
+            sans: ['Montserrat', 'ui-sans-serif', 'system-ui'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background-color: #0a0a0a; color: white; font-family: 'Montserrat', sans-serif; }
+    .fade-in { opacity: 0; transition: opacity 1.4s ease-in-out; }
+    .fade-in.loaded { opacity: 1; }
+    .card-carousel img { display: none; width: 100%; height: 16rem; object-fit: cover; }
+    .card-carousel img.active { display: block; }
+    .card-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,.4); color: white; border: none;
+      width: 36px; height: 36px; border-radius: 9999px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer; transition: background 0.3s;
     }
-  }
-};
-</script>
-<style>
-.fade-in{opacity:0;animation:fade 1s ease forwards;}
-@keyframes fade{to{opacity:1;}}
-.card-carousel img{display:none;}
-.card-carousel img.active{display:block;}
-.card-btn{
-  position:absolute;top:50%;transform:translateY(-50%);
-  background:rgba(0,0,0,.4);color:#fff;border:none;
-  width:38px;height:38px;border-radius:999px;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .3s;
-}
-.card-btn:hover{background:rgba(197,162,83,.85);}
-.card-btn.prev{left:8px;} .card-btn.next{right:8px;}
-</style>
+    .card-btn:hover { background: rgba(197,162,83,.85); }
+    .card-btn.prev { left: 8px; } .card-btn.next { right: 8px; }
+  </style>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey:"AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
-  authDomain:"pianoinv.firebaseapp.com",
-  projectId:"pianoinv",
-  storageBucket:"pianoinv.appspot.com"
-};
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
+      authDomain: "pianoinv.firebaseapp.com",
+      projectId: "pianoinv",
+      storageBucket: "pianoinv.appspot.com"
+    };
 
-const fixUrl = u => !u ? "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
-  : u.includes("firebasestorage.app") ? u.replace("firebasestorage.app","appspot.com") : u;
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-const priceStr = v => (typeof v==="number"&&!isNaN(v))?`$${v.toLocaleString()}`:"Contact for Pricing";
+    const fixUrl = (url) => {
+      if (!url) return "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+      return url.includes("firebasestorage.app")
+        ? url.replace("firebasestorage.app", "appspot.com")
+        : url;
+    };
 
-async function loadCatalog(){
-  const snap = await getDocs(collection(db,"pianos"));
-  const list=[];
-  snap.forEach(d=>{const p=d.data();if(p.status&&p.status.toLowerCase()==="sold")return;list.push({id:d.id,...p});});
-  const grid=document.getElementById("catalog");
-  if(!list.length){grid.innerHTML="<p class='text-gray-400'>No pianos available.</p>";return;}
-  grid.innerHTML=list.map((p,i)=>{
-    let photos=[];
-    if(Array.isArray(p.photos)&&p.photos.length)photos=p.photos;
-    else if(p.photoURL)photos=[p.photoURL];
-    if(!photos.length)photos=["https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"];
-    photos=photos.map(fixUrl);
-    const showArrows=photos.length>1;
-    return `
-    <div class="bg-ink border border-gold/20 rounded-xl overflow-hidden shadow hover:shadow-gold/30 transition transform hover:scale-[1.02] fade-in">
-      <a href="product.html?id=${p.id}">
-        <div class="relative card-carousel h-64 overflow-hidden">
-          ${photos.map((u,j)=>`<img src="${u}" class="w-full h-64 object-cover ${j===0?'active':''} transition-opacity duration-[1500ms]">`).join("")}
-          ${showArrows?`<button class="card-btn prev">&#10094;</button><button class="card-btn next">&#10095;</button>`:""}
-        </div>
-      </a>
-      <div class="p-5">
-        <h3 class="font-serif text-2xl font-bold text-gold mb-1">${p.brand||''}</h3>
-        <p class="text-gray-300 mb-2">${p.model||''} • ${p.year||''} • ${p.color||''} • ${p.length||''}</p>
-        <p class="text-lg font-semibold text-gold mb-4">${priceStr(p.listingPrice)}</p>
-        <div class="flex gap-3">
-          <a href="product.html?id=${p.id}" class="px-4 py-2 bg-gold text-black rounded-full font-semibold hover:bg-gold/90 transition">View</a>
-          <a href="contact.html" class="px-4 py-2 border border-gold text-gold rounded-full font-semibold hover:bg-gold hover:text-black transition">Buy Now</a>
-        </div>
-      </div>
-    </div>`;}).join("");
+    const formatPrice = (val) =>
+      typeof val === "number" && !isNaN(val) ? `$${val.toLocaleString()}` : "Contact for Pricing";
 
-  // wire carousels
-  document.querySelectorAll(".card-carousel").forEach(c=>{
-    const imgs=c.querySelectorAll("img");if(imgs.length<2)return;let idx=0;
-    const show=n=>{imgs[idx].classList.remove("active");idx=(n+imgs.length)%imgs.length;imgs[idx].classList.add("active");};
-    c.querySelector(".prev")?.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();show(idx-1);});
-    c.querySelector(".next")?.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();show(idx+1);});
-  });
-}
-window.addEventListener("load",loadCatalog);
-</script>
+    async function loadPianos() {
+      const snapshot = await getDocs(collection(db, "pianos"));
+      let html = "";
+
+      snapshot.forEach((doc) => {
+        const p = doc.data();
+        if (p.status && p.status.toLowerCase() === "sold") return;
+
+        let photos = [];
+        if (Array.isArray(p.photos) && p.photos.length) photos = p.photos;
+        else if (p.photoURL) photos = [p.photoURL];
+        photos = photos.map((u) => fixUrl(u));
+        if (!photos.length)
+          photos = ["https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"];
+
+        const price = formatPrice(p.listingPrice);
+        const showArrows = photos.length > 1;
+
+        html += `
+          <div class="bg-ink border border-gold/20 rounded-xl overflow-hidden shadow hover:shadow-gold/30 transition transform hover:scale-[1.02] fade-in" data-aos="fade-up">
+            <a href="/testsite/product.html?id=${doc.id}">
+              <div class="relative card-carousel h-64 overflow-hidden">
+                ${photos
+                  .map(
+                    (u, i) =>
+                      `<img src="${u}" alt="${p.brand || ""} ${p.model || ""}" class="${i === 0 ? "active" : ""}" loading="lazy">`
+                  )
+                  .join("")}
+                ${
+                  showArrows
+                    ? `<button class="card-btn prev" aria-label="Previous">&#10094;</button>
+                       <button class="card-btn next" aria-label="Next">&#10095;</button>`
+                    : ""
+                }
+              </div>
+            </a>
+            <div class="p-5">
+              <h3 class="font-serif text-2xl font-bold text-gold mb-1">${p.brand || ""}</h3>
+              <p class="text-gray-300 mb-2">${p.model || ""} • ${p.year || ""} • ${p.color || ""} • ${
+          p.length || ""
+        }</p>
+              <p class="text-lg font-semibold text-gold mb-4">${price}</p>
+              <div class="flex gap-3">
+                <a href="/testsite/product.html?id=${doc.id}" class="px-4 py-2 bg-gold text-black rounded-full font-semibold hover:bg-gold/90 transition">View</a>
+                <a href="/testsite/contact.html" class="px-4 py-2 border border-gold text-gold rounded-full font-semibold hover:bg-gold hover:text-black transition">Buy Now</a>
+              </div>
+            </div>
+          </div>`;
+      });
+
+      document.getElementById("catalog").innerHTML = html;
+
+      // Fade-in once loaded
+      document.querySelectorAll(".fade-in").forEach((el) => {
+        requestAnimationFrame(() => el.classList.add("loaded"));
+      });
+
+      // Mini carousel behavior
+      document.querySelectorAll(".card-carousel").forEach((carousel) => {
+        const imgs = carousel.querySelectorAll("img");
+        if (imgs.length < 2) return;
+        let idx = 0;
+        const show = (n) => {
+          imgs[idx].classList.remove("active");
+          idx = (n + imgs.length) % imgs.length;
+          imgs[idx].classList.add("active");
+        };
+        carousel.querySelector(".prev")?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          show(idx - 1);
+        });
+        carousel.querySelector(".next")?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          show(idx + 1);
+        });
+      });
+    }
+
+    window.onload = loadPianos;
+  </script>
 </head>
-<body class="bg-ink text-white font-sans">
-<header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
-  <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-    <div class="flex items-center space-x-2">
-      <img src="playstore.png" class="h-8 w-auto" alt="Logo">
-      <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+
+<body>
+  <!-- Header -->
+  <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
+      <div class="flex items-center space-x-2">
+        <img src="/testsite/playstore.png" alt="Logo" class="h-8 w-auto" />
+        <a href="/testsite/index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        <a href="/testsite/index.html" class="hover:text-gold">Home</a>
+        <a href="/testsite/pianos.html" class="text-gold">Pianos</a>
+        <a href="/testsite/contact.html" class="hover:text-gold">Contact</a>
+        <a href="/testsite/warranty.html" class="hover:text-gold">Warranty</a>
+      </nav>
     </div>
-    <nav class="hidden md:flex space-x-8">
-      <a href="index.html" class="hover:text-gold">Home</a>
-      <a href="pianos.html" class="text-gold">Pianos</a>
-      <a href="contact.html" class="hover:text-gold">Contact</a>
-      <a href="warranty.html" class="hover:text-gold">Warranty</a>
-    </nav>
-  </div>
-</header>
+  </header>
 
-<main class="max-w-7xl mx-auto pt-28 px-6 pb-20">
-  <h1 class="font-serif text-4xl font-bold text-center mb-12">Available Pianos</h1>
-  <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10"></div>
-</main>
+  <!-- Main -->
+  <main class="max-w-7xl mx-auto pt-28 px-6 pb-20">
+    <h1 class="font-serif text-4xl font-bold text-center mb-12">Available Pianos</h1>
+    <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+  </main>
 
-<footer class="py-8 text-center border-t border-gold/20 bg-ink">
-  <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
-</footer>
+  <!-- Footer -->
+  <footer class="py-8 text-center border-t border-gold/20 bg-ink">
+    <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
 </body>
 </html>
