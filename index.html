@@ -29,14 +29,11 @@
         <img src="playstore.png" alt="Logo" class="h-8 w-auto">
         <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
       </div>
-
       <nav class="hidden md:flex space-x-8">
         <a href="index.html" class="text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="warranty.html" class="hover:text-gold">Warranty</a>
-        <a href="#contact" class="hover:text-gold">Contact</a>
       </nav>
-
       <button id="menuBtn" class="md:hidden text-gold text-2xl focus:outline-none">☰</button>
     </div>
     <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
@@ -44,7 +41,6 @@
         <a href="index.html" class="hover:text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="warranty.html" class="hover:text-gold">Warranty</a>
-        <a href="#contact" class="hover:text-gold">Contact</a>
       </nav>
     </div>
   </header>
@@ -65,7 +61,7 @@
     </div>
   </section>
 
-  <!-- Featured Showcase -->
+  <!-- Showcase -->
   <section class="bg-black py-20">
     <div class="max-w-7xl mx-auto px-6 text-center">
       <h2 class="font-serif text-4xl font-bold mb-12" data-aos="fade-up">Our Collection</h2>
@@ -80,7 +76,7 @@
     </div>
   </section>
 
-  <!-- Modal -->
+  <!-- Showcase Modal -->
   <div id="showcaseModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
     <div class="bg-ink border border-gold/20 rounded-xl p-6 w-full max-w-2xl">
       <h3 class="font-serif text-2xl mb-4">Select Piano for Showcase</h3>
@@ -101,12 +97,11 @@
     <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
   </footer>
 
-  <!-- Firebase Showcase Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    const firebaseConfig = {
+    const app = initializeApp({
       apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
       authDomain: "pianoinv.firebaseapp.com",
       projectId: "pianoinv",
@@ -114,34 +109,28 @@
       messagingSenderId: "651707888262",
       appId: "1:651707888262:web:23131a782e31a7bb511707",
       measurementId: "G-1XQLEV28JZ"
-    };
-
-    const app = initializeApp(firebaseConfig);
+    });
     const db = getFirestore(app);
+
+    const bucket = "https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F";
 
     async function loadShowcase() {
       for (let i = 1; i <= 3; i++) {
         const snap = await getDoc(doc(db, "showcase", `slot${i}`));
-        if (snap.exists()) {
-          const pianoId = snap.data().pianoId;
-          const pianoSnap = await getDoc(doc(db, "pianos", pianoId));
-          if (pianoSnap.exists()) {
-            const p = pianoSnap.data();
-            let imageUrl = p.image || p.photoUrl || p.img || p.url;
-            if (!imageUrl && p.filename) {
-              imageUrl = `https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F${encodeURIComponent(p.filename)}?alt=media`;
-            }
-            if (!imageUrl) imageUrl = "https://via.placeholder.com/600x400";
-            document.getElementById(`featured${i}`).innerHTML = `
-              <a href="product.html?id=${pianoId}">
-                <img src="${imageUrl}" class="rounded mb-4"/>
-                <h3 class="font-serif text-xl font-bold">${p.make||''} ${p.model||''}</h3>
-                <p class="text-gray-300">${p.year||''} • ${p.length||''} • ${p.color||''}</p>
-              </a>`;
-          }
-        } else {
-          document.getElementById(`featured${i}`).innerHTML = `<p class="text-gray-400">Empty Slot</p>`;
-        }
+        if (!snap.exists()) continue;
+        const pianoId = snap.data().pianoId;
+        const pianoSnap = await getDoc(doc(db, "pianos", pianoId));
+        if (!pianoSnap.exists()) continue;
+        const p = pianoSnap.data();
+
+        let imageUrl = p.image || (p.filename ? `${bucket}${encodeURIComponent(p.filename)}?alt=media` : "https://via.placeholder.com/600x400");
+
+        document.getElementById(`featured${i}`).innerHTML = `
+          <a href="product.html?id=${pianoId}">
+            <img src="${imageUrl}" class="rounded mb-4"/>
+            <h3 class="font-serif text-xl font-bold">${p.make||''} ${p.model||''}</h3>
+            <p class="text-gray-300">${p.year||''} • ${p.length||''} • ${p.color||''}</p>
+          </a>`;
       }
     }
 
