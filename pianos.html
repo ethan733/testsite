@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pianos – World Class Piano Gallery</title>
+
+  <!-- ✅ Add favicon -->
+  <link rel="icon" type="image/png" href="playstore.png" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -19,7 +23,10 @@
       background-color: #111;
       transition: all 0.4s ease;
     }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(212,175,55,0.15); }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(212,175,55,0.15);
+    }
     img {
       width: 100%;
       height: 260px;
@@ -78,17 +85,21 @@
           catalog.innerHTML = `<p class='text-center text-gray-400'>No active listings found.</p>`;
           return;
         }
+
         let html = "";
         snap.forEach(doc => {
           const p = doc.data();
-          const price = p.cost ? `$${Number(p.cost).toLocaleString()}` :
-                        p.listingPrice ? `$${Number(p.listingPrice).toLocaleString()}` :
-                        "Contact for Pricing";
+          const price = p.cost
+            ? `$${Number(p.cost).toLocaleString()}`
+            : p.listingPrice
+            ? `$${Number(p.listingPrice).toLocaleString()}`
+            : "Contact for Pricing";
           const imgSrc = decodeURIComponent(p.photoURL || "");
+
           html += `
             <div class="card">
               <img src="${imgSrc}" alt="${p.brand || ''} ${p.model || ''}"
-                   onerror="this.src='https://via.placeholder.com/600x400?text=No+Image';" />
+                   onerror="this.src='https://placehold.co/600x400/111111/888888?text=No+Image';" />
               <h3 class="text-xl gold font-bold mt-4">${p.brand || ""}</h3>
               <p class="text-gray-300">${p.model || ""} • ${p.year || ""} • ${p.color || ""} • ${p.length || ""}</p>
               <p class="mt-1 text-gold font-semibold">${price}</p>
@@ -98,12 +109,14 @@
               </div>
             </div>`;
         });
+
         catalog.innerHTML = html;
       } catch (err) {
         console.error("❌ Error loading pianos:", err);
         catalog.innerHTML = `<p class='text-center text-red-400'>Failed to load listings.</p>`;
       }
     }
+
     loadPianos();
   </script>
 </body>
