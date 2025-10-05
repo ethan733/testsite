@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact – World Class Piano Gallery</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { gold: '#C5A253', ink: '#0a0a0a' },
-          fontFamily: {
-            serif: ['Playfair Display','ui-serif','Georgia','serif'],
-            sans: ['Montserrat','ui-sans-serif','system-ui'],
-          },
-        },
-      },
-    };
-  </script>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact – World Class Piano Gallery</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-ink text-white font-sans">
-  <!-- NAV -->
-  <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
-    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-      <div class="flex items-center space-x-2">
-        <img src="playstore.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" class="h-8 w-auto" alt="Logo">
-        <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
-      </div>
-      <nav class="hidden md:flex space-x-8">
-        <a href="index.html" class="hover:text-gold">Home</a>
-        <a href="pianos.html" class="hover:text-gold">Pianos</a>
-        <a href="contact.html" class="text-gold">Contact</a>
-        <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      </nav>
+<header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
+<div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
+<div class="flex items-center space-x-2">
+<img src="playstore.png" class="h-8 w-auto"><a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+</div>
+<nav class="hidden md:flex space-x-8">
+<a href="index.html" class="hover:text-gold">Home</a><a href="pianos.html" class="hover:text-gold">Pianos</a><a href="contact.html" class="text-gold">Contact</a><a href="warranty.html" class="hover:text-gold">Warranty</a>
+</nav>
+</div>
+</header>
+
+<section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
+<video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+  <source src="IMG_0069.mp4" type="video/mp4"/><source src="IMG_0069.mov" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 bg-black/60"></div>
+<div class="relative z-10 px-6 max-w-3xl">
+  <h1 class="font-serif text-5xl md:text-6xl font-bold text-gold mb-4">Visit or Contact Us</h1>
+  <p class="text-xl md:text-2xl text-gray-200 mb-8">World Class Piano Gallery</p>
+  <p class="text-gray-300 mb-2"><strong>Address:</strong> 1000 North Point Circle, Alpharetta, GA 30022</p>
+  <p class="text-gray-300 mb-2"><strong>Phone:</strong> (404) 491-1656</p>
+  <p class="text-gray-300 mb-2"><strong>Email:</strong> <a href="mailto:wcpianogallery@gmail.com" class="text-gold hover:underline">wcpianogallery@gmail.com</a></p>
+  <p class="text-gray-300 mb-8"><strong>Hours:</strong> Mon–Sat 11 AM–8 PM | Sun 12 PM–7 PM</p>
+  <div class="flex justify-center gap-4">
+    <a href="tel:14044911656" class="px-6 py-3 bg-gold text-black rounded-full font-semibold hover:bg-gold/90 transition">Call Now</a>
+    <a href="mailto:wcpianogallery@gmail.com" class="px-6 py-3 border border-gold text-gold rounded-full font-semibold hover:bg-gold hover:text-black transition">Email Us</a>
+  </div>
+</div>
+</section>
+
+<footer class="py-8 text-center border-t border-gold/20 bg-ink"><p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p></footer>
+</body>
+</html>
       <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
     </div>
     <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
