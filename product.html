@@ -20,6 +20,29 @@
     }
   </script>
 
+  <style>
+    #loading {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(10,10,10,0.9);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #C5A253; font-family: "Playfair Display", serif;
+      font-size: 1.3rem;
+      z-index: 9999;
+    }
+    .spinner {
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top: 4px solid #C5A253;
+      border-radius: 50%;
+      width: 50px; height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -38,6 +61,7 @@
     const db = getFirestore(app);
 
     async function loadProduct() {
+      document.getElementById("loading").style.display = "flex";
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
       if (!id) return;
@@ -45,13 +69,15 @@
       const snap = await getDoc(doc(db, "pianos", id));
       if (!snap.exists()) {
         document.getElementById("product").innerHTML = `<p class='text-gray-400'>Piano not found.</p>`;
+        document.getElementById("loading").style.display = "none";
         return;
       }
 
       const p = snap.data();
 
-      // ✅ Use toURL or fallback
+      // ✅ use photoURL field first
       let imageUrl =
+        p.photoURL ||
         p.toURL ||
         p.image ||
         p.img ||
@@ -79,6 +105,7 @@
             </a>
           </div>
         </div>`;
+      document.getElementById("loading").style.display = "none";
     }
 
     window.onload = loadProduct;
@@ -86,6 +113,12 @@
 </head>
 
 <body class="bg-ink text-white font-sans">
+  <!-- Loading Animation -->
+  <div id="loading">
+    <div class="spinner"></div>
+    Loading Piano Details...
+  </div>
+
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
       <div class="flex items-center space-x-2">
@@ -93,14 +126,6 @@
         <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
       </div>
       <nav class="hidden md:flex space-x-8">
-        <a href="index.html" class="hover:text-gold">Home</a>
-        <a href="pianos.html" class="hover:text-gold">Pianos</a>
-        <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      </nav>
-      <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
-      <nav class="flex flex-col px-6 py-4 space-y-4">
         <a href="index.html" class="hover:text-gold">Home</a>
         <a href="pianos.html" class="hover:text-gold">Pianos</a>
         <a href="warranty.html" class="hover:text-gold">Warranty</a>
@@ -118,10 +143,5 @@
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
-  <script>
-    document.getElementById("menuBtn").addEventListener("click", () => {
-      document.getElementById("mobileMenu").classList.toggle("hidden");
-    });
-  </script>
 </body>
 </html>
