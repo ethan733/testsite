@@ -19,6 +19,7 @@
       }
     }
   </script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -35,6 +36,7 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const bucket = "https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F";
 
     async function loadProduct() {
       const params = new URLSearchParams(window.location.search);
@@ -49,14 +51,8 @@
 
       const p = snap.data();
 
-      // Smart image fallback
-      let imageUrl = p.image || p.photoUrl || p.img || p.url;
-      if (!imageUrl && p.filename) {
-        imageUrl = `https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F${encodeURIComponent(p.filename)}?alt=media`;
-      }
-      if (!imageUrl) imageUrl = "https://via.placeholder.com/800x600";
-
-      let price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
+      let imageUrl = p.image || (p.filename ? `${bucket}${encodeURIComponent(p.filename)}?alt=media` : "https://via.placeholder.com/800x600");
+      const price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
       document.getElementById("product").innerHTML = `
         <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -78,8 +74,8 @@
     window.onload = loadProduct;
   </script>
 </head>
-<body class="bg-ink text-white font-sans">
 
+<body class="bg-ink text-white font-sans">
   <!-- Navbar -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
@@ -114,7 +110,7 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
   <script>
-    // Mobile nav toggle
+    // Mobile menu toggle
     document.getElementById("menuBtn").addEventListener("click", () => {
       document.getElementById("mobileMenu").classList.toggle("hidden");
     });
