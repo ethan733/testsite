@@ -46,7 +46,7 @@
           const p = docSnap.data();
           if (p.status && p.status.toLowerCase() === "sold") return;
 
-          // Smart image URL handling
+          // Build image URL
           let imageUrl = p.image || (p.filename ? `${bucket}${encodeURIComponent(p.filename)}?alt=media` : "https://via.placeholder.com/600x400");
           const price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
@@ -71,7 +71,6 @@
       }
     }
 
-    // Feature piano into homepage showcase slot
     window.featurePiano = async (pianoId) => {
       const slot = prompt("Feature this piano in slot 1, 2, or 3?");
       if (slot && [1,2,3].includes(parseInt(slot))) {
@@ -85,7 +84,6 @@
 </head>
 
 <body class="bg-ink text-white font-sans">
-  <!-- Navbar -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
       <div class="flex items-center space-x-2">
@@ -120,7 +118,6 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
   <script>
-    // Mobile menu toggle
     document.getElementById("menuBtn").addEventListener("click", () => {
       document.getElementById("mobileMenu").classList.toggle("hidden");
     });
