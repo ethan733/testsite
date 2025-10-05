@@ -1,39 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Piano Details – World Class Piano Gallery</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { gold: '#C5A253', ink: '#0a0a0a' },
-          fontFamily: {
-            serif: ['Playfair Display','ui-serif','Georgia','serif'],
-            sans: ['Montserrat','ui-sans-serif','system-ui'],
-          },
-        },
-      },
-    };
-  </script>
-  <style>
-    .fade-in-up{opacity:0;transform:translateY(30px);animation:fadeUp 1s ease forwards;}
-    @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
-    .carousel-container{position:relative;overflow:hidden;border-radius:0.75rem;}
-    .carousel-slide{display:none;width:100%;height:500px;object-fit:cover;}
-    .carousel-slide.active{display:block;}
-    .carousel-btn{
-      position:absolute;top:50%;transform:translateY(-50%);
-      background:rgba(0,0,0,.5);color:#fff;border:none;
-      width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;
-    }
-    .carousel-btn:hover{background:rgba(197,162,83,.85);}
-    .carousel-btn.prev{left:12px;} .carousel-btn.next{right:12px;}
-  </style>
-  <script type="module">
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Piano Details – World Class Piano Gallery</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.carousel-slide{display:none;width:100%;height:520px;object-fit:cover;transition:opacity 1.5s;}
+.carousel-slide.active{display:block;}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);
+background:rgba(0,0,0,.4);color:#fff;border:none;width:44px;height:44px;border-radius:999px;}
+.carousel-btn:hover{background:rgba(197,162,83,.85);}
+.carousel-btn.prev{left:12px;} .carousel-btn.next{right:12px;}
+.fade-in-up{opacity:0;transform:translateY(30px);animation:fadeUp 1s ease forwards;}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+</style>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app=initializeApp({apiKey:"AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",authDomain:"pianoinv.firebaseapp.com",projectId:"pianoinv",storageBucket:"pianoinv.appspot.com"});
+const db=getFirestore(app);
+const fix=u=>u?.includes("firebasestorage.app")?u.replace("firebasestorage.app","appspot.com"):u;
+const price=v=>(typeof v==="number"&&!isNaN(v))?`$${v.toLocaleString()}`:"Contact for Pricing";
+
+async function load(){
+ const id=new URLSearchParams(window.location.search).get("id");
+ if(!id)return;
+ const s=await getDoc(doc(db,"pianos",id));
+ if(!s.exists()){document.getElementById("product").innerHTML="<p class='text-gray-400'>Not found.</p>";return;}
+ const p=s.data();
+ let photos=[];
+ if(Array.isArray(p.photos)&&p.photos.length)photos=p.photos;else if(p.photoURL)photos=[p.photoURL];
+ if(!photos.length)photos=["https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"];
+ photos=photos.map(fix);
+ const slides=photos.map((u,i)=>`<img src="${u}" class="carousel-slide ${i===0?'active':''}" alt="${p.brand||''} ${p.model||''}">`).join("");
+ document.getElementById("product").innerHTML=`
+ <div class="grid lg:grid-cols-2 gap-12 items-center fade-in-up">
+   <div class="relative overflow-hidden rounded-lg">
+     ${slides}
+     ${photos.length>1?`<button class='carousel-btn prev'>&#10094;</button><button class='carousel-btn next'>&#10095;</button>`:""}
+   </div>
+   <div>
+     <h1 class="font-serif text-4xl font-bold mb-4 text-gold">${p.brand||''} ${p.model||''}</h1>
+     <p class="text-gray-300 mb-2">Year: ${p.year||'—'}</p>
+     <p class="text-gray-300 mb-2">Length: ${p.length||'—'}</p>
+     <p class="text-gray-300 mb-2">Color: ${p.color||'—'}</p>
+     <div class="text-2xl font-semibold text-gold mb-6">${price(p.listingPrice)}</div>
+     <a href="contact.html" class="px-6 py-3 bg-gold text-black font-semibold rounded-full hover:bg-gold/90 transition">Buy Now</a>
+   </div>
+ </div>`;
+ const imgs=document.querySelectorAll(".carousel-slide");
+ if(imgs.length>1){
+  let i=0;const show=n=>{imgs[i].classList.remove("active");i=(n+imgs.length)%imgs.length;imgs[i].classList.add("active");};
+  document.querySelector(".prev")?.addEventListener("click",()=>show(i-1));
+  document.querySelector(".next")?.addEventListener("click",()=>show(i+1));
+ }
+}
+window.addEventListener("load",load);
+</script>
+</head>
+<body class="bg-ink text-white font-sans">
+<header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
+<div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
+<div class="flex items-center space-x-2">
+<img src="playstore.png" class="h-8 w-auto"><a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
+</div>
+<nav class="hidden md:flex space-x-8">
+<a href="index.html" class="hover:text-gold">Home</a><a href="pianos.html" class="hover:text-gold">Pianos</a><a href="contact.html" class="hover:text-gold">Contact</a><a href="warranty.html" class="hover:text-gold">Warranty</a>
+</nav>
+</div>
+</header>
+<main class="max-w-7xl mx-auto pt-28 px-6 pb-20" id="product"></main>
+<footer class="py-8 text-center border-t border-gold/20 bg-ink"><p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p></footer>
+</body>
+</html>
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
