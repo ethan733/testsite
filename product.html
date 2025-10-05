@@ -45,30 +45,28 @@
 
       const snap = await getDoc(doc(db, "pianos", id));
       if (!snap.exists()) {
-        document.getElementById("product").innerHTML = `<p class="text-gray-400">Piano not found.</p>`;
+        document.getElementById("product").innerHTML = `<p class='text-gray-400'>Piano not found.</p>`;
         return;
       }
 
       const p = snap.data();
-
       let imageUrl = p.image || (p.filename ? `${bucket}${encodeURIComponent(p.filename)}?alt=media` : "https://via.placeholder.com/800x600");
       const price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
       document.getElementById("product").innerHTML = `
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <img src="${imageUrl}" alt="${p.make||''} ${p.model||''}" class="w-full rounded shadow-lg" data-aos="fade-right"/>
-          <div data-aos="fade-left">
-            <h1 class="font-serif text-4xl font-bold mb-4">${p.make||''} ${p.model||''}</h1>
-            <p class="text-gray-300 mb-4">Year: ${p.year||'—'} • Length: ${p.length||'—'} • Color: ${p.color||'—'}</p>
-            <div class="text-2xl font-semibold text-gold mb-6">${price}</div>
-            <p class="text-gray-200 mb-8">${p.description || "A world-class instrument ready for your home or stage."}</p>
-            <a href="mailto:info@worldclasspianos.com?subject=Interested in ${p.make||''} ${p.model||''}" 
-               class="px-6 py-3 bg-gold text-black font-semibold rounded-full hover:opacity-90">
+        <div class='grid lg:grid-cols-2 gap-12 items-center'>
+          <img src='${imageUrl}' alt='${p.make||''} ${p.model||''}' class='w-full rounded shadow-lg' data-aos='fade-right'/>
+          <div data-aos='fade-left'>
+            <h1 class='font-serif text-4xl font-bold mb-4'>${p.make||''} ${p.model||''}</h1>
+            <p class='text-gray-300 mb-4'>Year: ${p.year||'—'} • Length: ${p.length||'—'} • Color: ${p.color||'—'}</p>
+            <div class='text-2xl font-semibold text-gold mb-6'>${price}</div>
+            <p class='text-gray-200 mb-8'>${p.description || "A world-class instrument ready for your home or stage."}</p>
+            <a href='mailto:info@worldclasspianos.com?subject=Interested in ${p.make||''} ${p.model||''}' 
+               class='px-6 py-3 bg-gold text-black font-semibold rounded-full hover:opacity-90'>
                Inquire Now
             </a>
           </div>
-        </div>
-      `;
+        </div>`;
     }
 
     window.onload = loadProduct;
@@ -76,7 +74,6 @@
 </head>
 
 <body class="bg-ink text-white font-sans">
-  <!-- Navbar -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
       <div class="flex items-center space-x-2">
@@ -110,7 +107,6 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
   <script>
-    // Mobile menu toggle
     document.getElementById("menuBtn").addEventListener("click", () => {
       document.getElementById("mobileMenu").classList.toggle("hidden");
     });
