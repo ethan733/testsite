@@ -19,6 +19,7 @@
       }
     }
   </script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -35,23 +36,19 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const bucket = "https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F";
 
-    async function loadCatalog(){
+    async function loadCatalog() {
       try {
         const snapshot = await getDocs(collection(db, "pianos"));
         let html = "";
         snapshot.forEach(docSnap => {
           const p = docSnap.data();
-          if(p.status && p.status.toLowerCase() === "sold") return;
+          if (p.status && p.status.toLowerCase() === "sold") return;
 
-          let price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
-
-          // smart image fallback
-          let imageUrl = p.image || p.photoUrl || p.img || p.url;
-          if (!imageUrl && p.filename) {
-            imageUrl = `https://firebasestorage.googleapis.com/v0/b/pianoinv.firebasestorage.app/o/piano_photos%2F${encodeURIComponent(p.filename)}?alt=media`;
-          }
-          if (!imageUrl) imageUrl = "https://via.placeholder.com/600x400";
+          // Smart image URL handling
+          let imageUrl = p.image || (p.filename ? `${bucket}${encodeURIComponent(p.filename)}?alt=media` : "https://via.placeholder.com/600x400");
+          const price = p.cost ? `$${p.cost.toLocaleString()}` : "Contact for Pricing";
 
           html += `
             <div class="bg-ink text-white rounded-xl border border-gold/20 shadow p-6 hover:scale-[1.02] transition" data-aos="fade-up">
@@ -61,7 +58,6 @@
                 <p class="text-sm text-gray-300">Year: ${p.year||''} • Length: ${p.length||''} • Color: ${p.color||''}</p>
                 <div class="mt-3 text-lg font-semibold text-gold">${price}</div>
               </a>
-              <!-- Feature button -->
               <button onclick="featurePiano('${docSnap.id}')" 
                 class="mt-4 w-full px-4 py-2 border border-gold text-gold rounded hover:bg-gold hover:text-black">
                 Feature This Piano
@@ -75,7 +71,7 @@
       }
     }
 
-    // Feature piano into showcase slot
+    // Feature piano into homepage showcase slot
     window.featurePiano = async (pianoId) => {
       const slot = prompt("Feature this piano in slot 1, 2, or 3?");
       if (slot && [1,2,3].includes(parseInt(slot))) {
@@ -87,8 +83,8 @@
     window.onload = loadCatalog;
   </script>
 </head>
-<body class="bg-ink text-white font-sans">
 
+<body class="bg-ink text-white font-sans">
   <!-- Navbar -->
   <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
@@ -117,10 +113,14 @@
     <div id="catalog" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10"></div>
   </main>
 
+  <footer class="py-8 text-center border-t border-gold/20 bg-ink">
+    <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
+  </footer>
+
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
   <script>
-    // Mobile nav toggle
+    // Mobile menu toggle
     document.getElementById("menuBtn").addEventListener("click", () => {
       document.getElementById("mobileMenu").classList.toggle("hidden");
     });
