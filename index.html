@@ -14,10 +14,70 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
       color: #e8e6e3;
       background: #0e0e0e;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    /* Background video */
+    /* ---------------- NAVBAR ---------------- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      backdrop-filter: blur(8px);
+      background: rgba(15, 15, 15, 0.7);
+      border-bottom: 1px solid rgba(218, 183, 92, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 4vw;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo img {
+      height: 36px;
+      width: 36px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    .logo h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #d8c279;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #e8e6e3;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #d5b96a;
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { gap: 1rem; font-size: 0.9rem; }
+      .logo h1 { font-size: 1rem; }
+    }
+
+    /* ---------------- HERO ---------------- */
     .video-bg {
       position: fixed;
       top: 0; left: 0;
@@ -27,16 +87,14 @@
       z-index: -2;
     }
 
-    /* Subtle gradient overlay */
     .overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: linear-gradient(to bottom right, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
       z-index: -1;
     }
 
-    /* Hero section */
     .hero {
       height: 100vh;
       display: flex;
@@ -45,10 +103,11 @@
       align-items: center;
       text-align: center;
       letter-spacing: 0.03em;
+      padding-top: 4rem;
       animation: fadeIn 1s ease forwards;
     }
 
-    .hero h1 {
+    .hero h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 600;
       font-size: clamp(2.8rem, 5vw, 5rem);
@@ -113,15 +172,30 @@
 </head>
 
 <body>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">
+      <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/branding%2Fwcpg_logo.png?alt=media" alt="Logo">
+      <h1>World Class Piano Gallery</h1>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="pianos.html">Gallery</a>
+      <a href="warranty.html">Warranty</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
   <!-- Background video -->
   <video autoplay muted loop playsinline class="video-bg">
     <source src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/homepage%2Fshowroom.mp4?alt=media" type="video/mp4">
   </video>
   <div class="overlay"></div>
 
+  <!-- Hero content -->
   <section class="hero">
-    <h1>World Class Piano Gallery</h1>
-    <p>Where craftsmanship meets timeless sound.</p>
+    <h2>Where Craftsmanship Meets Sound</h2>
+    <p>Experience pianos that transcend design and performance.</p>
     <a href="pianos.html" class="cta">Enter Gallery</a>
   </section>
 
