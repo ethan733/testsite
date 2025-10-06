@@ -17,7 +17,7 @@
       overflow-x: hidden;
     }
 
-    /* ---------------- NAVBAR ---------------- */
+    /* NAVBAR */
     nav {
       position: fixed;
       top: 0;
@@ -77,13 +77,13 @@
       .logo h1 { font-size: 1rem; }
     }
 
-    /* ---------------- HERO ---------------- */
+    /* HERO */
     .video-bg {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      filter: brightness(50%) saturate(120%);
+      filter: brightness(55%) saturate(115%);
       z-index: -2;
     }
 
@@ -96,7 +96,7 @@
     }
 
     .hero {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -110,20 +110,21 @@
     .hero h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 600;
-      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-size: clamp(2.2rem, 5vw, 4rem);
       color: #f0e6cc;
       letter-spacing: 1px;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
       opacity: 0;
       transform: translateY(15px);
       animation: slideUp 1s ease forwards 0.3s;
     }
 
     .hero p {
-      font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+      max-width: 800px;
+      font-size: clamp(1rem, 1.6vw, 1.3rem);
       font-weight: 300;
       color: #c6c3b8;
-      margin-bottom: 2.2rem;
+      margin-bottom: 2.4rem;
       opacity: 0;
       transform: translateY(15px);
       animation: slideUp 1s ease forwards 0.6s;
@@ -150,29 +151,86 @@
       transform: translateY(-2px);
     }
 
-    footer {
-      position: absolute;
-      bottom: 18px;
-      width: 100%;
+    /* ABOUT + CONTACT SECTION */
+    section.info {
+      background: #111;
+      padding: 5rem 8vw;
       text-align: center;
-      font-size: 0.9rem;
+    }
+
+    section.info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #d8c279;
+      margin-bottom: 1rem;
+    }
+
+    section.info p {
+      color: #cfcfcf;
+      font-weight: 300;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input, textarea {
+      background: #181818;
+      border: 1px solid rgba(216,194,121,0.25);
+      border-radius: 6px;
+      color: #f1f1f1;
+      padding: 0.9rem 1rem;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #d5b96a;
+    }
+
+    button {
+      background: linear-gradient(135deg, #d5b96a, #b6933b);
+      color: #111;
+      border: none;
+      border-radius: 40px;
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #e0c87c, #c9a33e);
+      box-shadow: 0 0 18px rgba(213,185,106,0.25);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: #0d0d0d;
+      text-align: center;
       color: #8a877f;
+      padding: 1.5rem;
+      font-size: 0.9rem;
       letter-spacing: 0.04em;
+      border-top: 1px solid rgba(218,183,92,0.15);
     }
 
-    @keyframes slideUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 
 <body>
-  <!-- Navigation -->
+  <!-- NAVIGATION -->
   <nav>
     <div class="logo">
       <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/branding%2Fwcpg_logo.png?alt=media" alt="Logo">
@@ -186,17 +244,35 @@
     </div>
   </nav>
 
-  <!-- Background video -->
+  <!-- HERO WITH BACKGROUND VIDEO -->
   <video autoplay muted loop playsinline class="video-bg">
     <source src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/homepage%2Fshowroom.mp4?alt=media" type="video/mp4">
   </video>
   <div class="overlay"></div>
 
-  <!-- Hero content -->
   <section class="hero">
-    <h2>Where Craftsmanship Meets Sound</h2>
-    <p>Experience pianos that transcend design and performance.</p>
-    <a href="pianos.html" class="cta">Enter Gallery</a>
+    <h2>Elegant craftsmanship for refined players,<br>and excellent vehicles for aspiring masters.</h2>
+    <p>Experience pianos that embody heritage, precision, and soul.</p>
+    <a href="pianos.html" class="cta">Explore Our Gallery</a>
+  </section>
+
+  <!-- ABOUT / CONTACT -->
+  <section class="info">
+    <h3>About Us</h3>
+    <p>
+      For over 32 years, World Class Piano Gallery has served discerning musicians and collectors with
+      unparalleled expertise. Owned and operated by leading authorities on grand and upright pianos —
+      including some of the foremost Steinway experts in the United States and worldwide — we pride ourselves
+      on offering instruments that define excellence in craftsmanship and tone.
+    </p>
+
+    <h3>Contact Us</h3>
+    <form action="https://formspree.io/f/yourformid" method="POST">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="_replyto" placeholder="Email Address" required>
+      <textarea name="message" rows="5" placeholder="Your message..." required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
   </section>
 
   <footer>© 2025 World Class Piano Gallery</footer>
