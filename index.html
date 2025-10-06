@@ -33,7 +33,7 @@ nav{
 .nav-links a{text-decoration:none;color:#f3f3f3;transition:color .3s;}
 .nav-links a:hover{color:#d6be84;}
 
-/* HERO VIDEO */
+/* VIDEO */
 .video-container{position:relative;width:100%;height:100vh;overflow:hidden;}
 video{width:100%;height:100%;object-fit:cover;filter:brightness(60%) contrast(110%) saturate(115%);}
 .video-overlay{
@@ -59,7 +59,7 @@ video{width:100%;height:100%;object-fit:cover;filter:brightness(60%) contrast(11
 }
 .cta:hover{background:linear-gradient(135deg,#e2c87a,#c9a33e);box-shadow:0 0 28px rgba(213,185,106,0.3);transform:translateY(-3px);}
 
-/* LONG SERVICES SECTION */
+/* SERVICES SECTION */
 section.services{
   background:linear-gradient(to bottom,#0f0f0f,#111);
   padding:8rem 6vw;
@@ -168,7 +168,6 @@ footer{
 
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">
     <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/branding%2Fwcpg_logo.png?alt=media" alt="Logo">
@@ -199,7 +198,7 @@ footer{
   <h3>Our Expertise</h3>
 
   <div class="service-block">
-    <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fsteinway_model_d.jpg?alt=media" alt="Sales">
+    <img src="https://images.unsplash.com/photo-1510936111840-65e151ad71bb?auto=format&fit=crop&w=1200&q=80" alt="Piano Sales">
     <div class="service-text">
       <h4>Piano Sales</h4>
       <p>We curate a world-class selection of grand and upright pianos from Steinway, Yamaha, and European makers. Each instrument is meticulously inspected, voiced, and prepared to concert standards before it reaches your home or stage.</p>
@@ -207,15 +206,15 @@ footer{
   </div>
 
   <div class="service-block">
-    <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Ftuning.jpg?alt=media" alt="Tuning">
+    <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=1200&q=80" alt="Tuning">
     <div class="service-text">
       <h4>Tuning & Maintenance</h4>
-      <p>Our certified technicians provide tuning, regulation, and restoration services with precision and care. We understand the soul of each piano, ensuring that tone, touch, and resonance remain perfectly balanced.</p>
+      <p>Our certified technicians provide tuning, regulation, and restoration services with precision and care. We understand the soul of each piano, ensuring tone, touch, and resonance remain perfectly balanced.</p>
     </div>
   </div>
 
   <div class="service-block">
-    <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fmoving.jpg?alt=media" alt="Moving">
+    <img src="https://images.unsplash.com/photo-1591052212852-5d31d5032e38?auto=format&fit=crop&w=1200&q=80" alt="Moving">
     <div class="service-text">
       <h4>Professional Moving</h4>
       <p>Our expert logistics team offers complimentary piano moving within 1,000 miles of purchase. From concert halls to private residences, each transport is handled by professionals who specialize exclusively in fine instruments.</p>
@@ -223,7 +222,7 @@ footer{
   </div>
 
   <div class="service-block">
-    <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fwarranty.jpg?alt=media" alt="Warranty">
+    <img src="https://images.unsplash.com/photo-1608032077018-1d4572d97a12?auto=format&fit=crop&w=1200&q=80" alt="Warranty">
     <div class="service-text">
       <h4>Warranty & Support</h4>
       <p>Every new piano carries a 10-year manufacturer warranty. Pre-owned pianos include a 3-year “common sense” guarantee covering essential mechanical and tonal integrity. Excellence doesn’t end at delivery — it continues with support you can trust.</p>
@@ -255,5 +254,6 @@ document.getElementById('openModal').addEventListener('click',e=>{e.preventDefau
 document.getElementById('closeModal').addEventListener('click',()=>modal.classList.remove('active'));
 window.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('active');});
 </script>
+
 </body>
 </html>
