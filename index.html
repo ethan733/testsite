@@ -5,93 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Class Piano Gallery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-      color: #e8e6e3;
-      background: #0e0e0e;
+      font-family: 'Poppins', sans-serif;
+      color: #eaeaea;
+      background: #0d0d0d;
       overflow-x: hidden;
+      line-height: 1.65;
+      scroll-behavior: smooth;
     }
 
     /* NAVBAR */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      backdrop-filter: blur(8px);
-      background: rgba(15, 15, 15, 0.7);
-      border-bottom: 1px solid rgba(218, 183, 92, 0.15);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      top: 0; left: 0; width: 100%;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 1rem 4vw;
+      background: rgba(10,10,10,0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(218,183,92,0.12);
       z-index: 10;
+      transition: all 0.4s ease;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .logo img {
-      height: 36px;
-      width: 36px;
-      object-fit: contain;
-      border-radius: 6px;
-    }
-
+    .logo { display: flex; align-items: center; gap: 0.6rem; }
+    .logo img { height: 40px; width: 40px; object-fit: contain; border-radius: 8px; }
     .logo h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #d8c279;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: #d6be84;
       letter-spacing: 0.04em;
+      font-weight: 600;
     }
 
     .nav-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
+      display: flex; gap: 2rem; align-items: center;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: #e8e6e3;
+      color: #f2f2f2;
       font-weight: 400;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       transition: color 0.3s ease;
     }
 
-    .nav-links a:hover {
-      color: #d5b96a;
-    }
+    .nav-links a:hover { color: #d6be84; }
 
     @media (max-width: 700px) {
-      .nav-links { gap: 1rem; font-size: 0.9rem; }
-      .logo h1 { font-size: 1rem; }
+      .nav-links { gap: 1.2rem; font-size: 0.9rem; }
+      .logo h1 { font-size: 1.1rem; }
     }
 
-    /* HERO */
+    /* VIDEO HERO */
     .video-bg {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       filter: brightness(55%) saturate(115%);
       z-index: -2;
+      transition: opacity 1s ease;
     }
 
     .overlay {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
-      background: linear-gradient(to bottom right, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.5), rgba(0,0,0,0.75));
       z-index: -1;
     }
 
@@ -102,31 +88,31 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding-top: 4rem;
-      animation: fadeIn 1s ease forwards;
+      padding-top: 5rem;
+      animation: fadeIn 1.5s ease forwards;
     }
 
     .hero h2 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 600;
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      color: #f0e6cc;
-      letter-spacing: 1px;
-      margin-bottom: 0.8rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      color: #f3eac3;
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
       opacity: 0;
-      transform: translateY(15px);
-      animation: slideUp 1s ease forwards 0.3s;
+      transform: translateY(20px);
+      animation: slideUp 1s ease forwards 0.4s;
     }
 
     .hero p {
       max-width: 800px;
-      font-size: clamp(1rem, 1.6vw, 1.3rem);
+      font-size: clamp(1rem, 1.5vw, 1.3rem);
+      color: #d6d6d6;
       font-weight: 300;
-      color: #c6c3b8;
-      margin-bottom: 2.4rem;
+      margin-bottom: 2.6rem;
       opacity: 0;
-      transform: translateY(15px);
-      animation: slideUp 1s ease forwards 0.6s;
+      transform: translateY(20px);
+      animation: slideUp 1s ease forwards 0.8s;
     }
 
     .cta {
@@ -134,36 +120,45 @@
       text-decoration: none;
       color: #111;
       background: linear-gradient(135deg, #d5b96a, #b6933b);
-      padding: 0.9rem 2.4rem;
-      border-radius: 40px;
+      padding: 0.9rem 2.6rem;
+      border-radius: 50px;
       font-weight: 500;
       letter-spacing: 0.05em;
       transition: all 0.4s ease;
       opacity: 0;
-      transform: translateY(15px);
-      animation: slideUp 1s ease forwards 0.9s;
+      transform: translateY(20px);
+      animation: slideUp 1s ease forwards 1.2s;
     }
 
     .cta:hover {
-      background: linear-gradient(135deg, #e0c87c, #c9a33e);
-      box-shadow: 0 0 18px rgba(213,185,106,0.25);
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, #e2c87a, #c9a33e);
+      box-shadow: 0 0 20px rgba(213,185,106,0.25);
+      transform: translateY(-3px);
     }
 
-    /* SERVICES */
-    section.services {
-      background: #111;
+    /* SECTIONS */
+    section {
       padding: 6rem 8vw;
+      position: relative;
+      transition: background 0.8s ease;
+    }
+
+    section.services,
+    section.showcase,
+    section.info {
+      background: linear-gradient(to bottom, #0f0f0f, #111);
+    }
+
+    section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      color: #d6be84;
       text-align: center;
+      margin-bottom: 2.8rem;
+      letter-spacing: 0.02em;
     }
 
-    section.services h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      color: #d8c279;
-      margin-bottom: 3rem;
-    }
-
+    /* SERVICE CARDS */
     .service-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -171,11 +166,12 @@
     }
 
     .card {
-      background: #161616;
-      border: 1px solid rgba(218, 183, 92, 0.15);
-      border-radius: 12px;
+      background: #181818;
+      border: 1px solid rgba(218,183,92,0.12);
+      border-radius: 14px;
       padding: 2rem;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      transition: all 0.5s ease;
       opacity: 0;
       transform: translateY(40px);
     }
@@ -183,72 +179,41 @@
     .card.visible {
       opacity: 1;
       transform: translateY(0);
-      transition: all 0.6s ease;
     }
 
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 18px rgba(218, 183, 92, 0.2);
+      transform: translateY(-8px);
+      border: 1px solid rgba(218,183,92,0.35);
+      box-shadow: 0 0 25px rgba(218,183,92,0.15);
     }
 
     .card h4 {
+      font-family: 'Cormorant Garamond', serif;
       color: #f0e6cc;
-      font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
       margin-bottom: 0.6rem;
     }
 
     .card p {
-      color: #ccc;
+      color: #cfcfcf;
       font-weight: 300;
-      line-height: 1.6;
-    }
-
-    .gallery-link {
-      display: inline-block;
-      margin: 3rem auto 0;
-      text-decoration: none;
-      color: #111;
-      background: linear-gradient(135deg, #d5b96a, #b6933b);
-      padding: 0.7rem 2rem;
-      border-radius: 30px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .gallery-link:hover {
-      background: linear-gradient(135deg, #e0c87c, #c9a33e);
-      box-shadow: 0 0 18px rgba(213,185,106,0.25);
-      transform: translateY(-2px);
+      line-height: 1.7;
     }
 
     /* SHOWCASE */
-    section.showcase {
-      background: #0f0f0f;
-      padding: 6rem 8vw;
-      text-align: center;
-    }
-
-    section.showcase h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      color: #d8c279;
-      margin-bottom: 3rem;
-    }
-
     .showcase-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 3rem;
-      align-items: start;
+      margin-top: 2rem;
     }
 
     .showcase-card {
-      background: #141414;
-      border: 1px solid rgba(218,183,92,0.15);
-      border-radius: 16px;
+      background: #151515;
+      border-radius: 18px;
       overflow: hidden;
-      transition: transform 0.5s ease, box-shadow 0.5s ease, border 0.5s ease;
+      border: 1px solid rgba(218,183,92,0.15);
+      transition: all 0.6s ease;
       opacity: 0;
       transform: translateY(40px);
     }
@@ -256,34 +221,31 @@
     .showcase-card.visible {
       opacity: 1;
       transform: translateY(0);
-      transition: all 0.6s ease;
     }
 
     .showcase-card:hover {
       transform: translateY(-10px);
-      border: 1px solid rgba(218,183,92,0.4);
-      box-shadow: 0 12px 25px rgba(218,183,92,0.12);
+      box-shadow: 0 10px 25px rgba(218,183,92,0.18);
+      border-color: rgba(218,183,92,0.4);
     }
 
     .showcase-card img {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      filter: brightness(90%);
-      transition: filter 0.5s ease;
+      width: 100%; height: 240px; object-fit: cover;
+      filter: brightness(85%);
+      transition: filter 0.6s ease;
     }
-
     .showcase-card:hover img { filter: brightness(100%); }
 
     .showcase-card .info {
-      padding: 1.5rem 1.5rem 2rem;
+      padding: 1.7rem;
+      text-align: left;
     }
 
     .showcase-card h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
       color: #f0e6cc;
-      font-size: 1.4rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
     .showcase-card p {
@@ -297,8 +259,8 @@
       text-decoration: none;
       color: #111;
       background: linear-gradient(135deg, #d5b96a, #b6933b);
-      padding: 0.6rem 1.6rem;
-      border-radius: 30px;
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
       font-weight: 500;
       font-size: 0.95rem;
       transition: all 0.3s ease;
@@ -310,47 +272,31 @@
       transform: translateY(-1px);
     }
 
-    /* ABOUT & CONTACT */
-    section.info {
-      background: #0f0f0f;
-      padding: 5rem 8vw;
-      text-align: center;
-    }
-
-    section.info h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: #d8c279;
-      margin-bottom: 1rem;
-    }
-
+    /* ABOUT */
     section.info p {
-      color: #cfcfcf;
-      font-weight: 300;
-      max-width: 800px;
+      color: #d3d3d3;
+      max-width: 780px;
       margin: 0 auto 3rem;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
     form {
       max-width: 600px;
       margin: 0 auto;
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       gap: 1rem;
     }
 
     input, textarea {
-      background: #181818;
-      border: 1px solid rgba(216,194,121,0.25);
-      border-radius: 6px;
+      background: #191919;
+      border: 1px solid rgba(216,194,121,0.2);
+      border-radius: 8px;
       color: #f1f1f1;
       padding: 0.9rem 1rem;
       font-size: 1rem;
       outline: none;
-      transition: border 0.3s ease;
+      transition: all 0.3s ease;
     }
-
     input:focus, textarea:focus { border-color: #d5b96a; }
 
     button {
@@ -372,7 +318,7 @@
     }
 
     footer {
-      background: #0d0d0d;
+      background: #0b0b0b;
       text-align: center;
       color: #8a877f;
       padding: 1.5rem;
@@ -387,21 +333,19 @@
 </head>
 
 <body>
-  <!-- NAVIGATION -->
   <nav>
     <div class="logo">
       <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/branding%2Fwcpg_logo.png?alt=media" alt="Logo">
       <h1>World Class Piano Gallery</h1>
     </div>
     <div class="nav-links">
-      <a href="index.html">Home</a>
+      <a href="#">Home</a>
       <a href="pianos.html">Gallery</a>
       <a href="warranty.html">Warranty</a>
       <a href="contact.html">Contact</a>
     </div>
   </nav>
 
-  <!-- HERO -->
   <video autoplay muted loop playsinline class="video-bg">
     <source src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/homepage%2Fshowroom.mp4?alt=media" type="video/mp4">
   </video>
@@ -413,34 +357,20 @@
     <a href="pianos.html" class="cta">Explore Our Gallery</a>
   </section>
 
-  <!-- SERVICES -->
   <section class="services">
     <h3>Our Services</h3>
     <div class="service-grid">
-      <div class="card fade"> <h4>Piano Sales</h4>
-        <p>Exclusive selection of the world’s most distinguished pianos — from timeless Steinways to rare European masterpieces.</p>
-      </div>
-
-      <div class="card fade"> <h4>Tuning Resources</h4>
-        <p>Access our network of master tuners and technicians for on-site service, maintenance, and tonal optimization.</p>
-      </div>
-
-      <div class="card fade"> <h4>Free Moving within 1,000 Miles</h4>
-        <p>Enjoy complimentary professional transport for your piano within 1,000 miles — handled by fine-instrument specialists.</p>
-      </div>
-
-      <div class="card fade"> <h4>Warranty & Support</h4>
-        <p>Three-year common-sense coverage on pre-owned pianos and ten-year manufacturer warranty on all new instruments.</p>
-      </div>
+      <div class="card"><h4>Piano Sales</h4><p>Exclusive selection of the world’s most distinguished pianos — from timeless Steinways to rare European masterpieces.</p></div>
+      <div class="card"><h4>Tuning Resources</h4><p>Access our network of master tuners and technicians for on-site service, maintenance, and tonal optimization.</p></div>
+      <div class="card"><h4>Free Moving within 1,000 Miles</h4><p>Enjoy complimentary professional transport for your piano within 1,000 miles — handled by fine-instrument specialists.</p></div>
+      <div class="card"><h4>Warranty & Support</h4><p>Three-year common-sense coverage on pre-owned pianos and ten-year manufacturer warranty on all new instruments.</p></div>
     </div>
-    <a href="pianos.html" class="gallery-link">View Gallery</a>
   </section>
 
-  <!-- SHOWCASE -->
   <section class="showcase">
     <h3>Featured Instruments</h3>
     <div class="showcase-grid">
-      <div class="showcase-card fade">
+      <div class="showcase-card">
         <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fsteinway_model_d.jpg?alt=media" alt="Steinway Model D">
         <div class="info">
           <h4>Steinway & Sons Model D</h4>
@@ -449,7 +379,7 @@
         </div>
       </div>
 
-      <div class="showcase-card fade">
+      <div class="showcase-card">
         <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fyamaha_cfx.jpg?alt=media" alt="Yamaha CFX">
         <div class="info">
           <h4>Yamaha CFX</h4>
@@ -458,7 +388,7 @@
         </div>
       </div>
 
-      <div class="showcase-card fade">
+      <div class="showcase-card">
         <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fmason_hamlin_bb.jpg?alt=media" alt="Mason & Hamlin BB">
         <div class="info">
           <h4>Mason & Hamlin BB</h4>
@@ -469,7 +399,6 @@
     </div>
   </section>
 
-  <!-- ABOUT / CONTACT -->
   <section class="info">
     <h3>About Us</h3>
     <p>For over 32 years, World Class Piano Gallery has served discerning musicians and collectors with unparalleled expertise. Owned and operated by leading authorities on grand and upright pianos — including some of the foremost Steinway experts in the United States and worldwide — we pride ourselves on offering instruments that define excellence in craftsmanship and tone.</p>
@@ -485,17 +414,15 @@
 
   <footer>© 2025 World Class Piano Gallery</footer>
 
-  <!-- Scroll Fade Script -->
   <script>
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
         }
       });
     }, { threshold: 0.15 });
-
     document.querySelectorAll('.card, .showcase-card').forEach(el => observer.observe(el));
   </script>
 </body>
