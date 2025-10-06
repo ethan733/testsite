@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
@@ -102,7 +102,6 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      letter-spacing: 0.03em;
       padding-top: 4rem;
       animation: fadeIn 1s ease forwards;
     }
@@ -151,9 +150,169 @@
       transform: translateY(-2px);
     }
 
-    /* ABOUT + CONTACT SECTION */
-    section.info {
+    /* SERVICES */
+    section.services {
       background: #111;
+      padding: 6rem 8vw;
+      text-align: center;
+    }
+
+    section.services h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #d8c279;
+      margin-bottom: 3rem;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .card {
+      background: #161616;
+      border: 1px solid rgba(218, 183, 92, 0.15);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 18px rgba(218, 183, 92, 0.2);
+    }
+
+    .card h4 {
+      color: #f0e6cc;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .card p {
+      color: #ccc;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .gallery-link {
+      display: inline-block;
+      margin: 3rem auto 0;
+      text-decoration: none;
+      color: #111;
+      background: linear-gradient(135deg, #d5b96a, #b6933b);
+      padding: 0.7rem 2rem;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .gallery-link:hover {
+      background: linear-gradient(135deg, #e0c87c, #c9a33e);
+      box-shadow: 0 0 18px rgba(213,185,106,0.25);
+      transform: translateY(-2px);
+    }
+
+    /* SHOWCASE */
+    section.showcase {
+      background: #0f0f0f;
+      padding: 6rem 8vw;
+      text-align: center;
+    }
+
+    section.showcase h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #d8c279;
+      margin-bottom: 3rem;
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .showcase-card {
+      background: #141414;
+      border: 1px solid rgba(218,183,92,0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.5s ease, box-shadow 0.5s ease, border 0.5s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .showcase-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-10px);
+      border: 1px solid rgba(218,183,92,0.4);
+      box-shadow: 0 12px 25px rgba(218,183,92,0.12);
+    }
+
+    .showcase-card img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      filter: brightness(90%);
+      transition: filter 0.5s ease;
+    }
+
+    .showcase-card:hover img { filter: brightness(100%); }
+
+    .showcase-card .info {
+      padding: 1.5rem 1.5rem 2rem;
+    }
+
+    .showcase-card h4 {
+      font-family: 'Playfair Display', serif;
+      color: #f0e6cc;
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .showcase-card p {
+      color: #ccc;
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .showcase-btn {
+      text-decoration: none;
+      color: #111;
+      background: linear-gradient(135deg, #d5b96a, #b6933b);
+      padding: 0.6rem 1.6rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .showcase-btn:hover {
+      background: linear-gradient(135deg, #e0c87c, #c9a33e);
+      box-shadow: 0 0 15px rgba(213,185,106,0.25);
+      transform: translateY(-1px);
+    }
+
+    /* ABOUT & CONTACT */
+    section.info {
+      background: #0f0f0f;
       padding: 5rem 8vw;
       text-align: center;
     }
@@ -192,9 +351,7 @@
       transition: border 0.3s ease;
     }
 
-    input:focus, textarea:focus {
-      border-color: #d5b96a;
-    }
+    input:focus, textarea:focus { border-color: #d5b96a; }
 
     button {
       background: linear-gradient(135deg, #d5b96a, #b6933b);
@@ -244,7 +401,7 @@
     </div>
   </nav>
 
-  <!-- HERO WITH BACKGROUND VIDEO -->
+  <!-- HERO -->
   <video autoplay muted loop playsinline class="video-bg">
     <source src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/homepage%2Fshowroom.mp4?alt=media" type="video/mp4">
   </video>
@@ -256,15 +413,66 @@
     <a href="pianos.html" class="cta">Explore Our Gallery</a>
   </section>
 
+  <!-- SERVICES -->
+  <section class="services">
+    <h3>Our Services</h3>
+    <div class="service-grid">
+      <div class="card fade"> <h4>Piano Sales</h4>
+        <p>Exclusive selection of the world’s most distinguished pianos — from timeless Steinways to rare European masterpieces.</p>
+      </div>
+
+      <div class="card fade"> <h4>Tuning Resources</h4>
+        <p>Access our network of master tuners and technicians for on-site service, maintenance, and tonal optimization.</p>
+      </div>
+
+      <div class="card fade"> <h4>Free Moving within 1,000 Miles</h4>
+        <p>Enjoy complimentary professional transport for your piano within 1,000 miles — handled by fine-instrument specialists.</p>
+      </div>
+
+      <div class="card fade"> <h4>Warranty & Support</h4>
+        <p>Three-year common-sense coverage on pre-owned pianos and ten-year manufacturer warranty on all new instruments.</p>
+      </div>
+    </div>
+    <a href="pianos.html" class="gallery-link">View Gallery</a>
+  </section>
+
+  <!-- SHOWCASE -->
+  <section class="showcase">
+    <h3>Featured Instruments</h3>
+    <div class="showcase-grid">
+      <div class="showcase-card fade">
+        <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fsteinway_model_d.jpg?alt=media" alt="Steinway Model D">
+        <div class="info">
+          <h4>Steinway & Sons Model D</h4>
+          <p>The pinnacle of concert-grand excellence — powerful projection, responsive touch, and unmatched tonal range.</p>
+          <a href="pianos.html" class="showcase-btn">View in Gallery</a>
+        </div>
+      </div>
+
+      <div class="showcase-card fade">
+        <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fyamaha_cfx.jpg?alt=media" alt="Yamaha CFX">
+        <div class="info">
+          <h4>Yamaha CFX</h4>
+          <p>Modern precision meets dynamic artistry — crafted for clarity and brilliance on the world’s finest stages.</p>
+          <a href="pianos.html" class="showcase-btn">View in Gallery</a>
+        </div>
+      </div>
+
+      <div class="showcase-card fade">
+        <img src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/showcase%2Fmason_hamlin_bb.jpg?alt=media" alt="Mason & Hamlin BB">
+        <div class="info">
+          <h4>Mason & Hamlin BB</h4>
+          <p>American craftsmanship perfected — warm resonance and enduring quality that inspires every performance.</p>
+          <a href="pianos.html" class="showcase-btn">View in Gallery</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT / CONTACT -->
   <section class="info">
     <h3>About Us</h3>
-    <p>
-      For over 32 years, World Class Piano Gallery has served discerning musicians and collectors with
-      unparalleled expertise. Owned and operated by leading authorities on grand and upright pianos —
-      including some of the foremost Steinway experts in the United States and worldwide — we pride ourselves
-      on offering instruments that define excellence in craftsmanship and tone.
-    </p>
+    <p>For over 32 years, World Class Piano Gallery has served discerning musicians and collectors with unparalleled expertise. Owned and operated by leading authorities on grand and upright pianos — including some of the foremost Steinway experts in the United States and worldwide — we pride ourselves on offering instruments that define excellence in craftsmanship and tone.</p>
 
     <h3>Contact Us</h3>
     <form action="https://formspree.io/f/yourformid" method="POST">
@@ -276,5 +484,19 @@
   </section>
 
   <footer>© 2025 World Class Piano Gallery</footer>
+
+  <!-- Scroll Fade Script -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.card, .showcase-card').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
