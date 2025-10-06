@@ -2,58 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>World Class Piano Gallery</title>
-  <link rel="icon" type="image/png" href="playstore.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+
   <style>
-    body { background-color:#0b0b0b; color:#f4f4f4; font-family:'Times New Roman',serif; }
-    .gold { color:#d4af37; }
-    .btn {
-      border:1px solid #d4af37; color:#d4af37; border-radius:9999px;
-      padding:0.5rem 1.5rem; transition:all .3s ease;
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      color: #1a1a1a;
+      background-color: #faf9f6;
+      overflow-x: hidden;
     }
-    .btn:hover { background:#d4af37; color:#000; }
+
+    /* Background video */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+      filter: brightness(85%) saturate(110%);
+    }
+
+    /* Overlay */
+    .overlay {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    header {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: #2b2b2b;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+
+    p.subtitle {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      color: #4a4a4a;
+      margin-bottom: 2rem;
+    }
+
+    a.cta {
+      text-decoration: none;
+      background-color: #d1b97b;
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+    }
+
+    a.cta:hover {
+      background-color: #b89e5e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.9rem;
+      color: #444;
+    }
   </style>
 </head>
+
 <body>
-  <!-- Header -->
-  <header class="flex justify-between items-center px-6 py-4 border-b border-gold/20">
-    <div class="flex items-center gap-3">
-      <img src="playstore.png" alt="Logo" class="w-10 h-10 rounded-lg" />
-      <h1 class="text-2xl font-bold gold">World Class Piano Gallery</h1>
-    </div>
-    <nav class="flex gap-6 text-lg">
-      <a href="index.html" class="text-gold font-semibold">Home</a>
-      <a href="pianos.html" class="hover:text-gold">Pianos</a>
-      <a href="contact.html" class="hover:text-gold">Contact</a>
-      <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      <a href="tradein.html" class="hover:text-gold">Trade-In</a>
-    </nav>
-  </header>
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="video-bg">
+    <source src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/homepage%2Fshowroom.mp4?alt=media" type="video/mp4">
+  </video>
 
-  <!-- Hero -->
-  <section class="text-center py-24 px-6 bg-gradient-to-b from-[#141414] to-black">
-    <h2 class="text-5xl font-bold mb-6 gold">Exquisite Instruments. Unmatched Quality.</h2>
-    <p class="text-xl text-gray-300 mb-10">
-      Curated pianos from iconic makers — meticulously prepped, tuned, and delivered.
-    </p>
-    <a href="pianos.html" class="btn text-lg">View Pianos</a>
-  </section>
+  <div class="overlay">
+    <header>World Class Piano Gallery</header>
+    <p class="subtitle">Curated Instruments for Discerning Musicians</p>
+    <a href="pianos.html" class="cta">Explore Collection</a>
+  </div>
 
-  <!-- About -->
-  <section class="py-16 px-8 text-center">
-    <h3 class="text-3xl gold font-semibold mb-6">A Tradition of Excellence</h3>
-    <p class="max-w-3xl mx-auto text-gray-300 text-lg leading-relaxed">
-      World Class Piano Gallery specializes in high-end acoustic pianos from the most prestigious brands.
-      Each instrument undergoes comprehensive inspection, regulation, and voicing before delivery.
-      Whether you are an artist, collector, or first-time buyer, our gallery offers a seamless experience
-      that embodies craftsmanship, elegance, and enduring value.
-    </p>
-  </section>
-
-  <footer class="py-8 text-center border-t border-gold/20 text-sm text-gray-400">
-    © 2025 World Class Piano Gallery
-  </footer>
+  <footer>© 2025 World Class Piano Gallery</footer>
 </body>
 </html>
