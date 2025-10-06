@@ -5,223 +5,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Class Piano Gallery</title>
 
-  <!-- Favicons (place these files in your site root) -->
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <meta name="theme-color" content="#0d0d0d" />
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --gold: #d6be84;
-      --gold-strong: #c9a33e;
-      --radius: 18px;
-      --ease: cubic-bezier(.2,.6,.2,1);
-      --shadow-lg: 0 18px 40px rgba(0,0,0,0.30);
-      --shadow-gold: 0 18px 40px rgba(214,190,132,0.20);
-      --nav-h: 72px;
+      --gold:#d6be84; --gold-strong:#b6933b;
+      --radius:18px; --ease:cubic-bezier(.2,.6,.2,1);
     }
-    /* Light/Dark palettes controlled by [data-theme] + auto fallback */
-    @media (prefers-color-scheme: dark){
-      :root{ --bg: #0d0d0d; --bg-2:#101010; --ink:#f1f1f1; --muted:#cfcfcf; --line: rgba(218,183,92,0.15); --veil: rgba(0,0,0,0.35); }
-    }
-    @media (prefers-color-scheme: light){
-      :root{ --bg: #f7f5ee; --bg-2:#fff; --ink:#1a1a1a; --muted:#4a4a4a; --line: rgba(180,150,60,0.20); --veil: rgba(255,255,255,0.35); }
-    }
-    [data-theme="dark"]{ --bg:#0d0d0d; --bg-2:#101010; --ink:#f1f1f1; --muted:#cfcfcf; --line: rgba(218,183,92,0.15); --veil: rgba(0,0,0,0.35); }
-    [data-theme="light"]{ --bg:#f7f5ee; --bg-2:#ffffff; --ink:#1a1a1a; --muted:#4a4a4a; --line: rgba(180,150,60,0.20); --veil: rgba(255,255,255,0.35); }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    /* Color themes */
+    [data-theme="dark"]{
+      --bg:#0d0d0d; --bg-2:#121212; --ink:#f1f1f1;
+      --muted:#cfcfcf; --line:rgba(218,183,92,0.15);
+      --surface-gradient:linear-gradient(180deg,#0d0d0d 0%,#141312 50%,#1a1816 100%);
+    }
+    [data-theme="light"]{
+      --bg:#f7f5ee; --bg-2:#fff; --ink:#111;
+      --muted:#444; --line:rgba(180,150,60,0.25);
+      --surface-gradient:linear-gradient(180deg,#f8f7f2 0%,#ece7da 50%,#dfd8c5 100%);
+    }
+
+    html,body{margin:0;padding:0;overflow-x:hidden;height:100%;}
     body{
-      margin:0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-      color: var(--ink);
-      background: var(--bg);
+      font-family:'Inter',sans-serif;
+      color:var(--ink);
+      background:var(--surface-gradient);
       line-height:1.6;
-      overflow-x:hidden;
-      transition: background .35s var(--ease), color .35s var(--ease);
+      transition:background .4s var(--ease),color .4s var(--ease);
     }
-    h1,h2,h3,h4{ font-family: 'Cormorant Garamond', serif; letter-spacing:.02em; margin:0; }
-    a{ color: inherit; }
+    h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;letter-spacing:.02em;margin:0;}
 
-    /* NAVBAR */
+    /* NAV */
     nav{
-      position:fixed; inset:0 0 auto 0;
-      height: var(--nav-h);
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 0 4vw;
-      backdrop-filter: blur(10px);
-      background: color-mix(in oklab, var(--bg) 70%, transparent);
-      border-bottom: 1px solid var(--line);
-      z-index: 20;
-      transition: height .35s var(--ease), background .35s var(--ease), padding .35s var(--ease);
+      position:fixed;top:0;left:0;width:100%;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:1rem 4vw;height:72px;
+      backdrop-filter:blur(12px);
+      background:rgba(10,10,10,.45);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 4px 18px rgba(0,0,0,.4);
+      z-index:20;transition:all .35s var(--ease);
     }
-    nav.scrolled{
-      height: 56px;
-      padding: 0 3vw;
-      background: color-mix(in oklab, var(--bg) 80%, transparent);
-    }
-    .brand{
-      display:flex; align-items:center; gap:.6rem; min-width:0;
-    }
-    .brand img{
-      height: 32px; width: auto; display:block;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
-      transition: transform .35s var(--ease);
-    }
-    nav.scrolled .brand img{ transform: scale(.92); }
-    .brand .text{
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      font-family: 'Cormorant Garamond', serif; font-weight:600; letter-spacing:.03em;
-      color: var(--gold);
-      transition: opacity .35s var(--ease);
-    }
-    /* Hide brand text on narrow screens or when scrolled */
-    @media (max-width: 820px){ .brand .text{ display:none; } }
+    nav.scrolled{height:56px;padding:0.5rem 3vw;background:rgba(15,15,15,.6);}
+    .brand{display:flex;align-items:center;gap:.6rem;}
+    .brand img{height:40px;transition:transform .3s var(--ease);}
+    nav.scrolled .brand img{transform:scale(.9);}
+    .brand .text{color:var(--gold);font-weight:600;white-space:nowrap;}
+    @media(max-width:820px){.brand .text{display:none;}}
 
-    .links{ display:flex; align-items:center; gap:2rem; }
-    .links a{ text-decoration:none; color: var(--ink); opacity:.95; transition: color .25s, opacity .25s; }
-    .links a:hover{ color: var(--gold); opacity:1; }
-
-    /* Theme toggle icon */
+    .links{display:flex;align-items:center;gap:2rem;}
+    .links a{text-decoration:none;color:var(--ink);opacity:.9;transition:color .3s;}
+    .links a:hover{color:var(--gold);}
     .theme-toggle{
-      border:none; background:transparent; cursor:pointer;
-      padding:.25rem; margin-left: .5rem;
-      color: var(--gold); font-size:1.2rem; line-height:1;
-      display:flex; align-items:center; justify-content:center;
-      transition: transform .2s var(--ease);
+      border:none;background:transparent;color:var(--gold);
+      font-size:1.2rem;cursor:pointer;
+      transition:transform .2s var(--ease);
     }
-    .theme-toggle:hover{ transform: translateY(-1px) scale(1.05); }
+    .theme-toggle:hover{transform:scale(1.1);}
 
-    /* HERO VIDEO */
-    .hero-wrap{ position:relative; height: 100vh; overflow:hidden; }
-    .hero-wrap video{
-      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-      filter: brightness(60%) contrast(110%) saturate(115%);
-      transition: filter .35s var(--ease);
+    /* HERO */
+    header.hero{position:relative;height:100vh;overflow:hidden;}
+    header.hero video{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;filter:brightness(60%) contrast(110%) saturate(115%);
     }
-    [data-theme="light"] .hero-wrap video{ filter: brightness(75%) contrast(105%) saturate(110%); }
-
-    .veil{ position:absolute; inset:0; background: var(--veil); }
-
-    .hero{
-      position:relative; z-index:1;
-      height:100%; display:grid; place-items:center;
-      text-align:center; padding: 0 5vw;
+    [data-theme="light"] header.hero video{filter:brightness(75%) contrast(105%) saturate(110%);}
+    header.hero::after{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(circle at 50% 70%,rgba(214,190,132,.15) 0%,rgba(0,0,0,.6) 70%);
     }
-    .hero h2{
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
-      color: color-mix(in oklab, var(--ink), var(--gold) 10%);
-      text-shadow: 0 6px 30px rgba(0,0,0,.35);
-      margin-bottom: .8rem;
+    .hero-content{
+      position:relative;z-index:2;text-align:center;
+      top:50%;transform:translateY(-50%);
+      padding:0 5vw;
     }
-    .hero p{
-      max-width: 860px; margin: 0 auto 1.6rem;
-      color: var(--muted); font-weight: 300;
+    .hero-content h2{
+      font-size:clamp(2.5rem,5vw,4.5rem);
+      color:var(--gold);
+      text-shadow:0 8px 30px rgba(0,0,0,.6);
     }
+    .hero-content p{color:var(--muted);max-width:800px;margin:1rem auto 2rem;}
     .cta{
-      display:inline-block; text-decoration:none;
-      color:#111; background: linear-gradient(135deg, var(--gold), var(--gold-strong));
-      padding:.9rem 2.4rem; border-radius: 999px; font-weight: 600; letter-spacing:.03em;
-      box-shadow: 0 0 18px color-mix(in srgb, var(--gold), transparent 75%);
-      transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+      text-decoration:none;color:#111;
+      background:linear-gradient(135deg,var(--gold),var(--gold-strong));
+      padding:.9rem 2.4rem;border-radius:999px;font-weight:600;
+      box-shadow:0 0 22px rgba(214,190,132,.25);
+      transition:transform .3s var(--ease);
     }
-    .cta:hover{ transform: translateY(-2px); box-shadow: 0 0 26px color-mix(in srgb, var(--gold), transparent 65%); }
+    .cta:hover{transform:translateY(-2px);}
 
-    /* SERVICES (long, Apple-like) */
+    /* SERVICES */
     section.services{
-      background: linear-gradient(to bottom, var(--bg), var(--bg-2));
-      padding: 8rem 6vw;
+      padding:8rem 6vw;
+      background:var(--surface-gradient);
+      box-shadow:inset 0 20px 40px rgba(0,0,0,.3);
     }
-    section.services h3{
-      text-align:center; font-size: 2.4rem; color: var(--gold); margin-bottom: 3.2rem;
-    }
+    section.services h3{text-align:center;font-size:2.4rem;color:var(--gold);margin-bottom:3rem;}
     .block{
-      display:grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items:center;
-      margin: 0 auto 8rem; max-width: 1200px;
+      display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+      margin-bottom:8rem;
     }
-    .block:nth-child(even){ direction: rtl; }
-    .block .media{ position:relative; direction:ltr; border-radius: var(--radius); overflow:hidden; box-shadow: var(--shadow-lg); border:1px solid var(--line); }
-    .block .media img, .block .media video{ width:100%; height: 420px; object-fit: cover; display:block; }
-    .block .media .poster{ position:absolute; inset:0; }
-    .block .copy{ direction:ltr; max-width: 560px; }
-    .block .copy h4{ font-size: 1.9rem; color: color-mix(in oklab, var(--ink), var(--gold) 8%); margin-bottom: .6rem; }
-    .block .copy p{ color: var(--muted); font-weight: 300; }
-
-    /* Contact button in services */
+    .block:nth-child(even){direction:rtl;}
+    .media{
+      border-radius:var(--radius);overflow:hidden;
+      box-shadow:0 20px 45px rgba(0,0,0,.45);
+      border:1px solid var(--line);
+    }
+    .media img,.media video{width:100%;height:420px;object-fit:cover;display:block;}
+    .copy{direction:ltr;max-width:560px;}
+    .copy h4{font-size:1.9rem;color:var(--gold);margin-bottom:.6rem;}
+    .copy p{color:var(--muted);}
     .contact-btn{
-      display:block; width:max-content; margin: 1rem auto 0;
-      color:#111; background: linear-gradient(135deg, var(--gold), var(--gold-strong));
-      padding: .9rem 2.2rem; border-radius: 999px; font-weight:600; text-decoration:none;
-      box-shadow: 0 0 18px color-mix(in srgb, var(--gold), transparent 75%);
-      transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+      display:block;width:max-content;margin:1rem auto 0;
+      color:#111;background:linear-gradient(135deg,var(--gold),var(--gold-strong));
+      padding:.9rem 2.2rem;border-radius:999px;font-weight:600;text-decoration:none;
+      box-shadow:0 0 18px rgba(214,190,132,.3);
+      transition:transform .25s var(--ease);
     }
-    .contact-btn:hover{ transform: translateY(-2px); box-shadow: 0 0 26px color-mix(in srgb, var(--gold), transparent 65%); }
+    .contact-btn:hover{transform:translateY(-2px);}
 
     /* MODAL */
     .modal{
-      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-      background: color-mix(in oklab, var(--bg), transparent 35%);
-      backdrop-filter: blur(6px);
-      opacity:0; pointer-events:none; transition: opacity .3s var(--ease);
-      z-index: 50;
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+      background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+      opacity:0;pointer-events:none;transition:opacity .3s var(--ease);
+      z-index:50;
     }
-    .modal.active{ opacity:1; pointer-events:auto; }
-    .modal .panel{
-      width: min(92vw, 520px);
-      background: var(--bg-2);
-      border:1px solid var(--line);
-      border-radius: 14px;
-      box-shadow: var(--shadow-lg);
-      padding: 1.5rem 1.5rem 1.75rem;
-      position:relative;
+    .modal.active{opacity:1;pointer-events:auto;}
+    .panel{
+      width:min(92vw,520px);background:var(--bg-2);
+      border:1px solid var(--line);border-radius:14px;
+      box-shadow:0 18px 45px rgba(0,0,0,.5);
+      padding:1.5rem;position:relative;
     }
-    .panel h3{ text-align:center; color: var(--gold); font-size:1.8rem; margin: .25rem 0 1rem; }
-    .close{
-      position:absolute; top:10px; right:12px; border:none; background:transparent; color: var(--ink);
-      font-size:1.5rem; line-height:1; cursor:pointer;
+    .panel h3{text-align:center;color:var(--gold);}
+    .close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--ink);font-size:1.5rem;cursor:pointer;}
+    .panel input,.panel textarea{
+      width:100%;background:rgba(0,0,0,.1);
+      border:1px solid var(--line);border-radius:8px;color:var(--ink);
+      padding:.85rem 1rem;margin:.5rem 0;font-size:1rem;
     }
-    .panel input, .panel textarea{
-      width:100%; background: color-mix(in oklab, var(--bg-2), var(--bg) 40%);
-      border:1px solid var(--line); border-radius:8px; color: var(--ink);
-      padding:.85rem 1rem; margin:.5rem 0; font-size:1rem; outline:none;
-      transition: border-color .2s var(--ease), background .2s var(--ease);
-    }
-    .panel input:focus, .panel textarea:focus{ border-color: var(--gold); }
     .panel button{
-      display:block; margin: .75rem auto 0;
-      background: linear-gradient(135deg, var(--gold), var(--gold-strong)); color:#111;
-      border:none; border-radius:999px; padding:.85rem 2rem; font-weight:600; cursor:pointer;
-      box-shadow: 0 0 18px color-mix(in srgb, var(--gold), transparent 75%);
-      transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+      display:block;margin:.75rem auto 0;
+      background:linear-gradient(135deg,var(--gold),var(--gold-strong));
+      color:#111;border:none;border-radius:999px;
+      padding:.85rem 2rem;font-weight:600;cursor:pointer;
+      box-shadow:0 0 18px rgba(214,190,132,.25);
     }
-    .panel button:hover{ transform: translateY(-2px); box-shadow: 0 0 26px color-mix(in srgb, var(--gold), transparent 65%); }
 
     footer{
-      border-top: 1px solid var(--line);
-      background: var(--bg);
-      color: color-mix(in oklab, var(--ink), var(--muted) 30%);
-      text-align:center; padding: 1.5rem; font-size: .95rem;
-      transition: background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
+      border-top:1px solid var(--line);
+      text-align:center;padding:1.5rem;font-size:.95rem;
+      color:var(--muted);background:var(--bg-2);
     }
-
-    @media (max-width: 900px){
-      .block{ grid-template-columns: 1fr; }
-      .block:nth-child(even){ direction:ltr; }
-      .block .media img, .block .media video{ height: 340px; }
+    @media(max-width:900px){
+      .block{grid-template-columns:1fr;}
+      .block:nth-child(even){direction:ltr;}
+      .media img,.media video{height:340px;}
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav id="nav">
     <div class="brand">
-      <!-- Baked logo (base64) -->
-      <img alt="WCPG Logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAATlklEQVR42u2caZBdZ3nnf+97lnvufm...REPLACE_ME_IF_TRUNCATED..." />
+      <img src="logo.png" alt="World Class Piano Gallery Logo">
       <div class="text">World Class Piano Gallery</div>
     </div>
     <div class="links">
@@ -229,91 +180,66 @@
       <a href="pianos.html">Gallery</a>
       <a href="warranty.html">Warranty</a>
       <a href="contact.html">Contact</a>
-      <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
-        <!-- discrete gold icon (sun/moon) -->
-        <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zm10.48 14.32l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM12 4V1h-0v3h0zm0 19v-3h0v3h0zM4 12H1v0h3v0zm19 0h-3v0h3v0zM6.76 19.16l-1.42 1.42-1.79-1.8 1.41-1.41 1.8 1.79zM19.16 6.76l1.4-1.4 1.8 1.79-1.41 1.41-1.79-1.8zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
-        <svg id="moon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+        <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zm10.48 14.32l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM12 4V1h-0v3h0zm0 19v-3h0v3h0zM4 12H1v0h3v0zm19 0h-3v0h3v0zM6.76 19.16l-1.42 1.42-1.79-1.8 1.41-1.41 1.8 1.79zM19.16 6.76l1.4-1.4 1.8 1.79-1.41 1.41-1.79-1.8zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
+        <svg id="moon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </button>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <header class="hero-wrap">
+  <header class="hero">
     <video autoplay muted loop playsinline>
       <source src="IMG_0069.mp4" type="video/mp4">
     </video>
-    <div class="veil"></div>
-    <div class="hero">
-      <div>
-        <h2>Designed for Performance.</h2>
-        <p>Where tradition meets innovation — offering instruments that inspire mastery.</p>
-        <a class="cta" href="#services">Discover More</a>
-      </div>
+    <div class="hero-content">
+      <h2>Designed for Performance.</h2>
+      <p>Where tradition meets innovation — offering instruments that inspire mastery.</p>
+      <a href="#services" class="cta">Discover More</a>
     </div>
   </header>
 
-  <!-- SERVICES -->
   <section id="services" class="services">
     <h3>Our Expertise</h3>
-
-    <!-- Sales (your image) -->
     <div class="block">
-      <div class="media">
-        <img src="IMG_0059.jpeg" alt="Piano Sales showcase">
-      </div>
+      <div class="media"><img src="IMG_0059.jpeg" alt="Piano Sales"></div>
       <div class="copy">
         <h4>Piano Sales</h4>
-        <p>We curate a world-class selection of grand and upright pianos from Steinway, Yamaha, and European makers. Each instrument is meticulously inspected, voiced, and prepared to concert standards before it reaches your home or stage.</p>
+        <p>Curated grand and upright pianos from Steinway, Yamaha, and European makers — inspected, voiced, and prepared to concert standards.</p>
       </div>
     </div>
-
-    <!-- Tuning (branded placeholder) -->
     <div class="block">
-      <div class="media">
-        <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=1400&q=80" alt="Tuning & Maintenance">
-      </div>
+      <div class="media"><img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=1200&q=80" alt="Tuning"></div>
       <div class="copy">
         <h4>Tuning & Maintenance</h4>
-        <p>Certified technicians provide tuning, regulation, voicing, and restoration with concert-level precision. We understand the soul of each piano, ensuring tone, touch, and resonance remain perfectly balanced.</p>
+        <p>Our certified technicians provide tuning, regulation, and restoration with care — preserving tone, touch, and resonance.</p>
       </div>
     </div>
-
-    <!-- Moving (your video with fallback image) -->
     <div class="block">
       <div class="media">
-        <video autoplay muted loop playsinline poster="IMG_0058.jpeg">
-          <source src="movingquality.avif" type="video/avif">
-        </video>
+        <video autoplay muted loop playsinline poster="IMG_0058.jpeg"><source src="movingquality.avif" type="video/avif"></video>
       </div>
       <div class="copy">
         <h4>Professional Moving</h4>
-        <p>Enjoy complimentary transport within 1,000 miles of purchase. From concert halls to private residences, each move is handled by specialists trained exclusively in fine-instrument logistics.</p>
+        <p>Complimentary transport within 1,000 miles of purchase, handled by experts in fine-instrument logistics.</p>
       </div>
     </div>
-
-    <!-- Warranty (branded placeholder) -->
     <div class="block">
-      <div class="media">
-        <img src="https://images.unsplash.com/photo-1608032077018-1d4572d97a12?auto=format&fit=crop&w=1400&q=80" alt="Warranty & Support">
-      </div>
+      <div class="media"><img src="https://images.unsplash.com/photo-1608032077018-1d4572d97a12?auto=format&fit=crop&w=1200&q=80" alt="Warranty"></div>
       <div class="copy">
         <h4>Warranty & Support</h4>
-        <p>Every new piano carries a 10-year manufacturer warranty. Pre-owned pianos include a 3-year “common sense” guarantee covering essential mechanical and tonal integrity. Excellence continues with support you can trust.</p>
+        <p>New pianos: 10-year manufacturer warranty. Pre-owned: 3-year “common sense” coverage — our promise of lasting excellence.</p>
       </div>
     </div>
-
-    <a class="contact-btn" id="openModal" href="#contact">Contact Us</a>
+    <a href="#contact" class="contact-btn" id="openModal">Contact Us</a>
   </section>
 
-  <!-- CONTACT MODAL -->
-  <div class="modal" id="contactModal" aria-hidden="true">
-    <div class="panel" role="dialog" aria-modal="true" aria-labelledby="contactHeading">
-      <button class="close" id="closeModal" aria-label="Close">×</button>
-      <h3 id="contactHeading">Contact Us</h3>
-      <!-- TODO: replace with your Formspree endpoint -->
+  <div class="modal" id="contactModal">
+    <div class="panel">
+      <button class="close" id="closeModal">×</button>
+      <h3>Contact Us</h3>
       <form action="https://formspree.io/f/yourformid" method="POST">
-        <input type="text" name="name" placeholder="Full Name" required />
-        <input type="email" name="_replyto" placeholder="Email Address" required />
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="_replyto" placeholder="Email Address" required>
         <textarea name="message" rows="5" placeholder="Your message..." required></textarea>
         <button type="submit">Send Message</button>
       </form>
@@ -323,56 +249,20 @@
   <footer>© 2025 World Class Piano Gallery</footer>
 
   <script>
-    // === Theme handling (auto + manual) ===
-    const html = document.documentElement;
-    const btn = document.getElementById('themeBtn');
-    const sun = document.getElementById('sun');
-    const moon = document.getElementById('moon');
-
-    function applyTheme(mode){
-      // mode: 'dark' | 'light' | 'auto'
-      html.setAttribute('data-theme', mode);
-      const isDark = (mode === 'dark') || (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      sun.style.display = isDark ? 'none' : '';
-      moon.style.display = isDark ? '' : 'none';
-      // update meta theme-color for mobile browser UI
-      const meta = document.querySelector('meta[name="theme-color"]');
-      meta && meta.setAttribute('content', isDark ? '#0d0d0d' : '#f7f5ee');
-    }
-
-    // initial
-    const saved = localStorage.getItem('wcpg-theme') || 'auto';
-    applyTheme(saved);
-
-    // respond to system changes if in auto
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-      if((localStorage.getItem('wcpg-theme') || 'auto') === 'auto') applyTheme('auto');
-    });
-
-    btn.addEventListener('click', () => {
-      const current = html.getAttribute('data-theme') || 'auto';
-      const next = current === 'auto' ? 'dark' : current === 'dark' ? 'light' : 'auto';
-      localStorage.setItem('wcpg-theme', next);
-      applyTheme(next);
-    });
-
-    // === Shrink-on-scroll navbar & hide brand text on scroll for tighter look ===
-    const nav = document.getElementById('nav');
-    function onScroll(){
-      if(window.scrollY > 20){ nav.classList.add('scrolled'); }
-      else{ nav.classList.remove('scrolled'); }
-    }
-    window.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-
-    // === Contact modal ===
-    const modal = document.getElementById('contactModal');
-    const openBtn = document.getElementById('openModal');
-    const closeBtn = document.getElementById('closeModal');
-    openBtn.addEventListener('click', (e)=>{ e.preventDefault(); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); });
-    closeBtn.addEventListener('click', ()=>{ modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); });
-    window.addEventListener('click', (e)=>{ if(e.target === modal){ modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); }});
-    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); }});
+    const html=document.documentElement,btn=document.getElementById('themeBtn'),
+          sun=document.getElementById('sun'),moon=document.getElementById('moon');
+    function applyTheme(m){html.setAttribute('data-theme',m);
+      const d=(m==='dark')||(m==='auto'&&window.matchMedia('(prefers-color-scheme:dark)').matches);
+      sun.style.display=d?'none':'';moon.style.display=d?'':'none';
+      document.querySelector('meta[name="theme-color"]').setAttribute('content',d?'#0d0d0d':'#f7f5ee');}
+    const saved=localStorage.getItem('wcpg-theme')||'auto';applyTheme(saved);
+    window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{if((localStorage.getItem('wcpg-theme')||'auto')==='auto')applyTheme('auto');});
+    btn.addEventListener('click',()=>{const c=html.getAttribute('data-theme')||'auto';const n=c==='auto'?'dark':c==='dark'?'light':'auto';localStorage.setItem('wcpg-theme',n);applyTheme(n);});
+    const nav=document.getElementById('nav');function onScroll(){nav.classList.toggle('scrolled',window.scrollY>20);}window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+    const modal=document.getElementById('contactModal');document.getElementById('openModal').addEventListener('click',e=>{e.preventDefault();modal.classList.add('active');});
+    document.getElementById('closeModal').addEventListener('click',()=>modal.classList.remove('active'));
+    window.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('active');});
+    window.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('active');});
   </script>
 </body>
 </html>
