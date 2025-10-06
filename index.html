@@ -2,98 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Class Piano Gallery</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Raleway', sans-serif;
-      color: #1a1a1a;
-      background-color: #faf9f6;
-      overflow-x: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      color: #e8e6e3;
+      background: #0e0e0e;
+      overflow: hidden;
     }
 
     /* Background video */
     .video-bg {
       position: fixed;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      z-index: -1;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
-      filter: brightness(85%) saturate(110%);
+      filter: brightness(50%) saturate(120%);
+      z-index: -2;
     }
 
-    /* Overlay */
+    /* Subtle gradient overlay */
     .overlay {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(4px);
-      min-height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+      z-index: -1;
+    }
+
+    /* Hero section */
+    .hero {
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 2rem;
+      letter-spacing: 0.03em;
+      animation: fadeIn 1s ease forwards;
     }
 
-    header {
+    .hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
       font-weight: 600;
-      color: #2b2b2b;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      color: #f0e6cc;
       letter-spacing: 1px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: slideUp 1s ease forwards 0.3s;
     }
 
-    p.subtitle {
-      font-family: 'Raleway', sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.05em;
-      color: #4a4a4a;
-      margin-bottom: 2rem;
+    .hero p {
+      font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+      font-weight: 300;
+      color: #c6c3b8;
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: slideUp 1s ease forwards 0.6s;
     }
 
-    a.cta {
+    .cta {
+      display: inline-block;
       text-decoration: none;
-      background-color: #d1b97b;
-      color: white;
-      padding: 0.8rem 2rem;
+      color: #111;
+      background: linear-gradient(135deg, #d5b96a, #b6933b);
+      padding: 0.9rem 2.4rem;
       border-radius: 40px;
       font-weight: 500;
       letter-spacing: 0.05em;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: slideUp 1s ease forwards 0.9s;
     }
 
-    a.cta:hover {
-      background-color: #b89e5e;
+    .cta:hover {
+      background: linear-gradient(135deg, #e0c87c, #c9a33e);
+      box-shadow: 0 0 18px rgba(213,185,106,0.25);
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
     footer {
       position: absolute;
-      bottom: 20px;
+      bottom: 18px;
+      width: 100%;
+      text-align: center;
       font-size: 0.9rem;
-      color: #444;
+      color: #8a877f;
+      letter-spacing: 0.04em;
+    }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Background Video -->
+  <!-- Background video -->
   <video autoplay muted loop playsinline class="video-bg">
     <source src="https://firebasestorage.googleapis.com/v0/b/pianoinv.appspot.com/o/homepage%2Fshowroom.mp4?alt=media" type="video/mp4">
   </video>
+  <div class="overlay"></div>
 
-  <div class="overlay">
-    <header>World Class Piano Gallery</header>
-    <p class="subtitle">Curated Instruments for Discerning Musicians</p>
-    <a href="pianos.html" class="cta">Explore Collection</a>
-  </div>
+  <section class="hero">
+    <h1>World Class Piano Gallery</h1>
+    <p>Where craftsmanship meets timeless sound.</p>
+    <a href="pianos.html" class="cta">Enter Gallery</a>
+  </section>
 
   <footer>© 2025 World Class Piano Gallery</footer>
 </body>
