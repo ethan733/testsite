@@ -1,118 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact – World Class Piano Gallery</title>
-  <link rel="icon" type="image/png" href="playstore.png" />
-
-  <!-- Tailwind + Fonts -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <style>
-    :root { --gold:#d4af37; --black:#0b0b0b; }
-    body { background:var(--black); color:#f4f4f4; font-family:'Lora',serif; overflow-x:hidden; }
-    h1,h2,h3 { font-family:'Playfair Display',serif; }
-    .gold{color:var(--gold);}
-    input,textarea {
-      width:100%;
-      background:#111;
-      color:#f4f4f4;
-      border:1px solid rgba(212,175,55,0.3);
-      border-radius:8px;
-      padding:0.8rem 1rem;
-      margin-bottom:1rem;
-      font-family:'Lora',serif;
-      letter-spacing:0.3px;
-    }
-    input:focus,textarea:focus {
-      outline:none;
-      border-color:var(--gold);
-      box-shadow:0 0 6px rgba(212,175,55,0.3);
-    }
-    footer { border-top:1px solid rgba(212,175,55,0.25); background:#0a0a0a; }
-    footer a:hover { color:var(--gold); }
-  </style>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact – World Class Piano Gallery</title>
+<link rel="icon" type="image/png" href="playstore.png"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--gold:#d4af37;--black:#0b0b0b}
+body{background:var(--black);color:#f5f5f5;font-family:'Inter',sans-serif}
+h1,h2,h3{font-family:'Cormorant Garamond',serif}
+.nav a:hover{color:var(--gold)}
+.gold{color:var(--gold)}
+input,textarea{width:100%;background:#121212;color:#f5f5f5;border:1px solid rgba(212,175,55,.3);border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem}
+input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 6px rgba(212,175,55,.3)}
+.btn{border:1px solid var(--gold);padding:.8rem 1.6rem;border-radius:9999px}
+.btn:hover{background:var(--gold);color:#000}
+footer{border-top:1px solid rgba(212,175,55,.25);background:#0a0a0a}
+footer a:hover{color:var(--gold)}
+</style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="fixed top-0 left-0 w-full z-20 px-8 py-4 flex justify-between items-center bg-black/80 border-b border-gold/10">
-    <div class="flex items-center gap-3">
-      <img src="playstore.png" class="w-10 h-10 rounded-lg" />
-      <h1 class="text-2xl font-bold gold tracking-wide">World Class Piano Gallery</h1>
-    </div>
-    <nav class="flex gap-8 text-lg text-gray-200">
-      <a href="index.html" class="hover:text-gold">Home</a>
-      <a href="pianos.html" class="hover:text-gold">Pianos</a>
-      <a href="contact.html" class="text-gold font-semibold">Contact</a>
-      <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      <a href="tradein.html" class="hover:text-gold">Trade-In</a>
-    </nav>
-  </header>
+<header class="fixed top-0 left-0 w-full z-20 px-6 md:px-8 py-4 flex justify-between items-center bg-black/80 border-b border-gold/10">
+  <div class="flex items-center gap-3">
+    <img src="playstore.png" class="w-10 h-10 rounded-lg"/>
+    <h1 class="text-2xl font-semibold gold">World Class Piano Gallery</h1>
+  </div>
+  <nav class="nav flex gap-6 md:gap-8 text-sm md:text-base">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="pianos.html">Pianos</a>
+    <a href="contact.html" class="gold">Contact</a>
+    <a href="warranty.html">Warranty</a>
+    <a href="tradein.html">Trade-In</a>
+  </nav>
+</header>
 
-  <!-- Contact Section -->
-  <section class="pt-36 pb-24 px-8 text-center">
-    <h2 class="text-5xl font-bold gold mb-6">Get in Touch</h2>
-    <p class="text-gray-300 max-w-2xl mx-auto mb-12 text-lg leading-relaxed">
-      Whether you’re scheduling a private viewing, requesting a valuation, or simply have a question,
-      our gallery team is here to assist you.
-    </p>
-
-    <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">
-      <!-- Contact Form -->
-      <div>
-        <form action="https://formspree.io/f/mwprqdge" method="POST" class="text-gray-300">
-          <input type="text" name="name" placeholder="Full Name" required />
-          <input type="email" name="email" placeholder="Email Address" required />
-          <input type="tel" name="phone" placeholder="Phone Number" />
-          <textarea name="message" rows="5" placeholder="How can we help you?" required></textarea>
-          <button type="submit" class="w-full py-3 border border-gold rounded-full hover:bg-gold hover:text-black transition font-medium tracking-wide">
-            Send Message
-          </button>
-        </form>
-      </div>
-
-      <!-- Contact Info -->
-      <div class="flex flex-col justify-center space-y-4 md:pl-10">
-        <h3 class="text-2xl gold font-semibold mb-2">Our Gallery</h3>
-        <p class="text-gray-300">1000 North Point Cir<br>Alpharetta, GA 30022</p>
-        <p><span class="gold font-semibold">Phone:</span> (404) 491-1656</p>
-        <p><span class="gold font-semibold">Email:</span> <a href="mailto:wcpianogallery@gmail.com" class="hover:text-gold">wcpianogallery@gmail.com</a></p>
-        <p><span class="gold font-semibold">Hours:</span> Mon–Sat 11am–8pm, Sun 12pm–7pm</p>
-        <a href="https://www.facebook.com/WorldClassPianoGallery" target="_blank" class="text-gray-400 hover:text-gold flex items-center gap-2 mt-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M22.675 0h-21.35C.593 0 0 .593 0 1.326v21.348C0 23.406.593 24 1.326 24h11.49v-9.294H9.691v-3.622h3.125V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.099 2.796.143v3.24l-1.92.001c-1.505 0-1.796.716-1.796 1.765v2.315h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .593 23.406 0 22.675 0z"/>
-          </svg>
-          Facebook
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="pt-12 pb-8 text-center text-gray-400">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-center border-b border-gold/20 pb-6 mb-6 gap-6">
-        <div class="text-left">
-          <h3 class="text-2xl font-semibold gold mb-2">World Class Piano Gallery</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">
-            1000 North Point Cir, Alpharetta, GA 30022<br/>
-            (404) 491-1656<br/>
-            <a href="mailto:wcpianogallery@gmail.com" class="text-gray-400 hover:text-gold">wcpianogallery@gmail.com</a>
-          </p>
-        </div>
-        <a href="https://www.facebook.com/WorldClassPianoGallery" target="_blank" class="text-gray-400 hover:text-gold">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.326v21.348C0 23.406.593 24 1.326 24h11.49v-9.294H9.691v-3.622h3.125V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.099 2.796.143v3.24l-1.92.001c-1.505 0-1.796.716-1.796 1.765v2.315h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .593 23.406 0 22.675 0z"/></svg>
-          Facebook
-        </a>
-      </div>
-      <p class="text-sm text-gray-500">
-        © 2025 World Class Piano Gallery. All Rights Reserved.<br/>
-        Designed with precision and passion for timeless craftsmanship.
+<section class="pt-32 pb-24 px-6">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+    <div>
+      <h2 class="text-5xl font-semibold gold mb-6">Get in Touch</h2>
+      <p class="text-gray-300 text-lg leading-relaxed mb-8">
+        Schedule a private audition, request a valuation, or ask a question — we’re here to help.
       </p>
+      <form action="https://formspree.io/f/mwprqdge" method="POST">
+        <input type="text" name="name" placeholder="Full Name" required/>
+        <input type="email" name="email" placeholder="Email Address" required/>
+        <input type="tel" name="phone" placeholder="Phone Number"/>
+        <textarea name="message" rows="5" placeholder="How can we help you?" required></textarea>
+        <button type="submit" class="btn w-full">Send Message</button>
+      </form>
     </div>
-  </footer>
+    <div class="md:pl-8">
+      <h3 class="text-3xl font-semibold gold mb-4">Gallery</h3>
+      <p class="text-gray-300 mb-4">1000 North Point Cir, Alpharetta, GA 30022</p>
+      <p class="mb-2"><span class="gold font-semibold">Phone:</span> (404) 491-1656</p>
+      <p class="mb-2"><span class="gold font-semibold">Email:</span> <a href="mailto:wcpianogallery@gmail.com" class="hover:text-gold">wcpianogallery@gmail.com</a></p>
+      <p class="mb-6"><span class="gold font-semibold">Hours:</span> Mon–Sat 11am–8pm, Sun 12pm–7pm</p>
+      <a href="https://www.facebook.com/WorldClassPianoGallery" target="_blank" class="hover:text-gold inline-flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.326v21.348C0 23.406.593 24 1.326 24h11.49v-9.294H9.691v-3.622h3.125V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.099 2.796.143v3.24l-1.92.001c-1.505 0-1.796.716-1.796 1.765v2.315h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .593 23.406 0 22.675 0z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="pt-12 pb-8 text-center text-gray-400">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between items-center border-b border-gold/20 pb-6 mb-6 gap-6">
+      <div class="text-left">
+        <h4 class="text-2xl font-semibold gold mb-2">World Class Piano Gallery</h4>
+        <p class="text-sm leading-relaxed">
+          1000 North Point Cir, Alpharetta, GA 30022<br/>(404) 491-1656<br/>
+          <a href="mailto:wcpianogallery@gmail.com" class="hover:text-gold">wcpianogallery@gmail.com</a>
+        </p>
+      </div>
+      <a href="https://www.facebook.com/WorldClassPianoGallery" target="_blank" class="hover:text-gold">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.326v21.348C0 23.406.593 24 1.326 24h11.49v-9.294H9.691v-3.622h3.125V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.099 2.796.143v3.24l-1.92.001c-1.505 0-1.796.716-1.796 1.765v2.315h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .593 23.406 0 22.675 0z"/></svg>
+        Facebook
+      </a>
+    </div>
+    <p class="text-sm text-gray-500">© 2025 World Class Piano Gallery. All Rights Reserved.</p>
+  </div>
+</footer>
 </body>
 </html>
