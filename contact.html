@@ -8,11 +8,11 @@
 
   <!-- Tailwind + Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     :root { --gold:#d4af37; --black:#0b0b0b; }
-    body { background:var(--black); color:#f4f4f4; font-family:'Poppins',sans-serif; overflow-x:hidden; }
+    body { background:var(--black); color:#f4f4f4; font-family:'Lora',serif; overflow-x:hidden; }
     h1,h2,h3 { font-family:'Playfair Display',serif; }
     .gold{color:var(--gold);}
     input,textarea {
@@ -21,8 +21,10 @@
       color:#f4f4f4;
       border:1px solid rgba(212,175,55,0.3);
       border-radius:8px;
-      padding:0.75rem 1rem;
+      padding:0.8rem 1rem;
       margin-bottom:1rem;
+      font-family:'Lora',serif;
+      letter-spacing:0.3px;
     }
     input:focus,textarea:focus {
       outline:none;
@@ -39,7 +41,7 @@
   <header class="fixed top-0 left-0 w-full z-20 px-8 py-4 flex justify-between items-center bg-black/80 border-b border-gold/10">
     <div class="flex items-center gap-3">
       <img src="playstore.png" class="w-10 h-10 rounded-lg" />
-      <h1 class="text-2xl font-bold gold">World Class Piano Gallery</h1>
+      <h1 class="text-2xl font-bold gold tracking-wide">World Class Piano Gallery</h1>
     </div>
     <nav class="flex gap-8 text-lg text-gray-200">
       <a href="index.html" class="hover:text-gold">Home</a>
@@ -53,7 +55,7 @@
   <!-- Contact Section -->
   <section class="pt-36 pb-24 px-8 text-center">
     <h2 class="text-5xl font-bold gold mb-6">Get in Touch</h2>
-    <p class="text-gray-300 max-w-2xl mx-auto mb-12 text-lg">
+    <p class="text-gray-300 max-w-2xl mx-auto mb-12 text-lg leading-relaxed">
       Whether you’re scheduling a private viewing, requesting a valuation, or simply have a question,
       our gallery team is here to assist you.
     </p>
@@ -66,7 +68,7 @@
           <input type="email" name="email" placeholder="Email Address" required />
           <input type="tel" name="phone" placeholder="Phone Number" />
           <textarea name="message" rows="5" placeholder="How can we help you?" required></textarea>
-          <button type="submit" class="w-full py-3 border border-gold rounded-full hover:bg-gold hover:text-white transition font-medium">
+          <button type="submit" class="w-full py-3 border border-gold rounded-full hover:bg-gold hover:text-black transition font-medium tracking-wide">
             Send Message
           </button>
         </form>
