@@ -1,181 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Piano Details – World Class Piano Gallery</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-.carousel-slide{display:none;width:100%;height:520px;object-fit:cover;transition:opacity 1.5s;}
-.carousel-slide.active{display:block;}
-.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);
-background:rgba(0,0,0,.4);color:#fff;border:none;width:44px;height:44px;border-radius:999px;}
-.carousel-btn:hover{background:rgba(197,162,83,.85);}
-.carousel-btn.prev{left:12px;} .carousel-btn.next{right:12px;}
-.fade-in-up{opacity:0;transform:translateY(30px);animation:fadeUp 1s ease forwards;}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
-</style>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Piano Details – World Class Piano Gallery</title>
+  <link rel="icon" type="image/png" href="playstore.png" />
 
-const app=initializeApp({apiKey:"AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",authDomain:"pianoinv.firebaseapp.com",projectId:"pianoinv",storageBucket:"pianoinv.appspot.com"});
-const db=getFirestore(app);
-const fix=u=>u?.includes("firebasestorage.app")?u.replace("firebasestorage.app","appspot.com"):u;
-const price=v=>(typeof v==="number"&&!isNaN(v))?`$${v.toLocaleString()}`:"Contact for Pricing";
+  <!-- Tailwind + Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
 
-async function load(){
- const id=new URLSearchParams(window.location.search).get("id");
- if(!id)return;
- const s=await getDoc(doc(db,"pianos",id));
- if(!s.exists()){document.getElementById("product").innerHTML="<p class='text-gray-400'>Not found.</p>";return;}
- const p=s.data();
- let photos=[];
- if(Array.isArray(p.photos)&&p.photos.length)photos=p.photos;else if(p.photoURL)photos=[p.photoURL];
- if(!photos.length)photos=["https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"];
- photos=photos.map(fix);
- const slides=photos.map((u,i)=>`<img src="${u}" class="carousel-slide ${i===0?'active':''}" alt="${p.brand||''} ${p.model||''}">`).join("");
- document.getElementById("product").innerHTML=`
- <div class="grid lg:grid-cols-2 gap-12 items-center fade-in-up">
-   <div class="relative overflow-hidden rounded-lg">
-     ${slides}
-     ${photos.length>1?`<button class='carousel-btn prev'>&#10094;</button><button class='carousel-btn next'>&#10095;</button>`:""}
-   </div>
-   <div>
-     <h1 class="font-serif text-4xl font-bold mb-4 text-gold">${p.brand||''} ${p.model||''}</h1>
-     <p class="text-gray-300 mb-2">Year: ${p.year||'—'}</p>
-     <p class="text-gray-300 mb-2">Length: ${p.length||'—'}</p>
-     <p class="text-gray-300 mb-2">Color: ${p.color||'—'}</p>
-     <div class="text-2xl font-semibold text-gold mb-6">${price(p.listingPrice)}</div>
-     <a href="contact.html" class="px-6 py-3 bg-gold text-black font-semibold rounded-full hover:bg-gold/90 transition">Buy Now</a>
-   </div>
- </div>`;
- const imgs=document.querySelectorAll(".carousel-slide");
- if(imgs.length>1){
-  let i=0;const show=n=>{imgs[i].classList.remove("active");i=(n+imgs.length)%imgs.length;imgs[i].classList.add("active");};
-  document.querySelector(".prev")?.addEventListener("click",()=>show(i-1));
-  document.querySelector(".next")?.addEventListener("click",()=>show(i+1));
- }
-}
-window.addEventListener("load",load);
-</script>
+  <style>
+    :root {
+      --gold: #d4af37;
+      --black: #0b0b0b;
+    }
+    body {
+      background-color: var(--black);
+      color: #f4f4f4;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+    .gold { color: var(--gold); }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1.2s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    footer { border-top: 1px solid rgba(212,175,55,0.2); }
+  </style>
 </head>
-<body class="bg-ink text-white font-sans">
-<header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
-<div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-<div class="flex items-center space-x-2">
-<img src="playstore.png" class="h-8 w-auto"><a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
-</div>
-<nav class="hidden md:flex space-x-8">
-<a href="index.html" class="hover:text-gold">Home</a><a href="pianos.html" class="hover:text-gold">Pianos</a><a href="contact.html" class="hover:text-gold">Contact</a><a href="warranty.html" class="hover:text-gold">Warranty</a>
-</nav>
-</div>
-</header>
-<main class="max-w-7xl mx-auto pt-28 px-6 pb-20" id="product"></main>
-<footer class="py-8 text-center border-t border-gold/20 bg-ink"><p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p></footer>
-</body>
-</html>
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<body>
 
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full z-20 px-8 py-4 flex justify-between items-center bg-black/80 text-white border-b border-gold/10">
+    <div class="flex items-center gap-3">
+      <img src="playstore.png" alt="Logo" class="w-10 h-10 rounded-lg" />
+      <h1 class="text-2xl font-bold gold">World Class Piano Gallery</h1>
+    </div>
+    <nav class="flex gap-8 text-lg">
+      <a href="index.html" class="hover:text-gold">Home</a>
+      <a href="pianos.html" class="text-gold font-semibold">Pianos</a>
+      <a href="contact.html" class="hover:text-gold">Contact</a>
+      <a href="warranty.html" class="hover:text-gold">Warranty</a>
+      <a href="tradein.html" class="hover:text-gold">Trade-In</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main id="productContent" class="pt-32 pb-24 px-6 md:px-16 fade-up">
+    <div id="loading" class="text-center text-gray-400 text-lg mt-20">Loading piano details...</div>
+  </main>
+
+  <footer class="py-8 text-center text-sm text-gray-400">
+    © 2025 World Class Piano Gallery
+  </footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyA2932IBDCeUix6OdRaJMDIisHX0SbyDFo",
       authDomain: "pianoinv.firebaseapp.com",
       projectId: "pianoinv",
-      storageBucket: "pianoinv.appspot.com",
-      messagingSenderId: "651707888262",
-      appId: "1:651707888262:web:23131a782e31a7bb511707"
+      storageBucket: "pianoinv.appspot.com"
     };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
-    const fixUrl = (u) => u?.includes("firebasestorage.app") ? u.replace("firebasestorage.app","appspot.com") : u;
-    const priceStr = (v) => (typeof v === "number" && !isNaN(v)) ? `$${v.toLocaleString()}` : "Contact for Pricing";
-
-    async function loadProduct(){
-      const id = new URLSearchParams(window.location.search).get("id");
-      if(!id) return;
-
-      const snap = await getDoc(doc(db,"pianos",id));
-      if(!snap.exists()){
-        document.getElementById("product").innerHTML = "<p class='text-gray-400'>Piano not found.</p>";
+    async function loadProduct() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const container = document.getElementById("productContent");
+      if (!id) {
+        container.innerHTML = `<p class='text-center text-red-400 mt-20'>No product specified.</p>`;
         return;
       }
-      const p = snap.data();
 
-      let photos=[];
-      if (Array.isArray(p.photos) && p.photos.length) photos = p.photos;
-      else if (p.photoURL) photos=[p.photoURL];
-      if (!photos.length) photos=["https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"];
-      photos = photos.map(u => fixUrl(u) || "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg");
+      try {
+        const doc = await db.collection("pianos").doc(id).get();
+        if (!doc.exists) {
+          container.innerHTML = `<p class='text-center text-gray-400 mt-20'>Piano not found.</p>`;
+          return;
+        }
 
-      const slides = photos.map((u,i)=>`<img src="${u}" class="carousel-slide ${i===0?'active':''}" alt="${p.brand||''} ${p.model||''}">`).join("");
+        const p = doc.data();
+        const imgSrc = p.photoURL || p.photoUrl || "";
+        const price = p.cost
+          ? `$${Number(p.cost).toLocaleString()}`
+          : p.listingPrice
+          ? `$${Number(p.listingPrice).toLocaleString()}`
+          : "Contact for Pricing";
 
-      document.getElementById("product").innerHTML = `
-        <div class="grid lg:grid-cols-2 gap-12 items-center fade-in-up">
-          <div class="carousel-container">
-            ${slides}
-            ${photos.length>1?`<button class="carousel-btn prev" aria-label="Previous">&#10094;</button>
-            <button class="carousel-btn next" aria-label="Next">&#10095;</button>`:""}
+        container.innerHTML = `
+          <div class="max-w-5xl mx-auto">
+            <div class="w-full mb-10 rounded-xl overflow-hidden border border-gold/20">
+              <img src="${imgSrc}" alt="${p.brand || ''} ${p.model || ''}" 
+                class="w-full h-[500px] object-cover" 
+                referrerpolicy="no-referrer"
+                onerror="this.src='https://placehold.co/1000x600/111111/888888?text=No+Image';" />
+            </div>
+            <div class="text-center mb-10">
+              <h2 class="text-4xl gold font-semibold mb-3">${p.brand || ""} ${p.model || ""}</h2>
+              <p class="text-gray-300 italic mb-2">${p.year || ""} • ${p.color || ""} • ${p.length || ""}</p>
+              <p class="text-gold font-semibold text-2xl mb-8">${price}</p>
+              <div class="flex gap-4 justify-center">
+                <a href="contact.html" class="px-8 py-3 border border-gold rounded-full hover:bg-gold hover:text-black transition">Inquire to Purchase</a>
+                <a href="pianos.html" class="px-8 py-3 border border-gold rounded-full hover:bg-gold hover:text-black transition">Back to Gallery</a>
+              </div>
+            </div>
+            <div class="text-center max-w-3xl mx-auto">
+              <h3 class="text-2xl gold font-semibold mb-4">Description</h3>
+              <p class="text-gray-300 leading-relaxed">
+                ${p.notes || "This piano has been carefully curated and prepared by World Class Piano Gallery to meet our highest performance standards."}
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 class="font-serif text-4xl font-bold mb-4 text-gold">${p.brand||''} ${p.model||''}</h1>
-            <p class="text-gray-300 mb-2">Year: ${p.year||'—'}</p>
-            <p class="text-gray-300 mb-2">Length: ${p.length||'—'}</p>
-            <p class="text-gray-300 mb-4">Color: ${p.color||'—'}</p>
-            <div class="text-2xl font-semibold text-gold mb-6">${priceStr(p.listingPrice)}</div>
-            <a href="contact.html" class="px-6 py-3 bg-gold text-black font-semibold rounded-full hover:bg-gold/90 transition">Buy Now</a>
-          </div>
-        </div>`;
-
-      // Wire big carousel
-      const slidesEls = document.querySelectorAll(".carousel-slide");
-      if (slidesEls.length>1){
-        let idx=0;
-        const show=(n)=>{ slidesEls[idx].classList.remove("active"); idx=(n+slidesEls.length)%slidesEls.length; slidesEls[idx].classList.add("active"); };
-        document.querySelector(".prev")?.addEventListener("click",()=>show(idx-1));
-        document.querySelector(".next")?.addEventListener("click",()=>show(idx+1));
+        `;
+      } catch (err) {
+        console.error("Error loading product:", err);
+        container.innerHTML = `<p class='text-center text-red-400 mt-20'>Failed to load piano details.</p>`;
       }
     }
 
-    window.addEventListener("load", loadProduct);
-  </script>
-</head>
-<body class="bg-ink text-white font-sans">
-  <!-- NAV -->
-  <header class="fixed top-0 w-full z-50 bg-ink/80 backdrop-blur border-b border-gold/20">
-    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-14">
-      <div class="flex items-center space-x-2">
-        <img src="playstore.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'" class="h-8 w-auto" alt="Logo">
-        <a href="index.html" class="font-serif text-lg font-bold text-gold">World Class Piano Gallery</a>
-      </div>
-      <nav class="hidden md:flex space-x-8">
-        <a href="index.html" class="hover:text-gold">Home</a>
-        <a href="pianos.html" class="hover:text-gold">Pianos</a>
-        <a href="contact.html" class="hover:text-gold">Contact</a>
-        <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      </nav>
-      <button id="menuBtn" class="md:hidden text-gold text-2xl">☰</button>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-ink border-t border-gold/20">
-      <nav class="flex flex-col px-6 py-4 space-y-4">
-        <a href="index.html" class="hover:text-gold">Home</a>
-        <a href="pianos.html" class="hover:text-gold">Pianos</a>
-        <a href="contact.html" class="hover:text-gold">Contact</a>
-        <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="max-w-7xl mx-auto pt-28 px-6 pb-20" id="product"></main>
-
-  <footer class="py-8 text-center border-t border-gold/20 bg-ink">
-    <p class="text-sm text-gray-400">&copy; 2025 World Class Piano Gallery</p>
-  </footer>
-
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-    document.getElementById("menuBtn")?.addEventListener("click",()=>document.getElementById("mobileMenu")?.classList.toggle("hidden"));
+    loadProduct();
   </script>
 </body>
 </html>
