@@ -1,54 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trade-In – World Class Piano Gallery</title>
-  <link rel="icon" type="image/png" href="playstore.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body{background:#0b0b0b;color:#f4f4f4;font-family:'Times New Roman',serif;}
-    .gold{color:#d4af37;}
-  </style>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Trade-In – World Class Piano Gallery</title>
+<link rel="icon" type="image/png" href="playstore.png"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--gold:#d4af37;--black:#0b0b0b}
+body{background:var(--black);color:#f5f5f5;font-family:'Inter',sans-serif}
+h1,h2,h3{font-family:'Cormorant Garamond',serif}
+.nav a:hover{color:var(--gold)}
+.gold{color:var(--gold)}
+footer{border-top:1px solid rgba(212,175,55,.25);background:#0a0a0a}
+footer a:hover{color:var(--gold)}
+.btn{border:1px solid var(--gold);padding:.7rem 1.4rem;border-radius:9999px}
+.btn:hover{background:var(--gold);color:#000}
+</style>
 </head>
 <body>
-  <header class="flex justify-between items-center px-6 py-4 border-b border-gold/20">
-    <div class="flex items-center gap-3">
-      <img src="playstore.png" class="w-10 h-10 rounded-lg" />
-      <h1 class="text-2xl font-bold gold">World Class Piano Gallery</h1>
+
+<header class="fixed top-0 left-0 w-full z-20 px-6 md:px-8 py-4 flex justify-between items-center bg-black/80 border-b border-gold/10">
+  <div class="flex items-center gap-3">
+    <img src="playstore.png" class="w-10 h-10 rounded-lg"/>
+    <h1 class="text-2xl font-semibold gold">World Class Piano Gallery</h1>
+  </div>
+  <nav class="nav flex gap-6 md:gap-8 text-sm md:text-base">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="pianos.html">Pianos</a>
+    <a href="contact.html">Contact</a>
+    <a href="warranty.html">Warranty</a>
+    <a href="tradein.html" class="gold">Trade-In</a>
+  </nav>
+</header>
+
+<main class="pt-32 pb-20 px-6 md:px-10 max-w-4xl mx-auto text-center">
+  <h2 class="text-5xl font-semibold gold mb-6">Trade-In & Upgrade Program</h2>
+  <p class="text-gray-300 text-lg leading-relaxed mb-10">
+    Looking to upgrade or trade in your current piano? We offer fair, market-based evaluations and
+    generous credits toward any instrument in our showroom.
+  </p>
+  <div class="space-y-3 text-gray-300">
+    <p><span class="gold font-semibold">Phone:</span> (404) 491-1656</p>
+    <p><span class="gold font-semibold">Email:</span> <a href="mailto:wcpianogallery@gmail.com" class="hover:text-gold">wcpianogallery@gmail.com</a></p>
+    <p><span class="gold font-semibold">Location:</span> 1000 North Point Cir, Alpharetta, GA 30022</p>
+  </div>
+  <div class="mt-10">
+    <a class="btn" href="contact.html">Start Your Evaluation</a>
+  </div>
+</main>
+
+<footer class="pt-12 pb-8 text-center text-gray-400">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between items-center border-b border-gold/20 pb-6 mb-6 gap-6">
+      <div class="text-left">
+        <h4 class="text-2xl font-semibold gold mb-2">World Class Piano Gallery</h4>
+        <p class="text-sm leading-relaxed">
+          1000 North Point Cir, Alpharetta, GA 30022<br/>(404) 491-1656<br/>
+          <a href="mailto:wcpianogallery@gmail.com" class="hover:text-gold">wcpianogallery@gmail.com</a>
+        </p>
+      </div>
+      <a href="https://www.facebook.com/WorldClassPianoGallery" target="_blank" class="hover:text-gold">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.326v21.348C0 23.406.593 24 1.326 24h11.49v-9.294H9.691v-3.622h3.125V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.099 2.796.143v3.24l-1.92.001c-1.505 0-1.796.716-1.796 1.765v2.315h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .593 23.406 0 22.675 0z"/></svg>
+        Facebook
+      </a>
     </div>
-    <nav class="flex gap-6 text-lg">
-      <a href="index.html" class="hover:text-gold">Home</a>
-      <a href="pianos.html" class="hover:text-gold">Pianos</a>
-      <a href="contact.html" class="hover:text-gold">Contact</a>
-      <a href="warranty.html" class="hover:text-gold">Warranty</a>
-      <a href="tradein.html" class="text-gold font-semibold">Trade-In</a>
-    </nav>
-  </header>
-
-  <section class="py-16 px-8 text-center">
-    <h2 class="text-4xl font-bold gold mb-6">Trade-In & Upgrade Program</h2>
-    <p class="max-w-3xl mx-auto text-lg text-gray-300 leading-relaxed">
-      Looking to upgrade or trade in your current piano?  
-      World Class Piano Gallery offers fair, market-based evaluations and generous trade-in credits
-      toward any instrument in our showroom.  
-      Simply contact our gallery team with details about your current piano,
-      and we’ll guide you through our seamless trade-in process.
-    </p>
-
-    <div class="mt-10 text-lg">
-      <p><span class="gold font-semibold">Phone:</span> 404-491-1656</p>
-      <p><span class="gold font-semibold">Email:</span> wcpianogallery@gmail.com</p>
-      <p><span class="gold font-semibold">Location:</span> 1000 North Point Cir, Alpharetta, GA 30022</p>
-    </div>
-
-    <p class="mt-10 text-gray-400">
-      Schedule your evaluation today and discover the value of your piano toward your next masterpiece.
-    </p>
-  </section>
-
-  <footer class="py-8 text-center border-t border-gold/20 text-sm text-gray-400">
-    © 2025 World Class Piano Gallery
-  </footer>
+    <p class="text-sm text-gray-500">© 2025 World Class Piano Gallery. All Rights Reserved.</p>
+  </div>
+</footer>
 </body>
 </html>
